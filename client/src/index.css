@@ -1,0 +1,137 @@
+@import "~materialize-css/dist/css/materialize.min.css";
+
+input.yellow-input {
+    border-bottom: 1px solid #fff!important;
+    box-shadow: 0 1px 0 0 #fff!important;
+}
+
+input.yellow-input + label {
+    color: #ffffff!important;
+}
+
+input.yellow-input:focus + label {
+    color: #ffffff!important;
+}
+
+input.yellow-input:focus {
+    border-bottom: 1px solid #ffeb3b!important;
+    box-shadow: 0 1px 0 0 #ffeb3b!important;
+}
+
+html {
+    background-color: #e4e4e4;
+}
+
+button.btn.grey.lighten-1.black-text {
+    margin-top: 15px;
+}
+
+.card-action.center {
+    padding-top: 0;
+}
+
+.link-auth {
+    color: white!important;
+}
+
+.card-content.white-text {
+    padding-bottom: 0;
+}
+
+.nav-wrapper.blue.darken-1 {
+    padding: 0 2rem;
+}
+
+button.waves-effect.blue.darken-3.btn {
+    margin-top: 12px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    flex: 1;
+}
+
+.checkbox-blue-grey[type="checkbox"].filled-in:checked + span:not(.lever):after {
+    border: 2px solid #1565c0;
+    background-color: #1565c0;
+}
+
+.navbar-center {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.toolbar-buttons {
+    display: flex;
+}
+
+table {
+    margin-bottom: 15px;
+}
+
+td.main-checkbox {
+    padding-bottom: 1px;
+}
+
+td.checkbox-table-row {
+    padding-bottom: 3px;
+}
+
+.loader-loading {
+    display: flex;
+    justify-content: center;
+    padding-top: 2rem;
+}
+
+.card-content.white-text.auth {
+    padding-bottom: 0;
+}
+
+.brand-logo.center {
+    user-select: none;
+}
+
+.grid-item {
+    user-select: none;
+}
+
+.margin-bottom-null {
+    margin-bottom: 0;
+}
+
+.margin-top-null {
+    margin-top: 0;
+}
+
+.create-collection {
+    width: 550px;
+    margin: 0 auto 30px auto;
+}
+
+.default-values-create-collection {
+    margin-top: 25px;
+}
+
+.cursor-users-list {
+    cursor: pointer;
+}
+
+.modal-and-download {
+    display: flex;
+}
+
+.cursor-users-list:hover {
+    background-color: #dcdcdc;
+}
+
+@media screen and (max-width: 992px) {
+    .btn-big-screen {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 993px) {
+    .btn-small-screen {
+        display: none;
+    }
+}
+
+
