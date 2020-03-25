@@ -11,18 +11,17 @@ import {fetchCollections} from "../actionsCreator"
 
 function CollectionsPage({idUser}) {
 
-    const {loading} = useSelector(state => state.collectionsReducer)
-    const {token, userId} = useContext(AuthContext)
+    const {loading, error} = useSelector(state => state.collectionsReducer)
+    const {token} = useContext(AuthContext)
     const dispatch = useDispatch()
     const history = useHistory()
 
     useEffect(() => {
-        if (idUser === userId) {
+        dispatch(fetchCollections(token, idUser))
+        if (error) {
             history.push('/collections')
-        } else {
-            dispatch(fetchCollections(token, idUser))
         }
-    }, [dispatch, token, idUser])
+    }, [dispatch, token, idUser, error])
 
     if (loading) {
         return <Loader/>

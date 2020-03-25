@@ -92,11 +92,6 @@ export const create = (baseURL = '') => {
         return data
     }
 
-    const getCollections = async (token) => {
-        setHeader(token)
-        return await api.get('/api/collections')
-    }
-
     const getCollectionsById = async (token, userId) => {
         setHeader(token)
         return await api.get(`/api/collections/${userId}`)
@@ -142,7 +137,6 @@ export const create = (baseURL = '') => {
         unblockById,
         makeAdminById,
         logoutRequest,
-        getCollections,
         getCollectionsById,
         editCollectionById,
         deleteCollectionById,

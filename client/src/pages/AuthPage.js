@@ -31,8 +31,8 @@ const AuthPage = () => {
     const loginHandler = async () => {
         setLoading(true)
         try {
-            const data = await request('/api/auth/login', 'POST', {...form})
-            authorization.login(data.token, data.userId)
+            const {token, userId, userIsAdmin} = await request('/api/auth/login', 'POST', {...form})
+            authorization.login(token, userId, userIsAdmin)
             setLoading(false)
         } catch (e) {
             setLoading(false)

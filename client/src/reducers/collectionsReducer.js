@@ -1,7 +1,7 @@
 const initialState = {
     collections: [],
     loading: false,
-    error: false
+    error: null
 }
 
 const collectionsReducer = (state = initialState, action) => {

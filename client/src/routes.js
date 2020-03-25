@@ -9,15 +9,15 @@ import {useAuth} from "./hooks/auth.hook"
 
 export const useRoutes = isAuthenticated => {
 
-    const {token} = useAuth()
+    const {token, userIsAdmin} = useAuth()
 
     if (isAuthenticated) {
         return (
             <Switch>
-                <Route path="/users" exact component={UsersPage}/>
+                {userIsAdmin && <Route path="/users" exact component={UsersPage}/>}
                 <Route path="/collections" exact component={CollectionsPage}/>
-                <Route path="/collections/:id" exact
-                       render={({match}) => (<CollectionsPage idUser={(match.params.id)}/>)}/>
+                {userIsAdmin && <Route path="/collections/:id" exact
+                       render={({match}) => (<CollectionsPage idUser={(match.params.id)}/>)}/>}
                 <Route path='/create-item' render={() => {
                     return (
                         <button onClick={() => {

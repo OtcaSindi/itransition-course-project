@@ -23,7 +23,9 @@ const UsersPage = () => {
                 dispatch(usersLoaded(data.data))
             } catch (e) {
                 dispatch(usersError(e))
-                logout()
+                if (e.message === 'No authorization.') {
+                    logout()
+                }
             }
         }
 

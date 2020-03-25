@@ -12,7 +12,7 @@ import Loader from "./components/loader/loader"
 import store from "./store"
 
 const App = () => {
-    const {token, login, logout, userId, ready} = useAuth()
+    const {token, login, logout, userId, userIsAdmin, ready} = useAuth()
     const isAuthenticated = !!token
     const routes = useRoutes(isAuthenticated)
 
@@ -23,7 +23,7 @@ const App = () => {
     return (
         <Provider store={store}>
             <AuthContext.Provider value={{
-                token, login, logout, userId, isAuthenticated
+                token, login, logout, userId, isAuthenticated, userIsAdmin
             }}>
                 <Router>
                     { isAuthenticated && <NavBar/> }

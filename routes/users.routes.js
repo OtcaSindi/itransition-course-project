@@ -3,10 +3,11 @@ const {Router} = require('express')
 const User = require('../models/User')
 const Collection = require('../models/Collection')
 const auth = require('../middleware/auth.middleware')
+const checkAdmin = require('../middleware/admin.middleware')
 
 const router = Router()
 
-router.get('/', auth, async (req, res) => {
+router.get('/', auth, checkAdmin, async (req, res) => {
     try {
         const users = await User.find()
         const usersForFront = users.map(({_id, name, email, blocked, isAdmin}) => {
@@ -24,7 +25,7 @@ router.get('/', auth, async (req, res) => {
     }
 })
 
-router.delete('/delete/:id', auth, async (req, res) => {
+router.delete('/delete/:id', auth, checkAdmin, async (req, res) => {
     try {
         await User.remove({_id: req.params.id})
         await Collection.remove({owner: req.params.id})
@@ -34,7 +35,7 @@ router.delete('/delete/:id', auth, async (req, res) => {
     }
 })
 
-router.post('/block/:id', auth, async (req, res) => {
+router.post('/block/:id', auth, checkAdmin, async (req, res) => {
     try {
         await User.findByIdAndUpdate(req.params.id, {blocked: true})
         res.status(200).json({message: 'User changed.'})
@@ -43,7 +44,7 @@ router.post('/block/:id', auth, async (req, res) => {
     }
 })
 
-router.post('/unblock/:id', auth, async (req, res) => {
+router.post('/unblock/:id', auth, checkAdmin, async (req, res) => {
     try {
         await User.findByIdAndUpdate(req.params.id, {blocked: false})
         res.status(200).json({message: 'User changed.'})
@@ -52,7 +53,7 @@ router.post('/unblock/:id', auth, async (req, res) => {
     }
 })
 
-router.post('/make-admin/:id', auth, async (req, res) => { // add middleware for check admin!
+router.post('/make-admin/:id', auth, checkAdmin, async (req, res) => {
     try {
         const user = await User.findById(req.params.id)
         if (!user.isAdmin) {

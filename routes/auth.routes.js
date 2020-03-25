@@ -90,12 +90,15 @@ router.post(
             }
 
             const token = jwt.sign(
-                {userId: user.id},
+                {
+                    userId: user.id,
+                    userIsAdmin: user.isAdmin
+                },
                 config.get('jwtSecret')
             )
             await user.save()
 
-            res.status(200).json({token, userId: user.id})
+            res.status(200).json({token, userId: user.id, userIsAdmin: user.isAdmin})
 
         } catch (e) {
             res.status(500).json({message: 'Something went wrong, try again.'})

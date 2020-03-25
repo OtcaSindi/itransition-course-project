@@ -28,7 +28,6 @@ const fetchCollections = (token, userId) => (dispatch) => {
         })
         .catch((err) => {
                 dispatch(collectionsError(err))
-                throw err
             }
         )
 }
@@ -41,7 +40,6 @@ const createCollectionRequest = (token, form, userId) => (dispatch) => {
         })
         .catch((err) => {
                 dispatch(collectionsError(err))
-                throw err
             }
         )
 }
@@ -54,7 +52,6 @@ const editCollectionRequest = (token, form, collectionId, userId) => (dispatch) 
         })
         .catch((err) => {
                 dispatch(collectionsError(err))
-                throw err
             }
         )
 }
@@ -67,12 +64,9 @@ const deleteCollectionRequest = (token, id, userId) => (dispatch) => {
         })
         .catch((err) => {
                 dispatch(collectionsError(err))
-                throw err
             }
         )
 }
-
-
 
 export {
     collectionsRequested,
