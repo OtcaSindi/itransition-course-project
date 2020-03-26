@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux'
 
 import {AuthContext} from "../context/AuthContext"
 import Loader from "../components/loader"
-import UsersList from "../components/users-list"
+import UsersTable from "../components/users-table"
 import {usersError, usersLoaded, usersRequested} from "../actionsCreator"
 import Toolbar from "../components/toolbar"
 import {create} from "../services"
@@ -45,7 +45,7 @@ const UsersPage = () => {
     return (
         <Fragment>
             <Toolbar/>
-            <UsersList users={users}/>
+            <UsersTable users={users}/>
         </Fragment>
     )
 }

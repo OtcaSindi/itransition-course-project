@@ -122,10 +122,14 @@ export const create = (baseURL = '') => {
         return await api.get(`/api/items/${collectionId}`)
     }
 
-    const createItem = async (token, form) => {
-        console.log('asdfsadfs')
+    const createItem = async (token, form, collectionId) => {
         setHeader(token)
-        return await api.post('/api/items/create', {...form})
+        return await api.post(`/api/items/create/${collectionId}`, {...form})
+    }
+
+    const addCommentByItemId = async (token, form, itemId) => {
+        setHeader(token)
+        return await api.post(`/api/items/${itemId}/create-comment`, {...form})
     }
 
 
@@ -143,5 +147,7 @@ export const create = (baseURL = '') => {
         createCollection,
         createCollectionById,
         createItem,
+        getItemsByCollectionId,
+        addCommentByItemId
     }
 }

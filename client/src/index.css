@@ -106,6 +106,15 @@ td.checkbox-table-row {
     margin: 0 auto 30px auto;
 }
 
+.card {
+    transition: box-shadow .3s, transform .3s;
+}
+
+.card:hover {
+    transform: scale(1.005);
+    box-shadow: 0 4px 6px grey;
+}
+
 .default-values-create-collection {
     margin-top: 25px;
 }
@@ -118,7 +127,7 @@ td.checkbox-table-row {
     display: flex;
 }
 
-.cursor-users-list:hover {
+.cursor-active:hover {
     background-color: #dcdcdc;
 }
 

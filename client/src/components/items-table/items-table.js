@@ -1,7 +1,7 @@
 import React, {useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
 
-const ItemsList = () => {
+const ItemsTable = () => {
 
     const {items} = useSelector(state => state.itemsReducer)
     const dispatch = useDispatch()
@@ -17,4 +17,4 @@ const ItemsList = () => {
     )
 }
 
-export default ItemsList
+export default ItemsTable

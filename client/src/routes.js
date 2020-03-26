@@ -6,6 +6,7 @@ import AuthPage from "./pages/AuthPage"
 import CollectionsPage from "./pages/CollectionsPage"
 import {create} from "./services"
 import {useAuth} from "./hooks/auth.hook"
+import CollectionPage from "./pages/CollectionPage"
 
 export const useRoutes = isAuthenticated => {
 
@@ -15,14 +16,20 @@ export const useRoutes = isAuthenticated => {
         return (
             <Switch>
                 {userIsAdmin && <Route path="/users" exact component={UsersPage}/>}
+
                 <Route path="/collections" exact component={CollectionsPage}/>
-                {userIsAdmin && <Route path="/collections/:id" exact
+
+                {userIsAdmin && <Route path="/users/:id" exact
                        render={({match}) => (<CollectionsPage idUser={(match.params.id)}/>)}/>}
+
+                <Route path="/collections/:id" exact
+                       render={({match}) => (<CollectionPage collectionId={match.params.id}/>)}/>
+
                 <Route path='/create-item' render={() => {
                     return (
                         <button onClick={() => {
                             console.log(token)
-                            create().createItem(token, {title: 'ABC', someObject: {a: 1, b: 2}})
+                            create().createItem(token, {ititle: 'ABC', })
                         }}>Click</button>
                     )
                 }}/>

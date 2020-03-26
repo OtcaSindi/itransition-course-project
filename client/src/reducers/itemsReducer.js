@@ -1,7 +1,7 @@
 const initialState = {
     items: [],
     loading: false,
-    error: false
+    error: null
 }
 
 const itemsReducer = (state = initialState, action) => {

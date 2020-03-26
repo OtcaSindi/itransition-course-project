@@ -5,7 +5,13 @@ const schema = new Schema({
     title: {type: String, required: true},
     description: {type: String},
     tags: [{type: String}],
-    someObject: {type: Buffer}
+    dateCreation: {type: Date, default: Date.now},
+    comments: [
+        {
+            user: {type: Types.ObjectId},
+            comment: {type: String}
+        }
+    ]
 })
 
 module.exports = model('Item', schema)

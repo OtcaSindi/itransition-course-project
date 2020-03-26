@@ -20,15 +20,14 @@ const itemsError = (error) => {
     }
 }
 
-const fetchItems = (token, userId) => (dispatch) => {
+const fetchItems = (token, collectionId) => (dispatch) => {
     dispatch(itemsRequested())
-    create().getCollectionsById(token, userId || '')
+    create().getItemsByCollectionId(token, collectionId || '')
         .then(({data}) => {
             dispatch(itemsLoaded(data))
         })
         .catch((err) => {
                 dispatch(itemsError(err))
-                throw err
             }
         )
 }
@@ -41,7 +40,6 @@ const createItemRequest = (token, form, userId) => (dispatch) => {
         })
         .catch((err) => {
                 dispatch(itemsError(err))
-                throw err
             }
         )
 }
@@ -54,7 +52,6 @@ const deleteItemRequest = (token, id, userId) => (dispatch) => {
         })
         .catch((err) => {
                 dispatch(itemsError(err))
-                throw err
             }
         )
 }

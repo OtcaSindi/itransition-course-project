@@ -48,7 +48,7 @@ const Table = () => {
     )
 }
 
-const UsersList = ({users}) => {
+const UsersTable = ({users}) => {
     const [select, setSelect] = useState(false)
     const dispatch = useDispatch()
     const history = useHistory()
@@ -72,7 +72,7 @@ const UsersList = ({users}) => {
         if (userId === id) {
             return history.push(`/collections`)
         }
-        history.push(`/collections/${id}`)
+        history.push(`/users/${id}`)
     }
 
     const dateFormat = (dateNow) => {
@@ -112,7 +112,7 @@ const UsersList = ({users}) => {
             <tbody>
             {users.map(({id, name, email, blocked, isAdmin, checked}) => {
                 return (
-                    <tr key={id} className="cursor-users-list" onClick={transition(id)}>
+                    <tr key={id} className="cursor-active" onClick={transition(id)}>
                         <td>
                             <div style={{height: '20px'}}>
                                 <label onClick={(e) => {
@@ -141,4 +141,4 @@ const UsersList = ({users}) => {
     )
 }
 
-export default UsersList
+export default UsersTable
