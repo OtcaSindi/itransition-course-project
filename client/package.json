@@ -3,16 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@carbon/icons-react": "^10.9.2",
+    "@storybook/addon-knobs": "^5.3.17",
+    "@storybook/react": "^5.3.17",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
+    "carbon-components": "^10.10.2",
+    "carbon-components-react": "^7.10.2",
+    "carbon-icons": "^7.0.7",
     "marked": "^0.8.0",
     "materialize-css": "^1.0.0-rc.2",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-gesture-responder": "^2.1.0",
-    "react-grid-dnd": "^2.1.2",
     "react-materialize": "^3.5.9",
     "react-redux": "^7.2.0",
     "react-router": "^5.1.2",
@@ -42,5 +47,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^5.3.17"
   }
 }

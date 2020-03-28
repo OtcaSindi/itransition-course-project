@@ -4,6 +4,8 @@ import {useHistory} from 'react-router'
 
 import {AuthContext} from "../../context/AuthContext"
 
+import styles from './narbar.module.css'
+
 const Navbar = () => {
 
     const {logout, userIsAdmin} = useContext(AuthContext)
@@ -14,23 +16,12 @@ const Navbar = () => {
         history.push('/')
     }
     return (
-        <nav className="fixed-navbar">
-            <div className="nav-wrapper blue darken-1">
-                <div className="nav-wrapper blue darken-1 navbar-center">
-                    <NavLink to="/notes" className="brand-logo center">Items</NavLink>
-                    <a href="#" data-target="mobile-demo" className="sidenav-trigger"><i
-                        className="material-icons">menu</i></a>
-                    <ul id="nav-mobile" className="left hide-on-med-and-down">
-                        {userIsAdmin && <li><NavLink to="/users">Users</NavLink></li>}
-                        <li><NavLink to="/collections">My collections</NavLink></li>
-                    </ul>
-                    <ul id="nav-mobile" className="right hide-on-med-and-down">
-                        <li><NavLink to="/news">News</NavLink></li>
-                        <li><a href="/" onClick={logoutHandler}>Logout</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+            <nav className={styles.navbar}>
+                {userIsAdmin && <NavLink to="/users" className={styles.navLink}>Users</NavLink>}
+                <NavLink to="/collections" className={styles.navLink}>My collections</NavLink>
+                <NavLink to="/news" className={styles.navLink}>News</NavLink>
+                <a href="/" className={styles.navLink} onClick={logoutHandler}>Logout</a>
+            </nav>
     )
 }
 

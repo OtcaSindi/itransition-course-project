@@ -1,43 +1,77 @@
-import React, {useEffect} from 'react'
-import {useDispatch, useSelector} from "react-redux"
+import React, {useCallback, useContext, useMemo, useState} from 'react'
 
+import map from 'lodash/fp/map'
 import {fetchItems} from "../actionsCreator"
-import {useAuth} from "../hooks/auth.hook"
-import {create} from "../services"
+import ItemsTable from "../components/items-table"
+import {AuthContext} from "../context/AuthContext"
+import {dateFormat} from "../commonFunctions"
+import {useTableData} from "../hooks/use-table-data"
+
+const selector = state => state.itemsReducer
+
+const headersItems = [
+    {
+        header: 'Title',
+        key: 'title'
+    },
+    {
+        header: 'Date creation',
+        key: 'dateCreation'
+    },
+    {
+        header: 'Description',
+        key: 'description'
+    },
+    {
+        header: 'Likes',
+        key: 'likes'
+    }]
+
+const tableActions = [
+    {
+        name: 'Edit',
+    },
+    {
+        name: 'Delete'
+    },
+]
+
+const initialRowsMapper = map(({id, title, description, dateCreation}) => {
+    return {
+        id,
+        title,
+        description,
+        dateCreation: dateFormat(dateCreation),
+        likes: 100
+    }
+})
 
 const CollectionPage = ({collectionId}) => {
 
-    const dispatch = useDispatch()
-    const {items} = useSelector(state => state.itemsReducer)
-    const {token} = useAuth()
+    const {token} = useContext(AuthContext)
 
-    const createItem = () => {
-        create().createItem(token, {
-            title: 'title',
-            description: 'description',
-            tags: ['tag1', 'tag2']
-        }, collectionId)
-    }
+    const [action, setAction] = useState({})
 
-    const addComment = () => {
-        create().addCommentByItemId(token, {
-            comment: 'fuck you boy'
-        }, items[0]._id)
-    }
+    const handleClick = useCallback((selectedRows, e) => {
+        setAction({action: e.nativeEvent.target.textContent, items: selectedRows})
+    }, [])
 
-    useEffect(() => {
-        dispatch(fetchItems(token, collectionId))
-    }, [dispatch, token, collectionId])
+    const memoizedAction = useMemo(() => {
+        return fetchItems(token, collectionId)
+    }, [token, collectionId])
+
+    const {tableProps, batchAction} = useTableData({
+        action: memoizedAction,
+        headersItems,
+        selector,
+        initialRowsMapper,
+        tableActions,
+    })
 
     return (
-        <>
-            <div>
-                <button onClick={createItem} className="btn">Create item</button>
-            </div>
-            <div>
-                <button onClick={addComment} className="btn">Add comment</button>
-            </div>
-        </>
+        <div style={{display: 'flex', alignItems: 'center', margin: '0 2%'}}>
+            <ItemsTable {...tableProps} />
+        </div>
     )
 }
 

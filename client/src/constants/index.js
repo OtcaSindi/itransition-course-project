@@ -1,7 +1,3 @@
-const PINK = '#f3bac3'
-const GREY = '#d3c9c4'
-const BLUE = '#a4e6f4'
-
 const THEME_GAMES = {
     title: 'Games',
     color: '#fcd985'
@@ -21,7 +17,12 @@ const NOT_BLOCKED = 'Not blocked'
 const ADMIN = 'Admin'
 const USER = 'User'
 
+const MODAL_HEADER_CREATE = 'Create'
+const MODAL_HEADER_EDIT = 'Edit'
+const MODAL_HEADER_DELETE = 'Delete'
 
+const MODAL_LABEL_ITEMS = 'Items'
+const MODAL_LABEL_USERS = 'Users'
 
 export {
     THEME_GAMES,
@@ -33,7 +34,10 @@ export {
     ADMIN,
     USER,
 
-    PINK,
-    GREY,
-    BLUE
+    MODAL_HEADER_CREATE,
+    MODAL_HEADER_EDIT,
+    MODAL_HEADER_DELETE,
+
+    MODAL_LABEL_ITEMS,
+    MODAL_LABEL_USERS,
 }
