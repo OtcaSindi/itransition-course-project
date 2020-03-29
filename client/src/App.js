@@ -5,7 +5,7 @@ import {Provider} from 'react-redux'
 import 'materialize-css'
 
 import {useRoutes} from "./routes"
-import {useAuth} from "./hooks/auth.hook"
+import {useAuth} from "./hooks/use-auth"
 import {AuthContext} from "./context/AuthContext"
 import NavBar from './components/navbar/navbar'
 import Loader from "./components/loader/loader"

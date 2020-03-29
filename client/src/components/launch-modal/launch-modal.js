@@ -19,7 +19,8 @@ const LaunchModal = (
         open,
         setOpen,
         FileUploaderImage,
-        defaultImage
+        defaultImage,
+        authSocials // array socials
     }) => {
 
     const [image, setImage] = useState(defaultImage || '')
@@ -58,13 +59,13 @@ const LaunchModal = (
                     <SelectItem key={value} value={value} text={text}/>
                 ))}
             </Select>}
+            <br/>
 
             {FileUploaderImage &&
                 (image ?
                 <img id="target" style={{height: '100px'}} src={image} alt="item"/> :
                 <FileUploaderDropContainer accept={['.png', '.jpg']}
                                            onAddFiles={(e, {addedFiles}) => {
-                                               console.log(addedFiles)
                                                const file = addedFiles[0]
                                                const reader = new FileReader()
                                                reader.onload = (e) => {
@@ -73,7 +74,16 @@ const LaunchModal = (
                                                reader.readAsDataURL(file);}}
                                            labelText="Drag and drop image(.png, .jpg) here or click to upload"
                                            id="uploader"
-                />)}
+                />)
+            }
+
+            {authSocials && (authSocials.map((authSocial, idx) => {
+                return (
+                    <div key={idx}>
+                        {authSocial}
+                    </div>
+                )
+            }))}
 
         </Modal>
     )

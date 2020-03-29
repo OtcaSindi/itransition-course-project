@@ -2,7 +2,7 @@ import React from "react"
 
 import {Dropdown} from 'react-materialize'
 
-import {useAuth} from "../../hooks/auth.hook"
+import {useAuth} from "../../hooks/use-auth"
 import EditCollectionModal from "../edit-collection-modal"
 import {useDispatch} from "react-redux"
 import {

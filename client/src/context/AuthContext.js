@@ -1,6 +1,5 @@
 import {createContext} from 'react'
-
-function noop() {}
+import noop from 'lodash/noop'
 
 export const AuthContext = createContext({
     token: null,

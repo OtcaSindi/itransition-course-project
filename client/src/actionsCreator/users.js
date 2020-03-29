@@ -1,4 +1,4 @@
-import {create} from "../services"
+import axiosRequest from "../services"
 
 const usersRequested = () => {
     return {
@@ -35,7 +35,7 @@ const editUserAllCheckbox = () => {
 
 const fetchUsers = (token) => (dispatch) => {
     dispatch(usersRequested())
-    create().getUsers(token)
+    axiosRequest.getUsers(token)
         .then(({data}) => {
             dispatch(usersLoaded(data))
         })

@@ -4,7 +4,7 @@ import {create} from "../../services"
 import {THEME_MOVIES, THEME_GAMES, THEME_BOOKS} from "../../constants"
 import {Modal, Button} from 'react-materialize'
 
-import {useAuth} from "../../hooks/auth.hook"
+import {useAuth} from "../../hooks/use-auth"
 import {useDispatch} from "react-redux"
 import {createCollectionRequest} from "../../actionsCreator"
 

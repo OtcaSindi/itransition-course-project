@@ -1,9 +1,11 @@
 import React, {useContext, useEffect, useState} from "react"
 import {Link} from "react-router-dom"
 
-import {useHttp} from "../hooks/http.hook"
-import {useMessage} from "../hooks/message.hook"
+import {useHttp} from "../hooks/use-http"
+import {useMessage} from "../hooks/use-message"
 import {AuthContext} from "../context/AuthContext"
+import AuthVkLogin from "../components/auth-socials/auth-vk-login"
+import AuthGoogleLogin from "../components/auth-socials/auth-google-login"
 
 
 const AuthPage = () => {
@@ -87,6 +89,8 @@ const AuthPage = () => {
                         >
                             Login
                         </button>
+                        <AuthVkLogin/>
+                        <AuthGoogleLogin/>
                     </div>
                 </div>
             </div>

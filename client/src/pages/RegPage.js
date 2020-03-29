@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
-import {useHttp} from "../hooks/http.hook"
-import {useMessage} from "../hooks/message.hook"
+import {useHttp} from "../hooks/use-http"
+import {useMessage} from "../hooks/use-message"
 import {Link, useHistory} from "react-router-dom"
 
 const RegPage = () => {

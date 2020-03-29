@@ -1,4 +1,4 @@
-import {create} from "../services"
+import axiosRequest from "../services"
 
 const itemsRequested = () => {
     return {
@@ -22,7 +22,7 @@ const itemsError = (error) => {
 
 const fetchItems = (token, collectionId) => (dispatch) => {
     dispatch(itemsRequested())
-    create().getItemsByCollectionId(token, collectionId || '')
+    axiosRequest.getItemsByCollectionId(token, collectionId || '')
         .then(({data}) => {
             dispatch(itemsLoaded(data))
         })
@@ -34,7 +34,7 @@ const fetchItems = (token, collectionId) => (dispatch) => {
 
 const createItemRequest = (token, form, userId) => (dispatch) => {
     dispatch(itemsRequested())
-    create().createCollectionById(token, form, userId || '')
+    axiosRequest.createCollectionById(token, form, userId || '')
         .then(({data}) => {
             dispatch(itemsLoaded(data))
         })
@@ -46,7 +46,7 @@ const createItemRequest = (token, form, userId) => (dispatch) => {
 
 const deleteItemRequest = (token, id, userId) => (dispatch) => {
     dispatch(itemsRequested())
-    create().deleteCollectionById(token, id)
+    axiosRequest.deleteCollectionById(token, id)
         .then(() => {
             dispatch(itemsLoaded(token, userId))
         })

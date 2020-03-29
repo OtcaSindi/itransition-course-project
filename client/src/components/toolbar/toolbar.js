@@ -1,11 +1,11 @@
 import React, {useContext} from "react"
 import {useDispatch, useSelector} from "react-redux"
 
-import {create} from "../../services"
+import axiosRequest from "../../services"
 import {fetchUsers} from "../../actionsCreator"
 import {AuthContext} from "../../context/AuthContext"
-import {storageName} from "../../hooks/auth.hook"
-import {useMessage} from "../../hooks/message.hook"
+import {storageName} from "../../hooks/use-auth"
+import {useMessage} from "../../hooks/use-message"
 
 const Toolbar = () => {
 
@@ -28,7 +28,7 @@ const Toolbar = () => {
                     const currentUser = usersChecked.find((user) => user.id === currentUserId)
 
                     await Promise.all(usersChecked.map((user) => {
-                        return create().blockById(user.id, token)
+                        return axiosRequest.blockById(user.id, token)
                     }))
 
                     if (currentUser) {
@@ -58,7 +58,7 @@ const Toolbar = () => {
                 const currentUser = usersChecked.find((user) => user.id === currentUserId)
 
                 await Promise.all(usersChecked.map((user) => {
-                    return create().deleteById(user.id, token)
+                    return axiosRequest.deleteById(user.id, token)
                 }))
 
                 if (currentUser) {
@@ -84,7 +84,7 @@ const Toolbar = () => {
 
                 if (usersBlocked.length !== 0) {
                     await Promise.all(usersChecked.map((user) => {
-                        return create().unblockById(user.id, token)
+                        return axiosRequest.unblockById(user.id, token)
                     }))
 
                     dispatch(fetchUsers(token))
@@ -110,7 +110,7 @@ const Toolbar = () => {
 
                 if (usersBlocked.length !== 0) {
                     await Promise.all(usersChecked.map((user) => {
-                        return create().makeAdminById(user.id, token)
+                        return axiosRequest.makeAdminById(user.id, token)
                     }))
 
                     dispatch(fetchUsers(token))

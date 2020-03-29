@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const create = (baseURL = '') => {
+const create = (baseURL = '') => {
 
     const api = axios.create({
         baseURL,
@@ -86,7 +86,7 @@ export const create = (baseURL = '') => {
     const auth = async (form) => {
         const data = await api.post(
             '/api/auth/login',
-            {...form}
+            form
             )
         setHeader(data.token)
         return data
@@ -99,17 +99,17 @@ export const create = (baseURL = '') => {
 
     const createCollection = async (token, form) => {
         setHeader(token)
-        return await api.post('/api/collections/create', {...form})
+        return await api.post('/api/collections/create', form)
     }
 
     const createCollectionById = async (token, form, userId) => {
         setHeader(token)
-        return await api.post(`/api/collections/create/${userId}`, {...form})
+        return await api.post(`/api/collections/create/${userId}`, form)
     }
 
     const editCollectionById = async (token, form, collectionId) => {
         setHeader(token)
-        return await api.post(`/api/collections/edit/${collectionId}`, {...form})
+        return await api.post(`/api/collections/edit/${collectionId}`, form)
     }
 
     const deleteCollectionById = async (token, id) => {
@@ -124,12 +124,12 @@ export const create = (baseURL = '') => {
 
     const createItem = async (token, form, collectionId) => {
         setHeader(token)
-        return await api.post(`/api/items/create/${collectionId}`, {...form})
+        return await api.post(`/api/items/create/${collectionId}`, form)
     }
 
     const addCommentByItemId = async (token, form, itemId) => {
         setHeader(token)
-        return await api.post(`/api/items/${itemId}/create-comment`, {...form})
+        return await api.post(`/api/items/${itemId}/create-comment`, form)
     }
 
 
@@ -151,3 +151,7 @@ export const create = (baseURL = '') => {
         addCommentByItemId
     }
 }
+
+const axiosRequest = create()
+
+export default axiosRequest

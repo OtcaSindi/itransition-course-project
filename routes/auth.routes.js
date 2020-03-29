@@ -8,6 +8,26 @@ const User = require('../models/User')
 
 const router = Router()
 
+const createUser = async (email, name, password) => {
+    const hashPassword = await bcrypt.hash(password, 12)
+
+    return new User({
+        email,
+        name,
+        password: hashPassword
+    })
+}
+
+const createToken = (user, jwtSecret) => {
+    return jwt.sign(
+        {
+            userId: user.id,
+            userIsAdmin: user.isAdmin
+        },
+        config.get(jwtSecret)
+    )
+}
+
 router.post(
     '/register',
     [
@@ -16,7 +36,6 @@ router.post(
     ],
     async (req, res) => {
         try {
-
             const errors = validationResult(req)
 
             if (!errors.isEmpty()) {
@@ -38,13 +57,7 @@ router.post(
                 res.status(400).json({message: 'This user already exists.'})
             }
 
-            const hashPassword = await bcrypt.hash(password, 12)
-
-            const user = new User({
-                email,
-                name,
-                password: hashPassword
-            })
+            const user = createUser(email, name, password)
 
             await user.save()
             res.status(201).json({message: 'User created.'})
@@ -89,14 +102,7 @@ router.post(
                 return res.status(400).json({message: 'Invalid password, try again.'})
             }
 
-            const token = jwt.sign(
-                {
-                    userId: user.id,
-                    userIsAdmin: user.isAdmin
-                },
-                config.get('jwtSecret')
-            )
-            await user.save()
+            const token = createToken(user, 'jwtSecret')
 
             res.status(200).json({token, userId: user.id, userIsAdmin: user.isAdmin})
 
@@ -105,5 +111,39 @@ router.post(
         }
     }
 )
+
+router.post('/social', async (req, res) => {
+    try {
+        const {email, name, password} = req.body
+        const user = await User.findOne({email})
+
+        if (!user) {
+            const user = await createUser(email, name, password)
+            await user.save()
+
+            const token = jwt.sign(
+                {
+                    userId: user.id,
+                    userIsAdmin: user.isAdmin
+                },
+                config.get('jwtSecret')
+            )
+
+            res.status(201).json({token, userId: user.id, userIsAdmin: user.isAdmin})
+        } else {
+            const isMatch = await bcrypt.compare(password, user.password)
+
+            if (!isMatch) {
+                return res.status(400).json({message: 'Invalid password, try again.'})
+            }
+
+            const token = createToken(user, 'jwtSecret')
+
+            res.status(200).json({token, userId: user.id, userIsAdmin: user.isAdmin})
+        }
+    } catch (e) {
+        res.status(500).json({message: 'Something went wrong, try again.'})
+    }
+})
 
 module.exports = router

@@ -1,17 +1,18 @@
 import React, {useState} from 'react'
 import {Switch, Route, Redirect} from 'react-router-dom'
-import {FileUploaderDropContainer} from "carbon-components-react"
 
 import UsersPage from './pages/UsersPage'
 import RegPage from './pages/RegPage'
 import AuthPage from "./pages/AuthPage"
 import CollectionsPage from "./pages/CollectionsPage"
-import {create} from "./services"
-import {useAuth} from "./hooks/auth.hook"
+import axiosRequest from "./services"
+import {useAuth} from "./hooks/use-auth"
 import CollectionPage from "./pages/CollectionPage"
 import LaunchModal from "./components/launch-modal"
 
 import {MODAL_HEADER_CREATE, MODAL_LABEL_ITEMS} from "./constants"
+import {InlineNotification} from "carbon-components-react"
+import Notification from "./components/notification"
 
 const inputsText = [
     {
@@ -56,21 +57,22 @@ const select = {
 
 const Comp = () => {
     const [open, setOpen] = React.useState(false)
-    const [image, setImage] = useState(null)
+
     return (
         <>
-            <button onClick={() =>setOpen(true)}>Hello</button>
-            <LaunchModal
-                modalLabel={MODAL_LABEL_ITEMS}
-                modalHeading={MODAL_HEADER_CREATE}
-                primaryButtonText="Create"
-                secondaryButtonText="Cancel"
-                select={select}
-                inputsText={inputsText}
-                open={open}
-                setOpen={setOpen}
-                FileUploaderImage
-            />
+            <button onClick={() => setOpen(true)}>Hello</button>
+            {open && <Notification text="Hello my friend"/>}
+            {/*<LaunchModal*/}
+            {/*    modalLabel={MODAL_LABEL_ITEMS}*/}
+            {/*    modalHeading={MODAL_HEADER_CREATE}*/}
+            {/*    primaryButtonText="Create"*/}
+            {/*    secondaryButtonText="Cancel"*/}
+            {/*    select={select}*/}
+            {/*    inputsText={inputsText}*/}
+            {/*    open={open}*/}
+            {/*    setOpen={setOpen}*/}
+            {/*    FileUploaderImage*/}
+            {/*/>*/}
         </>
     )
 }
@@ -87,7 +89,6 @@ export const useRoutes = isAuthenticated => {
                        component={Comp}
                 />
 
-
                 {userIsAdmin && <Route path="/users" exact component={UsersPage}/>}
 
                 <Route path="/collections" exact component={CollectionsPage}/>
@@ -102,7 +103,7 @@ export const useRoutes = isAuthenticated => {
                     return (
                         <button onClick={() => {
                             console.log(token)
-                            create().createItem(token, {ititle: 'ABC',})
+                            axiosRequest.createItem(token, {ititle: 'ABC',})
                         }}>Click</button>
                     )
                 }}/>

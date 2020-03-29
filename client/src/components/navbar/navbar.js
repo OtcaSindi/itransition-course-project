@@ -11,17 +11,17 @@ const Navbar = () => {
     const {logout, userIsAdmin} = useContext(AuthContext)
     const history = useHistory()
 
-    const logoutHandler = async (e) => {
+    const logoutHandler = async () => {
         await logout()
         history.push('/')
     }
     return (
-            <nav className={styles.navbar}>
+            <div className={styles.navbar}>
                 {userIsAdmin && <NavLink to="/users" className={styles.navLink}>Users</NavLink>}
                 <NavLink to="/collections" className={styles.navLink}>My collections</NavLink>
                 <NavLink to="/news" className={styles.navLink}>News</NavLink>
                 <a href="/" className={styles.navLink} onClick={logoutHandler}>Logout</a>
-            </nav>
+            </div>
     )
 }
 

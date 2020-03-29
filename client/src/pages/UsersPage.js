@@ -6,9 +6,7 @@ import Loader from "../components/loader"
 import UsersTable from "../components/users-table"
 import {usersError, usersLoaded, usersRequested} from "../actionsCreator"
 import Toolbar from "../components/toolbar"
-import {create} from "../services"
-
-export {create} from '../services'
+import axiosRequest from "../services"
 
 const UsersPage = () => {
     const {users, loading, error} = useSelector(({usersReducer}) => usersReducer)
@@ -19,7 +17,7 @@ const UsersPage = () => {
         const foo = async () => {
             try {
                 dispatch(usersRequested())
-                const data = await create().getUsers(token)
+                const data = await axiosRequest.getUsers(token)
                 dispatch(usersLoaded(data.data))
             } catch (e) {
                 dispatch(usersError(e))
@@ -38,7 +36,6 @@ const UsersPage = () => {
     }
 
     if (error) {
-        console.log(error)
         return <div className="center">Unexpected error. Please try again.</div>
     }
 

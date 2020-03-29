@@ -3,8 +3,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {THEME_MOVIES, THEME_GAMES, THEME_BOOKS} from "../../constants"
 import {Modal} from 'react-materialize'
 
-import {useAuth} from "../../hooks/auth.hook"
-import {useMessage} from "../../hooks/message.hook"
+import {useAuth} from "../../hooks/use-auth"
 import {editCollectionRequest, fetchCollections} from "../../actionsCreator"
 
 const EditCollectionModal = ({collectionId, userId}) => {

@@ -1,6 +1,6 @@
 import {useState, useCallback, useEffect} from 'react'
 
-import {create} from "../services"
+import axiosRequest from "../../services"
 
 export const storageName = 'userData'
 
@@ -24,7 +24,7 @@ export const useAuth = () => {
 
     const logout = useCallback(async () => {
         const token = JSON.parse(localStorage.getItem(storageName)).token
-        await create().logoutRequest(token)
+        await axiosRequest.logoutRequest(token)
         setToken(null)
         setUserId(null)
         setUserIsAdmin(null)
