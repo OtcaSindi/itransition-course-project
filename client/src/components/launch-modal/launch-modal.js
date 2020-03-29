@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useCallback, useState} from 'react'
 import {
     FileUploaderDropContainer,
     Modal,
@@ -14,17 +14,16 @@ const LaunchModal = (
         primaryButtonText,
         primaryButtonAction,
         secondaryButtonText,
-        inputsText,
+        inputsText =[],
         select,
         open,
-        setOpen,
+        onClose,
         FileUploaderImage,
         defaultImage,
-        authSocials // array socials
+        authSocials, // array socials,
     }) => {
 
     const [image, setImage] = useState(defaultImage || '')
-
     return (
         <Modal
             modalLabel={modalLabel}
@@ -34,7 +33,7 @@ const LaunchModal = (
             primaryButtonText={primaryButtonText}
             secondaryButtonText={secondaryButtonText}
             open={open}
-            onRequestClose={() => setOpen(false)}
+            onRequestClose={onClose}
             onRequestSubmit={primaryButtonAction}
         >
             {

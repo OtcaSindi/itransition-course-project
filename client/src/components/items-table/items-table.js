@@ -1,12 +1,19 @@
 import React, {Fragment} from "react"
 
-import {DataTable, Button, SkeletonText, ButtonSkeleton} from 'carbon-components-react'
+import {
+    DataTable,
+    Button,
+    ButtonSkeleton,
+    OverflowMenu,
+    OverflowMenuItem,
+} from 'carbon-components-react'
 
 import {Add16} from "@carbon/icons-react"
 
 import noop from 'lodash/noop'
 import over from 'lodash/over'
 import map from 'lodash/map'
+import isEmpty from 'lodash/isEmpty'
 
 import styles from './table.module.css'
 import './styles.css'
@@ -30,9 +37,10 @@ const {
     TableSelectRow,
 } = DataTable
 
-const ItemsTable = ({headersItems, initialRows, loading, tableActions}) => {
 
-    const exp = (f) => over([f, noop])
+const selectedRowsIds = (arr) => map(arr, ({id}) => id)
+
+const ItemsTable = ({headersItems, initialRows, loading, batchActions, overflowActions}) => {
 
     return (
         <DataTable
@@ -53,8 +61,8 @@ const ItemsTable = ({headersItems, initialRows, loading, tableActions}) => {
                     title={<div className={styles.titleHeader}><span className={styles.textHeader}>Items</span></div>}>
                     <TableToolbar>
                         <TableBatchActions {...getBatchActionProps()}>
-                            {map(tableActions, ({name, handleClickBatch}) => (
-                                <TableBatchAction key={name} onClick={e => handleClickBatch(selectedRows, e)}>
+                            {map(batchActions, ({name, onClick}) => (
+                                <TableBatchAction key={name} onClick={e => onClick(selectedRows, e)}>
                                     {name}
                                 </TableBatchAction>
                             ))}
@@ -86,6 +94,7 @@ const ItemsTable = ({headersItems, initialRows, loading, tableActions}) => {
                                         {header.header}
                                     </TableHeader>
                                 ))}
+                                {!isEmpty(overflowActions) && <TableHeader/>}
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -93,16 +102,29 @@ const ItemsTable = ({headersItems, initialRows, loading, tableActions}) => {
                                 const {onExpand, ...rest} = getRowProps({row})
                                 return (
                                     <Fragment key={row.id}>
-                                        <TableExpandRow {...rest} onExpand={exp(onExpand)}>
+                                        <TableExpandRow {...rest} onExpand={onExpand}>
                                             <TableSelectRow {...getSelectionProps({row})} />
                                             {row.cells.map(cell => (
                                                 <TableCell key={cell.id}>
-                                                    {loading ? <SkeletonText/> : cell.value}
+                                                    {cell.value}
                                                 </TableCell>
                                             ))}
+                                            {!isEmpty(overflowActions) && <TableCell className='overflowActionsContainer'>
+                                                {
+                                                    !selectedRowsIds(selectedRows).find(id => id === row.id) &&
+                                                    <OverflowMenu flipped>
+                                                        {map(overflowActions, ({name, onClick}, idx) => (
+                                                            <OverflowMenuItem itemText={name}
+                                                                              onClick={e => onClick(selectedRows, e)}
+                                                                              primaryFocus={idx === 0}/>
+                                                        ))}
+                                                    </OverflowMenu>
+                                                }
+                                            </TableCell>}
+
                                         </TableExpandRow>
                                         {row.isExpanded &&
-                                        <TableExpandedRow colSpan={headers.length + 2}>
+                                        <TableExpandedRow colSpan={!isEmpty(overflowActions) ?headers.length + 3 :headers.length + 2}>
                                             Hello
                                         </TableExpandedRow>
                                         }
@@ -118,7 +140,7 @@ const ItemsTable = ({headersItems, initialRows, loading, tableActions}) => {
 }
 
 ItemsTable.defaultProps = {
-    tableActions: []
+    batchActions: []
 }
 
 export default ItemsTable

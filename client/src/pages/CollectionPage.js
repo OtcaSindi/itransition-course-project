@@ -1,11 +1,14 @@
-import React, {useCallback, useContext, useMemo, useState} from 'react'
+import React, {useCallback, useContext, useMemo} from 'react'
 
 import map from 'lodash/fp/map'
+import isUndefined from 'lodash/isUndefined'
+import over from 'lodash/over'
 import {fetchItems} from "../actionsCreator"
 import ItemsTable from "../components/items-table"
 import {AuthContext} from "../context/AuthContext"
 import {dateFormat} from "../commonFunctions"
 import {useTableData} from "../hooks/use-table-data"
+import LaunchModal from "../components/launch-modal"
 
 const selector = state => state.itemsReducer
 
@@ -25,18 +28,33 @@ const headersItems = [
     {
         header: 'Likes',
         key: 'likes'
-    }]
+    },
+]
 
-const tableActions = [
+const batchActions = [
     {
-        name: 'Edit',
+        name: 'Delete'
+    },
+]
+
+const overflowActions = [
+    {
+        name: 'Edit'
     },
     {
         name: 'Delete'
     },
 ]
 
-const initialRowsMapper = map(({id, title, description, dateCreation}) => {
+const renderModals = {
+    Delete: LaunchModal
+}
+
+const DynamicComponent = ({component: Component, ...rest}) => {
+    return !isUndefined(Component) && <Component {...rest} />
+}
+
+const initialRowsMapper = map(({_id: id, title, description, dateCreation}) => {
     return {
         id,
         title,
@@ -50,28 +68,40 @@ const CollectionPage = ({collectionId}) => {
 
     const {token} = useContext(AuthContext)
 
-    const [action, setAction] = useState({})
-
-    const handleClick = useCallback((selectedRows, e) => {
-        setAction({action: e.nativeEvent.target.textContent, items: selectedRows})
-    }, [])
-
     const memoizedAction = useMemo(() => {
         return fetchItems(token, collectionId)
     }, [token, collectionId])
 
-    const {tableProps, batchAction} = useTableData({
+    const {
+        tableProps,
+        menuAction,
+        setRefetch,
+        onClose,
+    } = useTableData({
         action: memoizedAction,
         headersItems,
         selector,
         initialRowsMapper,
-        tableActions,
+        batchActions,
+        overflowActions,
     })
 
+    const onModalClose = useCallback(() => {
+        setRefetch(i => !i)
+        onClose()
+    }, [setRefetch, onClose])
+
     return (
-        <div style={{display: 'flex', alignItems: 'center', margin: '0 2%'}}>
-            <ItemsTable {...tableProps} />
-        </div>
+        <>
+            <DynamicComponent
+                component={renderModals[menuAction.action]}
+                {...menuAction}
+                onClose={onModalClose}
+            />
+            <div style={{display: 'flex', alignItems: 'center', margin: '0 2%'}}>
+                <ItemsTable {...tableProps} />
+            </div>
+        </>
     )
 }
 
