@@ -29,7 +29,8 @@
     "react-vk-login": "0.0.2",
     "react-vkontakte-login": "0.0.4",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "utilities": "^1.0.5"
   },
   "scripts": {
     "start": "react-scripts start",

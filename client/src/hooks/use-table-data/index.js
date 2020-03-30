@@ -3,7 +3,7 @@ import {useAction} from "../use-action"
 import map from 'lodash/map'
 import {useState} from "react"
 
-const useActionMapper = ({handleClick, menuActions}) => {
+const actionMapper = ({handleClick, menuActions}) => {
     return map(menuActions, (i) => map(i, (item) => ({...item, onClick: handleClick})))
 }
 
@@ -17,13 +17,13 @@ export const useTableData = (
         overflowActions,
     }) => {
 
-    const [refetch, setRefetch] = useState(false)
+    const [reFetch, setReFetch] = useState(false)
 
-    const {loading, data} = useData({action, selector, refetch})
+    const {loading, data} = useData({action, selector, reFetch})
 
     const {action: menuAction, handleClick, onClose} = useAction()
 
-    const [batchActionsMapped, overflowActionsMapped] = useActionMapper({handleClick, menuActions: [batchActions, overflowActions]})
+    const [batchActionsMapped, overflowActionsMapped] = actionMapper({handleClick, menuActions: [batchActions, overflowActions]})
 
     return {
         tableProps: {
@@ -34,7 +34,7 @@ export const useTableData = (
             overflowActions: overflowActionsMapped,
         },
         menuAction,
-        setRefetch,
+        setReFetch,
         onClose,
     }
 }

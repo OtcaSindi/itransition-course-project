@@ -1,14 +1,14 @@
-import React, {useCallback, useContext, useMemo} from 'react'
+import React, {useCallback, useContext, useMemo, useState} from 'react'
 
 import map from 'lodash/fp/map'
 import isUndefined from 'lodash/isUndefined'
-import over from 'lodash/over'
 import {fetchItems} from "../actionsCreator"
 import ItemsTable from "../components/items-table"
 import {AuthContext} from "../context/AuthContext"
 import {dateFormat} from "../commonFunctions"
 import {useTableData} from "../hooks/use-table-data"
-import LaunchModal from "../components/launch-modal"
+import LaunchModal from "../components/modals/launch-modal"
+import EditModal from "../components/modals/edit-modal"
 
 const selector = state => state.itemsReducer
 
@@ -18,12 +18,12 @@ const headersItems = [
         key: 'title'
     },
     {
-        header: 'Date creation',
-        key: 'dateCreation'
-    },
-    {
         header: 'Description',
         key: 'description'
+    },
+    {
+        header: 'Date creation',
+        key: 'dateCreation'
     },
     {
         header: 'Likes',
@@ -47,14 +47,15 @@ const overflowActions = [
 ]
 
 const renderModals = {
-    Delete: LaunchModal
+    Delete: LaunchModal,
+    Edit: EditModal
 }
 
 const DynamicComponent = ({component: Component, ...rest}) => {
     return !isUndefined(Component) && <Component {...rest} />
 }
 
-const initialRowsMapper = map(({_id: id, title, description, dateCreation}) => {
+const initialRowsMapper = map(({id, title, description, dateCreation}) => {
     return {
         id,
         title,
@@ -75,7 +76,7 @@ const CollectionPage = ({collectionId}) => {
     const {
         tableProps,
         menuAction,
-        setRefetch,
+        setReFetch,
         onClose,
     } = useTableData({
         action: memoizedAction,
@@ -87,9 +88,11 @@ const CollectionPage = ({collectionId}) => {
     })
 
     const onModalClose = useCallback(() => {
-        setRefetch(i => !i)
+        setReFetch(i => !i)
         onClose()
-    }, [setRefetch, onClose])
+    }, [setReFetch, onClose])
+
+    console.log(menuAction)
 
     return (
         <>

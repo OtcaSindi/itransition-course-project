@@ -3,7 +3,7 @@ import {useCallback, useState} from "react"
 export const useAction = () => {
     const [action, setAction] = useState({})
 
-    const handleClick = useCallback((selectedRows, e) => {
+    const handleClick = useCallback((e, selectedRows) => {
         setAction({action: e.nativeEvent.target.textContent, items: selectedRows, open: true})
     }, [setAction])
 

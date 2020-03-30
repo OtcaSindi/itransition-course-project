@@ -1,8 +1,23 @@
 import React, {useRef, useEffect, useState, useCallback} from 'react'
 
-export const ANIMATION_TIMER = 720
+import {Modal} from "carbon-components-react"
 
-export function WrapperLaunchModal(
+import noop from 'lodash/noop'
+import cond from 'lodash/cond'
+import isFunction from 'lodash/isFunction'
+import stubTrue from 'lodash/stubTrue'
+import identity from 'lodash/identity'
+
+export const ANIMATION_TIMER = 360
+
+const call = (f, ...arg) => f(arg)
+
+const render = cond([
+    [isFunction, call],
+    [stubTrue, identity]
+])
+
+const WrapperAnimateModal = (
     {
         onRequestClose,
         onRequestSubmit,
@@ -10,7 +25,7 @@ export function WrapperLaunchModal(
         children,
         component: ModalComponent,
         ...props
-    }) {
+    }) => {
     const [open, setOpen] = useState(false)
     const timer = useRef(null)
 
@@ -26,8 +41,6 @@ export function WrapperLaunchModal(
 
     const delayRequestClose = useCallback(() => {
         setOpen(false)
-
-        // If modal had onTransitionEnd prop we could resolve this w/o timeout
         timer.current = setTimeout(onClose, ANIMATION_TIMER)
     }, [onClose])
 
@@ -53,9 +66,17 @@ export function WrapperLaunchModal(
             open={open}
             {...props}
         >
-            {children(delayRequestClose)}
+            {render(children, delayRequestClose)}
         </ModalComponent>
     )
 }
 
-export default WrapperLaunchModal
+
+WrapperAnimateModal.defaultProps = {
+    component: Modal,
+    onRequestClose: noop,
+    onRequestSubmit: noop,
+    onClose: noop,
+}
+
+export default WrapperAnimateModal

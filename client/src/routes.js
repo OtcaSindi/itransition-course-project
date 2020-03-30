@@ -8,7 +8,7 @@ import CollectionsPage from "./pages/CollectionsPage"
 import axiosRequest from "./services"
 import {useAuth} from "./hooks/use-auth"
 import CollectionPage from "./pages/CollectionPage"
-import LaunchModal from "./components/launch-modal"
+import LaunchModal from "./components/modals/launch-modal"
 
 import {MODAL_HEADER_CREATE, MODAL_LABEL_ITEMS} from "./constants"
 import {InlineNotification} from "carbon-components-react"

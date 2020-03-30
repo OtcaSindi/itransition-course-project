@@ -127,6 +127,11 @@ const create = (baseURL = '') => {
         return await api.post(`/api/items/create/${collectionId}`, form)
     }
 
+    const editItem = async (token, form, id) => {
+        setHeader(token)
+        return await api.post(`/api/items/edit/${id}`, form)
+    }
+
     const addCommentByItemId = async (token, form, itemId) => {
         setHeader(token)
         return await api.post(`/api/items/${itemId}/create-comment`, form)
@@ -147,6 +152,7 @@ const create = (baseURL = '') => {
         createCollection,
         createCollectionById,
         createItem,
+        editItem,
         getItemsByCollectionId,
         addCommentByItemId
     }

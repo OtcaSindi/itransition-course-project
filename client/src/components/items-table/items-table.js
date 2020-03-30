@@ -11,7 +11,6 @@ import {
 import {Add16} from "@carbon/icons-react"
 
 import noop from 'lodash/noop'
-import over from 'lodash/over'
 import map from 'lodash/map'
 import isEmpty from 'lodash/isEmpty'
 
@@ -62,7 +61,7 @@ const ItemsTable = ({headersItems, initialRows, loading, batchActions, overflowA
                     <TableToolbar>
                         <TableBatchActions {...getBatchActionProps()}>
                             {map(batchActions, ({name, onClick}) => (
-                                <TableBatchAction key={name} onClick={e => onClick(selectedRows, e)}>
+                                <TableBatchAction key={name} onClick={e => onClick(e, selectedRows)}>
                                     {name}
                                 </TableBatchAction>
                             ))}
@@ -115,7 +114,7 @@ const ItemsTable = ({headersItems, initialRows, loading, batchActions, overflowA
                                                     <OverflowMenu flipped>
                                                         {map(overflowActions, ({name, onClick}, idx) => (
                                                             <OverflowMenuItem itemText={name}
-                                                                              onClick={e => onClick(selectedRows, e)}
+                                                                              onClick={e => onClick(e, row)}
                                                                               primaryFocus={idx === 0}/>
                                                         ))}
                                                     </OverflowMenu>
