@@ -5,7 +5,6 @@ import {useHistory} from "react-router"
 import CreateCollectionModal from "../components/create-collection-modal"
 import {AuthContext} from "../context/AuthContext"
 import Loader from "../components/loader"
-import DownloadAllNotes from "../components/download-all-notes"
 import CollectionsList from "../components/collections-list"
 import {fetchCollections} from "../actionsCreator"
 
@@ -21,7 +20,7 @@ function CollectionsPage({idUser}) {
         if (error) {
             history.push('/collections')
         }
-    }, [dispatch, token, idUser, error])
+    }, [dispatch, token, idUser, error, history])
 
     if (loading) {
         return <Loader/>
@@ -32,7 +31,6 @@ function CollectionsPage({idUser}) {
             {idUser && <h5 className="center">User's (ID: {idUser}) collections</h5>}
             <div className="modal-and-download">
                 <CreateCollectionModal idUser={idUser}/>
-                <DownloadAllNotes/>
             </div>
             <CollectionsList idUser={idUser}/>
         </div>

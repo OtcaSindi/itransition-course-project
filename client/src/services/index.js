@@ -122,14 +122,19 @@ const create = (baseURL = '') => {
         return await api.get(`/api/items/${collectionId}`)
     }
 
-    const createItem = async (token, form, collectionId) => {
+    const createItemByCollectionId = async (token, form, collectionId) => {
         setHeader(token)
         return await api.post(`/api/items/create/${collectionId}`, form)
     }
 
-    const editItem = async (token, form, id) => {
+    const editItemById = async (token, form, id) => {
         setHeader(token)
         return await api.post(`/api/items/edit/${id}`, form)
+    }
+
+    const deleteItemById = async (token, id) => {
+        setHeader(token)
+        return await api.delete(`/api/items/delete/${id}`)
     }
 
     const addCommentByItemId = async (token, form, itemId) => {
@@ -151,8 +156,9 @@ const create = (baseURL = '') => {
         deleteCollectionById,
         createCollection,
         createCollectionById,
-        createItem,
-        editItem,
+        createItemByCollectionId,
+        editItemById,
+        deleteItemById,
         getItemsByCollectionId,
         addCommentByItemId
     }

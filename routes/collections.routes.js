@@ -3,22 +3,9 @@ const {Router} = require('express')
 const Collection = require('../models/Collection')
 const auth = require('../middleware/auth.middleware')
 const checkAdmin = require('../middleware/admin.middleware')
+const collectionsForFront = require('../data-for-front/collections-for-front')
 
 const router = Router()
-
-const collectionsForFront = (collections) => {
-    return collections.map(({_id, title, description, themeTitle, themeColor, itemTitleDefault, itemTagsDefault}) => {
-        return {
-            id: _id,
-            title,
-            description,
-            themeTitle,
-            themeColor,
-            itemTitleDefault,
-            itemTagsDefault
-        }
-    })
-}
 
 router.get('/', auth, async (req, res) => {
     try {

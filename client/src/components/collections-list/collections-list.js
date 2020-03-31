@@ -5,11 +5,11 @@ import {useSelector} from "react-redux"
 
 const CollectionsList = ({idUser}) => {
 
-    const {collections} = useSelector(state => state.collectionsReducer)
+    const {data} = useSelector(state => state.collectionsReducer)
 
     return (
         <div>
-            {collections.map(({id, title, description, themeColor, themeTitle}) => (
+            {data.map(({id, title, description, themeColor, themeTitle}) => (
                     <Collection
                         key={id}
                         idUser={idUser}

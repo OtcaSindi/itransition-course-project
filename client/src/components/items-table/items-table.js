@@ -8,9 +8,8 @@ import {
     OverflowMenuItem,
 } from 'carbon-components-react'
 
-import {Add16} from "@carbon/icons-react"
+import {Add16, Delete16} from "@carbon/icons-react"
 
-import noop from 'lodash/noop'
 import map from 'lodash/map'
 import isEmpty from 'lodash/isEmpty'
 
@@ -39,8 +38,7 @@ const {
 
 const selectedRowsIds = (arr) => map(arr, ({id}) => id)
 
-const ItemsTable = ({headersItems, initialRows, loading, batchActions, overflowActions}) => {
-
+const ItemsTable = ({headersItems, initialRows, loading, batchActions, overflowActions, toolbarActions, tableTitle}) => {
     return (
         <DataTable
             rows={initialRows}
@@ -57,11 +55,12 @@ const ItemsTable = ({headersItems, initialRows, loading, batchActions, overflowA
                          expandAll,
                      }) => (
                 <TableContainer
-                    title={<div className={styles.titleHeader}><span className={styles.textHeader}>Items</span></div>}>
+                    title={<div className={styles.titleHeader}><span className={styles.textHeader}>{tableTitle}</span>
+                    </div>}>
                     <TableToolbar>
-                        <TableBatchActions {...getBatchActionProps()}>
+                        <TableBatchActions {...getBatchActionProps()} >
                             {map(batchActions, ({name, onClick}) => (
-                                <TableBatchAction key={name} onClick={e => onClick(e, selectedRows)}>
+                                <TableBatchAction renderIcon={Delete16} key={name} onClick={e => onClick(e, selectedRows)}>
                                     {name}
                                 </TableBatchAction>
                             ))}
@@ -71,15 +70,19 @@ const ItemsTable = ({headersItems, initialRows, loading, batchActions, overflowA
                                 persistent
                                 onChange={onInputChange}/>
                             {loading ? (
-                                <ButtonSkeleton/>
-                            ) : (
-                                <Button
-                                    onClick={noop} size='default'
-                                    kind="primary"
-                                    renderIcon={Add16}
-                                >
-                                    Create item
-                                </Button>
+                                <ButtonSkeleton className={styles.buttonSkeletonToolbar}/>
+                            ) : (map(toolbarActions, ({name, onClick}) => {
+                                    return (
+                                        <Button
+                                            onClick={onClick}
+                                            size='default'
+                                            kind="primary"
+                                            renderIcon={Add16}
+                                        >
+                                            {name}
+                                        </Button>
+                                    )
+                                })
                             )}
                         </TableToolbarContent>
                     </TableToolbar>
@@ -102,19 +105,20 @@ const ItemsTable = ({headersItems, initialRows, loading, batchActions, overflowA
                                 return (
                                     <Fragment key={row.id}>
                                         <TableExpandRow {...rest} onExpand={onExpand}>
-                                            <TableSelectRow {...getSelectionProps({row})} />
+                                            <TableSelectRow {...getSelectionProps({row})}/>
                                             {row.cells.map(cell => (
                                                 <TableCell key={cell.id}>
                                                     {cell.value}
                                                 </TableCell>
                                             ))}
-                                            {!isEmpty(overflowActions) && <TableCell className='overflowActionsContainer'>
+                                            {!isEmpty(overflowActions) &&
+                                            <TableCell className='overflowActionsContainer'>
                                                 {
                                                     !selectedRowsIds(selectedRows).find(id => id === row.id) &&
                                                     <OverflowMenu flipped>
                                                         {map(overflowActions, ({name, onClick}, idx) => (
                                                             <OverflowMenuItem itemText={name}
-                                                                              onClick={e => onClick(e, row)}
+                                                                              onClick={e => onClick(e, [row])}
                                                                               primaryFocus={idx === 0}/>
                                                         ))}
                                                     </OverflowMenu>
@@ -123,7 +127,8 @@ const ItemsTable = ({headersItems, initialRows, loading, batchActions, overflowA
 
                                         </TableExpandRow>
                                         {row.isExpanded &&
-                                        <TableExpandedRow colSpan={!isEmpty(overflowActions) ?headers.length + 3 :headers.length + 2}>
+                                        <TableExpandedRow
+                                            colSpan={!isEmpty(overflowActions) ? headers.length + 3 : headers.length + 2}>
                                             Hello
                                         </TableExpandedRow>
                                         }

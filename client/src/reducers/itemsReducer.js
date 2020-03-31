@@ -1,5 +1,6 @@
 const initialState = {
     data: [],
+    collection: {},
     loading: false,
     error: null
 }
@@ -18,12 +19,13 @@ const itemsReducer = (state = initialState, action) => {
 
         case 'FETCH_ITEMS_SUCCESS': {
 
-            const data = action.payload
+            const {items: data, collection} = action.payload
 
             return {
                 ...state,
                 loading: false,
-                data
+                data,
+                collection
             }
         }
 

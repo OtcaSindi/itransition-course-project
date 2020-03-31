@@ -1,34 +1,38 @@
 import React, {useContext, useState} from 'react'
-
-import WrapperAnimateModal from "../wrapper-animate-modal"
-import {useSelector} from "react-redux"
 import {FileUploaderDropContainer, TextArea, TextInput} from "carbon-components-react"
 
-import './edit-modal.css'
-import styles from './edit-modal.module.css'
-import axiosRequest from "../../../services"
+import AnimateModal from "../animate-modal"
+import {useSelectorItemById} from "../../../hooks/use-selector-item-by-id"
 import {AuthContext} from "../../../context/AuthContext"
 
-const useSelectorItemById = (selector, id) => {
-    const {data} = useSelector(selector)
-    return data.find(i => i.id === id)
-}
+import './modal-on-batch-toolbar-action-item.css'
+import styles from './modal-on-batch-toolbar-action-item.module.css'
 
-const EditModal = ({onClose, items}) => {
+const ModalOnBatchToolbarActionsItem = ({onClose, items, operation, collection, primaryRequest}) => {
 
     const {token} = useContext(AuthContext)
 
-    const {id} = items
+    let id = null
+    let resDefaultTags = []
+    if (items) {
+        id = items[0].id
+    }
     const {
         title: defaultTitle,
         description: defaultDescription,
         tags: defaultTags,
         image: defaultImage,
     } = useSelectorItemById(state => state.itemsReducer, id)
+    resDefaultTags = defaultTags
+
+    if (!id) {
+        id = collection.id
+        resDefaultTags = collection.itemTagsDefault
+    }
 
     const [title, setTitle] = useState(defaultTitle)
     const [description, setDescription] = useState(defaultDescription)
-    const [tags, setTags] = useState(defaultTags)
+    const [tags, setTags] = useState(resDefaultTags)
     const [srcImage, setSrcImage] = useState(defaultImage)
 
     const handleTitle = (e) => {
@@ -43,8 +47,6 @@ const EditModal = ({onClose, items}) => {
         setTags(e.target.value.split(' '))
     }
 
-    const onHandleClose = (e, closeModal) => closeModal()
-
     const isChanged = () => {
         return !(defaultTitle === title &&
             defaultDescription === description &&
@@ -52,23 +54,19 @@ const EditModal = ({onClose, items}) => {
             defaultImage === srcImage)
     }
 
-    const editItem = async (e, closeModal) => {
+    const editItem = async () => {
         if (isChanged()) {
-            await axiosRequest.editItem(token, {title, description, tags, image: srcImage}, id)
+            await primaryRequest(token, {title, description, tags, image: srcImage}, id)
         }
-        closeModal()
     }
 
     return (
-        <WrapperAnimateModal
-            onRequestClose={onHandleClose}
-            onClose={onClose}
+        <AnimateModal
             modalHeading={defaultTitle}
-            modalLabel='Edit'
-            primaryButtonText='Edit'
+            modalLabel={operation}
+            primaryButtonText={operation}
             onRequestSubmit={editItem}
-            secondaryButtonText='Close'
-            hasForm
+            onClose={onClose}
         >
             <>
                 <TextInput
@@ -103,7 +101,7 @@ const EditModal = ({onClose, items}) => {
                 </div>
                 <br/>
                 <FileUploaderDropContainer
-                    accept={['.png', '.jpg']}
+                    accept={['.png']}
                     onAddFiles={(e, {addedFiles}) => {
                         const file = addedFiles[0]
                         const reader = new FileReader()
@@ -112,13 +110,12 @@ const EditModal = ({onClose, items}) => {
                         }
                         reader.readAsDataURL(file)
                     }}
-                    labelText="Drag and drop image(.png, .jpg) here or click to upload"
+                    labelText="Drag and drop image(.png) here or click to upload"
                     id="uploader"
                 />
             </>
-        </WrapperAnimateModal>
+        </AnimateModal>
     )
-
 }
 
-export default EditModal
+export default ModalOnBatchToolbarActionsItem

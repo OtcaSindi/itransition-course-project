@@ -10,6 +10,7 @@ import {AuthContext} from "./context/AuthContext"
 import NavBar from './components/navbar/navbar'
 import Loader from "./components/loader/loader"
 import store from "./store"
+import {NotificationsProvider} from "./portals/notification-portal"
 
 const App = () => {
     const {token, login, logout, userId, userIsAdmin, ready} = useAuth()
@@ -17,22 +18,25 @@ const App = () => {
     const routes = useRoutes(isAuthenticated)
 
     if (!ready) {
-        return <Loader />
+        return <Loader/>
     }
 
     return (
-        <Provider store={store}>
-            <AuthContext.Provider value={{
-                token, login, logout, userId, isAuthenticated, userIsAdmin
-            }}>
-                <Router>
-                    { isAuthenticated && <NavBar/> }
-                    <div className="container">
-                        {routes}
-                    </div>
-                </Router>
-            </AuthContext.Provider>
-        </Provider>
+        <NotificationsProvider>
+            <Provider store={store}>
+                <AuthContext.Provider value={{
+                    token, login, logout, userId, isAuthenticated, userIsAdmin
+                }}>
+
+                    <Router>
+                        {isAuthenticated && <NavBar/>}
+                        <div className="container">
+                            {routes}
+                        </div>
+                    </Router>
+                </AuthContext.Provider>
+            </Provider>
+        </NotificationsProvider>
     )
 }
 

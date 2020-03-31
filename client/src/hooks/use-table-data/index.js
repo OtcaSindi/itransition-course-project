@@ -15,6 +15,7 @@ export const useTableData = (
         initialRowsMapper,
         batchActions,
         overflowActions,
+        toolbarActions,
     }) => {
 
     const [reFetch, setReFetch] = useState(false)
@@ -23,7 +24,14 @@ export const useTableData = (
 
     const {action: menuAction, handleClick, onClose} = useAction()
 
-    const [batchActionsMapped, overflowActionsMapped] = actionMapper({handleClick, menuActions: [batchActions, overflowActions]})
+    const [
+        batchActionsMapped,
+        overflowActionsMapped,
+        toolbarActionsMapped,
+    ] = actionMapper({
+            handleClick,
+            menuActions: [batchActions, overflowActions, toolbarActions]
+        })
 
     return {
         tableProps: {
@@ -32,6 +40,7 @@ export const useTableData = (
             loading,
             batchActions: batchActionsMapped,
             overflowActions: overflowActionsMapped,
+            toolbarActions: toolbarActionsMapped,
         },
         menuAction,
         setReFetch,

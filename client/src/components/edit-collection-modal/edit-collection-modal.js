@@ -4,14 +4,14 @@ import {THEME_MOVIES, THEME_GAMES, THEME_BOOKS} from "../../constants"
 import {Modal} from 'react-materialize'
 
 import {useAuth} from "../../hooks/use-auth"
-import {editCollectionRequest, fetchCollections} from "../../actionsCreator"
+import {editCollectionRequest} from "../../actionsCreator"
 
 const EditCollectionModal = ({collectionId, userId}) => {
 
     const {token} = useAuth()
 
-    const {collections} = useSelector(state => state.collectionsReducer)
-    const collection = collections.find(({id}) => id === collectionId)
+    const {data} = useSelector(state => state.collectionsReducer)
+    const collection = data.find(({id}) => id === collectionId)
 
     const [title, setTitle] = useState(collection.title)
     const [description, setDescription] = useState(collection.description)

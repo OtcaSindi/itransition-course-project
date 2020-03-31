@@ -2,12 +2,11 @@ const express = require('express')
 const config = require('config')
 const mongoose = require('mongoose')
 const path = require('path')
-const bodyParser = require('body-parser')
 
 const app = express()
 
-app.use(express.urlencoded({limit: '1mb'}));
-app.use(express.json({extended: true, limit: '1mb'}))
+app.use(express.urlencoded({limit: '5mb'}));
+app.use(express.json({extended: true, limit: '5mb'}))
 
 app.use('/api/auth', require('./routes/auth.routes'))
 app.use('/api/users', require('./routes/users.routes'))

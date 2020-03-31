@@ -17,10 +17,10 @@ const render = cond([
     [stubTrue, identity]
 ])
 
-const WrapperAnimateModal = (
+const AnimateModal = (
     {
-        onRequestClose,
         onRequestSubmit,
+        onRequestClose,
         onClose,
         children,
         component: ModalComponent,
@@ -44,26 +44,18 @@ const WrapperAnimateModal = (
         timer.current = setTimeout(onClose, ANIMATION_TIMER)
     }, [onClose])
 
-    const handleRequestSubmit = useCallback(
-        (...args) => {
-            onRequestSubmit(...args, delayRequestClose)
-        },
-        [onRequestSubmit, delayRequestClose],
-    )
-
-    const handleRequestClose = useCallback(
-        (...args) => {
-            onRequestClose(...args, delayRequestClose)
-        },
-        [onRequestClose, delayRequestClose],
-    )
+    const handleRequestSubmit = useCallback(() => {
+        onRequestSubmit()
+        delayRequestClose()
+    }, [onRequestSubmit, delayRequestClose])
 
     return (
         <ModalComponent
-            onRequestClose={handleRequestClose}
+            onRequestClose={delayRequestClose}
             onRequestSubmit={handleRequestSubmit}
-            onSubmit={handleRequestSubmit}
+            secondaryButtonText="Cancel"
             open={open}
+            hasForm
             {...props}
         >
             {render(children, delayRequestClose)}
@@ -72,11 +64,11 @@ const WrapperAnimateModal = (
 }
 
 
-WrapperAnimateModal.defaultProps = {
+AnimateModal.defaultProps = {
     component: Modal,
     onRequestClose: noop,
     onRequestSubmit: noop,
     onClose: noop,
 }
 
-export default WrapperAnimateModal
+export default AnimateModal
