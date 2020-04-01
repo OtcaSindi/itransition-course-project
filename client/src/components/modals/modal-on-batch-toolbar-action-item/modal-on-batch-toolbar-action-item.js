@@ -7,6 +7,7 @@ import {AuthContext} from "../../../context/AuthContext"
 
 import './modal-on-batch-toolbar-action-item.css'
 import styles from './modal-on-batch-toolbar-action-item.module.css'
+import {itemsReducerSelector} from "../../../selectors"
 
 const ModalOnBatchToolbarActionsItem = ({onClose, items, operation, collection, primaryRequest}) => {
 
@@ -22,7 +23,7 @@ const ModalOnBatchToolbarActionsItem = ({onClose, items, operation, collection, 
         description: defaultDescription,
         tags: defaultTags,
         image: defaultImage,
-    } = useSelectorItemById(state => state.itemsReducer, id)
+    } = useSelectorItemById(itemsReducerSelector, id)
     resDefaultTags = defaultTags
 
     if (!id) {

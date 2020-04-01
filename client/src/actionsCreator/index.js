@@ -2,8 +2,6 @@ import {
     usersRequested,
     usersLoaded,
     usersError,
-    editUserCheckbox,
-    editUserAllCheckbox,
     fetchUsers
 } from './users'
 
@@ -32,8 +30,6 @@ export {
     usersLoaded,
     usersError,
     fetchUsers,
-    editUserCheckbox,
-    editUserAllCheckbox,
     collectionsRequested,
     collectionsLoaded,
     collectionsError,

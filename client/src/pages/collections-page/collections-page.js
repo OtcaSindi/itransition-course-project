@@ -2,11 +2,10 @@ import React, {useContext, useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {useHistory} from "react-router"
 
-import CreateCollectionModal from "../components/create-collection-modal"
-import {AuthContext} from "../context/AuthContext"
-import Loader from "../components/loader"
-import CollectionsList from "../components/collections-list"
-import {fetchCollections} from "../actionsCreator"
+import CreateCollectionModal from "../../components/create-collection-modal"
+import {AuthContext} from "../../context/AuthContext"
+import CollectionsList from "../../components/collections-list"
+import {fetchCollections} from "../../actionsCreator"
 
 function CollectionsPage({idUser}) {
 
@@ -21,10 +20,6 @@ function CollectionsPage({idUser}) {
             history.push('/collections')
         }
     }, [dispatch, token, idUser, error, history])
-
-    if (loading) {
-        return <Loader/>
-    }
 
     return (
         <div className="container">

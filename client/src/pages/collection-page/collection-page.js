@@ -1,11 +1,10 @@
 import React, {useCallback, useContext, useMemo} from 'react'
 import {useSelector} from "react-redux"
 
-import isUndefined from 'lodash/isUndefined'
-
+import DynamicComponent from "../../components/dynamic-component"
 import {itemsReducerSelector} from '../../selectors'
 import {fetchItems} from "../../actionsCreator"
-import ItemsTable from "../../components/items-table"
+import MainTable from "../../components/main-table"
 import {AuthContext} from "../../context/AuthContext"
 import {useTableData} from "../../hooks/use-table-data"
 import {itemsReducerSelector as selector} from "../../selectors"
@@ -19,10 +18,6 @@ import {
     renderItemModals,
     selectItemRequest
 } from "./utilities"
-
-const DynamicComponent = ({component: Component, ...rest}) => {
-    return !isUndefined(Component) && <Component {...rest} />
-}
 
 const CollectionPage = ({collectionId}) => {
 
@@ -47,16 +42,16 @@ const CollectionPage = ({collectionId}) => {
         toolbarActions,
     })
 
-    const fireNotification = useNotification()
-
-    const fireN = () => {
-        fireNotification({
-            kind: 'primary',
-            notificationType: 'inline',
-            caption: null,
-            delay: 3000,
-        })
-    }
+    // const fireNotification = useNotification()
+    //
+    // const fireN = () => {
+    //     fireNotification({
+    //         kind: 'primary',
+    //         notificationType: 'inline',
+    //         caption: null,
+    //         delay: 3000,
+    //     })
+    // }
 
     const onModalClose = useCallback(() => {
         setReFetch(i => !i)
@@ -67,7 +62,7 @@ const CollectionPage = ({collectionId}) => {
 
     return (
         <>
-            <button onClick={fireN}> Hello</button>
+            {/*<button onClick={fireN}> Hello</button>*/}
             <DynamicComponent
                 component={renderItemModals[menuAction.action]}
                 primaryRequest={selectItemRequest(menuAction.action)}
@@ -77,9 +72,10 @@ const CollectionPage = ({collectionId}) => {
                 onClose={onModalClose}
             />
 
-            <ItemsTable
+            <MainTable
                 tableTitle={collection.title ? `Items "${collection.title}"` : 'Items'}
                 {...tableProps}
+                isExpandRows
             />
         </>
     )

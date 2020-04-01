@@ -2,8 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {useDispatch} from 'react-redux'
 
 import {BLOCKED, NOT_BLOCKED, ADMIN, USER} from "../../constants"
-import {editUserCheckbox, editUserAllCheckbox} from "../../actionsCreator"
-import {Link, useHistory} from "react-router-dom"
+import {useHistory} from "react-router-dom"
 import {useAuth} from "../../hooks/use-auth"
 
 const Table = () => {

@@ -15,6 +15,6 @@
     padding-right: 65px;
 }
 
-.buttonSkeletonToolbar {
-    width: 120px!important;
+.searchSkeletonToolbar {
+    width: 100%;
 }

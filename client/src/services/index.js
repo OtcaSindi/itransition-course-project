@@ -26,7 +26,7 @@ const create = (baseURL = '') => {
         }
     }
 
-    const deleteById = async (id, token) => {
+    const deleteById = async (token, id) => {
         setHeader(token)
         try {
             const response = await api.delete(`/api/users/delete/${id}`)
@@ -39,7 +39,7 @@ const create = (baseURL = '') => {
         }
     }
 
-    const blockById = async (id, token) => {
+    const blockById = async (token, id) => {
         setHeader(token)
         try {
             const response = await api.post(`/api/users/block/${id}`)
@@ -52,7 +52,7 @@ const create = (baseURL = '') => {
         }
     }
 
-    const unblockById = async (id, token) => {
+    const unblockById = async (token, id) => {
         setHeader(token)
         try {
             const response = await api.post(`/api/users/unblock/${id}`)
@@ -65,7 +65,7 @@ const create = (baseURL = '') => {
         }
     }
 
-    const makeAdminById = async (id, token) => {
+    const makeAdminById = async (token, id) => {
         setHeader(token)
         try {
             const response = await api.post(`/api/users/make-admin/${id}`)

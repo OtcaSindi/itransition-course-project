@@ -1,10 +1,10 @@
 import React from 'react'
 import {Switch, Route, Redirect} from 'react-router-dom'
 
-import UsersPage from './pages/UsersPage'
+import UsersPage from './pages/users-page/users-page'
 import RegPage from './pages/RegPage'
 import AuthPage from "./pages/AuthPage"
-import CollectionsPage from "./pages/CollectionsPage"
+import CollectionsPage from "./pages/collections-page"
 import CollectionPage from "./pages/collection-page"
 import {useAuth} from "./hooks/use-auth"
 

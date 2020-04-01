@@ -20,19 +20,6 @@ const usersError = (error) => {
     }
 }
 
-const editUserCheckbox = (userId) => {
-    return {
-        type: 'EDIT_USER_CHECKBOX',
-        payload: userId
-    }
-}
-
-const editUserAllCheckbox = () => {
-    return {
-        type: 'EDIT_USER_ALL_CHECKBOX'
-    }
-}
-
 const fetchUsers = (token) => (dispatch) => {
     dispatch(usersRequested())
     axiosRequest.getUsers(token)
@@ -50,7 +37,5 @@ export {
     usersRequested,
     usersLoaded,
     usersError,
-    editUserCheckbox,
-    editUserAllCheckbox,
     fetchUsers
 }
