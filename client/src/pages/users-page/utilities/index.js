@@ -1,8 +1,14 @@
 import map from "lodash/fp/map"
+import {Delete16, Blockchain16, } from '@carbon/icons-react'
+import {useHistory} from "react-router"
+
 import {BLOCKED, NOT_BLOCKED, ADMIN, USER} from '../../../constants'
 import UserActionModal from "../../../components/modals/user-action-modal"
 import {blockById, deleteById, makeAdminById, unblockById} from "../../../services"
-import {Delete16, Blockchain16, } from '@carbon/icons-react'
+import {OverflowMenuItem} from "carbon-components-react"
+import React from "react"
+import {useAuth} from "../../../hooks/use-auth"
+import {AuthContext} from "../../../context/AuthContext"
 
 const headersItems = [
     {
@@ -94,11 +100,35 @@ const selectUserRequest = (action) => {
     }
 }
 
+const OverflowActionInfoUserComponent = ({id}) => {
+    const history = useHistory()
+    const {userId} = useAuth(AuthContext)
+
+    const historyPush = (id) => () => {
+        if (userId === id) {
+            history.push('/collections')
+        } else {
+            history.push(`/users/${id}`)
+        }
+    }
+
+    return (
+        <OverflowMenuItem
+            key="Info"
+            itemText="Info"
+            onClick={historyPush(id)}
+        />
+    )
+
+}
+
+
 export {
     headersItems,
     batchActions,
     overflowActions,
     initialRowsMapper,
     renderUserModals,
-    selectUserRequest
+    selectUserRequest,
+    OverflowActionInfoUserComponent
 }

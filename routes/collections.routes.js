@@ -27,13 +27,13 @@ router.get('/:id', auth, checkAdmin, async (req, res) => {
 
 router.post('/create', auth, async (req, res) => {
     try {
-        const {title, description, themeTitle, themeColor, itemTitleDefault, itemTagsDefault} = req.body
+        const {title, description, theme, image, itemTitleDefault, itemTagsDefault} = req.body
         const collection = new Collection({
             owner: req.user.userId,
             title,
-            themeTitle,
-            themeColor,
+            theme,
             description,
+            image: new Buffer(image),
             itemTitleDefault,
             itemTagsDefault
         })

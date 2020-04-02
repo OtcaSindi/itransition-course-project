@@ -1,21 +1,24 @@
+import React from "react"
+import map from "lodash/map"
 import isEmpty from "lodash/isEmpty"
 import {
     OverflowMenu,
     OverflowMenuItem,
     TableCell,
-    TableExpandedRow,
     TableExpandRow, TableRow,
     TableSelectRow
 } from "carbon-components-react"
-import map from "lodash/map"
-import React from "react"
+
+import styles from './main-table-row.module.css'
+import MainTableExpandedRowItem from "./main-table-expanded-row-item"
+import MainTableExpandedRowUser from "./main-table-expanded-row-user"
 
 const selectedRowsIds = (arr) => map(arr, ({id}) => id)
 
-const DynamicExpandComponent = ({expandRow, children, ...props}) => {
+const DynamicExpandComponent = ({expandRows, children, ...props}) => {
     return (
         (
-            expandRow ?
+            expandRows ?
                 <TableExpandRow {...props}>
                     {children}
                 </TableExpandRow> :
@@ -26,21 +29,47 @@ const DynamicExpandComponent = ({expandRow, children, ...props}) => {
     )
 }
 
+const DynamicExpandedComponent = ({expandRows, isExpanded, initialRow, colSpan}) => {
+    if (!expandRows) {
+        return null
+    }
+    if (isExpanded) {
+        if (expandRows === 'items') {
+            return (
+                <MainTableExpandedRowItem
+                    initialRow={initialRow}
+                    colSpan={colSpan}
+                />
+            )
+        } else if (expandRows === 'users') {
+            return (
+                <MainTableExpandedRowUser
+                    initialRow={initialRow}
+                    colSpan={colSpan}
+                />
+            )
+        }
+    }
+    return null
+}
+
 const MainTableRow = (
     {
         row,
+        initialRow,
         onExpand,
         rest,
         getSelectionProps,
+        OverflowActionInfoComponent,
         overflowActions,
         selectedRows,
         headers,
-        expandRow
+        expandRows,
     }) => {
 
     return (
         <>
-            <DynamicExpandComponent {...rest} onExpand={onExpand} expandRow={expandRow}>
+            <DynamicExpandComponent {...rest} onExpand={onExpand} expandRows={expandRows}>
                 <TableSelectRow {...getSelectionProps({row})}/>
                 {row.cells.map(cell => (
                     <TableCell key={cell.id}>
@@ -52,25 +81,25 @@ const MainTableRow = (
                     {
                         !selectedRowsIds(selectedRows).find(id => id === row.id) &&
                         <OverflowMenu flipped>
+                            {OverflowActionInfoComponent &&
+                            <OverflowActionInfoComponent id={row.id}/>}
                             {map(overflowActions, ({name, onClick}, idx) => (
                                 <OverflowMenuItem key={name}
                                                   itemText={name}
                                                   onClick={e => onClick(e, [row])}
-                                                  primaryFocus={idx === 0}/>
+                                />
                             ))}
                         </OverflowMenu>
                     }
                 </TableCell>}
-
             </DynamicExpandComponent>
-            {
-                expandRow &&
-                row.isExpanded &&
-                <TableExpandedRow
-                    colSpan={!isEmpty(overflowActions) ? headers.length + 3 : headers.length + 2}>
-                    expandRow
-                </TableExpandedRow>
-            }
+
+            <DynamicExpandedComponent
+                initialRow={initialRow}
+                expandRows={expandRows}
+                isExpanded={row.isExpanded}
+                colSpan={!isEmpty(overflowActions) ? headers.length + 3 : headers.length + 2}
+            />
         </>
     )
 }

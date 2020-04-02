@@ -10,7 +10,8 @@ import {
     overflowActions,
     initialRowsMapper,
     renderUserModals,
-    selectUserRequest
+    selectUserRequest,
+    OverflowActionInfoUserComponent
 } from "./utilities"
 import {useTableData} from "../../hooks/use-table-data"
 import MainTable from "../../components/main-table"
@@ -56,6 +57,7 @@ const UsersPage = () => {
             <MainTable
                 tableTitle="Users"
                 {...tableProps}
+                OverflowActionInfoComponent={OverflowActionInfoUserComponent}
             />
         </>
     )

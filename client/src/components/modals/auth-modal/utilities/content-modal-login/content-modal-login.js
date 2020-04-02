@@ -1,8 +1,5 @@
 import React from "react"
-
 import {TextInput} from "carbon-components-react"
-import AuthVkLogin from "../../../../auth-socials/auth-vk-login"
-import AuthGoogleLogin from "../../../../auth-socials/auth-google-login"
 
 const ContentModalLogin = (
     {
@@ -30,7 +27,8 @@ const ContentModalLogin = (
                 value={password}
                 invalid={!!invalidPassword}
                 invalidText={invalidPassword}
-                onChange={handlePassword}/>
+                onChange={handlePassword}
+            />
             <br/>
         </>
     )

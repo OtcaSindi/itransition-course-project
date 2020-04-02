@@ -1,9 +1,5 @@
 import map from "lodash/fp/map"
-
-import {dateFormat} from "../../../commonFunctions"
-import DeleteItemModal from "../../../components/modals/delete-items-modal"
-import ModalOnBatchToolbarActionsItem from "../../../components/modals/modal-on-batch-toolbar-action-item"
-import {createItemByCollectionId, editItemById} from "../../../services"
+import {createCollectionById, editCollectionById, deleteCollectionById} from "../../../services"
 
 const headersItems = [
     {
@@ -15,12 +11,16 @@ const headersItems = [
         key: 'description'
     },
     {
-        header: 'Date creation',
-        key: 'dateCreation'
+        header: 'Default title for items',
+        key: 'itemTitleDefault'
     },
     {
-        header: 'Likes',
-        key: 'likes'
+        header: 'Default tags for items',
+        key: 'itemTagsDefault'
+    },
+    {
+        header: 'Theme',
+        key: 'theme'
     },
 ]
 
@@ -45,31 +45,32 @@ const toolbarActions = [
     }
 ]
 
-const initialRowsMapper = map(({id, title, description, dateCreation, likes, image, tags, comments}) => {
+const initialRowsMapper = map(({id, title, description, theme, image, itemTitleDefault, itemTagsDefault}) => {
     return {
         id,
         title,
         description,
+        theme,
         image,
-        tags,
-        likes,
-        dateCreation: dateFormat(dateCreation),
-        comments
+        itemTitleDefault,
+        itemTagsDefault
     }
 })
 
 const renderItemModals = {
-    Delete: DeleteItemModal,
-    Edit: ModalOnBatchToolbarActionsItem,
-    Create: ModalOnBatchToolbarActionsItem
+    Delete: '',
+    Edit: '',
+    Create: ''
 }
 
 const selectItemRequest = (action) => {
     switch (action) {
         case 'Edit':
-            return editItemById
+            return editCollectionById
         case 'Create':
-            return createItemByCollectionId
+            return createCollectionById
+        case 'Delete':
+            return deleteCollectionById
         default:
             return null
     }

@@ -75,7 +75,7 @@ const CollectionPage = ({collectionId}) => {
             <MainTable
                 tableTitle={collection.title ? `Items "${collection.title}"` : 'Items'}
                 {...tableProps}
-                isExpandRows
+                expandRows="items"
             />
         </>
     )

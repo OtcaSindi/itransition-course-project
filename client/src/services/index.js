@@ -83,13 +83,13 @@ const create = (baseURL = '') => {
         api.get('/api/users/logout')
     }
 
-    const login = async (form) => {
+    const loginRequest = async (form) => {
         const data = await api.post('/api/auth/login', form)
         setHeader(data.token)
         return data
     }
 
-    const register = async (form) => {
+    const registerRequest = async (form) => {
         return await api.post('/api/auth/register', form)
     }
 
@@ -150,8 +150,8 @@ const create = (baseURL = '') => {
 
 
     return {
-        login,
-        register,
+        loginRequest,
+        registerRequest,
         getUsers,
         deleteById,
         blockById,

@@ -21,7 +21,6 @@ function CollectionsPage({idUser}) {
 
     return (
         <div className="container">
-            <button onClick={() => setOpenModal(true)}>Hello</button>
             {idUser && <h5 className="center">User's (ID: {idUser}) collections</h5>}
             <div className="modal-and-download">
                 <CreateCollectionModal idUser={idUser}/>

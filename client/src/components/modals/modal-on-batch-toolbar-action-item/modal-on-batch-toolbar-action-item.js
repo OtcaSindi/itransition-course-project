@@ -14,6 +14,7 @@ const ModalOnBatchToolbarActionsItem = ({onClose, items, operation, collection, 
     const {token} = useContext(AuthContext)
 
     let id = null
+    let resDefaultTitle = ''
     let resDefaultTags = []
     if (items) {
         id = items[0].id
@@ -24,14 +25,16 @@ const ModalOnBatchToolbarActionsItem = ({onClose, items, operation, collection, 
         tags: defaultTags,
         image: defaultImage,
     } = useSelectorItemById(itemsReducerSelector, id)
+    resDefaultTitle = defaultTitle
     resDefaultTags = defaultTags
 
     if (!id) {
         id = collection.id
+        resDefaultTitle = collection.itemTitleDefault
         resDefaultTags = collection.itemTagsDefault
     }
 
-    const [title, setTitle] = useState(defaultTitle)
+    const [title, setTitle] = useState(resDefaultTitle)
     const [description, setDescription] = useState(defaultDescription)
     const [tags, setTags] = useState(resDefaultTags)
     const [srcImage, setSrcImage] = useState(defaultImage)
@@ -94,7 +97,6 @@ const ModalOnBatchToolbarActionsItem = ({onClose, items, operation, collection, 
                     <img
                         className={styles.img}
                         id="target"
-                        style={{height: '100px'}}
                         src={srcImage}
                         alt="item"
                     />

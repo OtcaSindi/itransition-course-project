@@ -37,14 +37,15 @@ const MainTable = (
         loading,
         batchActions,
         overflowActions,
+        OverflowActionInfoComponent,
         toolbarActions,
         tableTitle,
-        isExpandRows
+        expandRows
     }) => {
 
     return (
         <DataTable
-            rows={[...initialRows, ]}
+            rows={[...initialRows]}
             headers={headersItems}
             render={({
                          rows,
@@ -62,7 +63,6 @@ const MainTable = (
                     </div>}>
                     <TableToolbar>
                         {selectedRows.length !== 0 && <TableBatchActions {...getBatchActionProps()} >
-                            {console.log(selectedRows)}
                             {map(batchActions, ({name, onClick}) => (
                                 <TableBatchAction
                                     renderIcon={null}
@@ -99,7 +99,7 @@ const MainTable = (
                     <Table>
                         <TableHead>
                             <TableRow>
-                                {isExpandRows && <TableHeader onClick={expandAll}>Expand</TableHeader>}
+                                {expandRows && <TableHeader onClick={expandAll}>Expand</TableHeader>}
                                 <TableSelectAll {...getSelectionProps()} />
                                 {headers.map(({header}) => (
                                     <TableHeader key={header} {...getHeaderProps({header})}>
@@ -110,18 +110,20 @@ const MainTable = (
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map(row => {
+                            {rows.map((row, idx) => {
                                 const {onExpand, ...rest} = getRowProps({row})
                                 return (
                                     <MainTableRow
-                                        expandRow={isExpandRows}
+                                        expandRows={expandRows}
                                         key={row.id}
+                                        initialRow={initialRows[idx]}
                                         row={row}
                                         onExpand={onExpand}
                                         rest={rest}
                                         selectedRows={selectedRows}
                                         getSelectionProps={getSelectionProps}
                                         overflowActions={overflowActions}
+                                        OverflowActionInfoComponent={OverflowActionInfoComponent}
                                         headers={headers}
                                     />
                                 )

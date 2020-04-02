@@ -34,7 +34,7 @@ router.post('/create/:idCollection', auth, async (req, res) => {
         const {idCollection} = req.params
         const {title, description, image, tags} = req.body
         const collection = await Collection.findById(idCollection)
-        const allTags = [...collection.itemTagsDefault, ...tags]
+        const allTags = Array.from(new Set([...collection.itemTagsDefault, ...tags]))
 
         const item = new Item({
             owner: idCollection,
