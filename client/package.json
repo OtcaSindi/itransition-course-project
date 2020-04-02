@@ -41,7 +41,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "proxy": "http://localhost:5000",
+  "proxy": "https://stormy-garden-34529.herokuapp.com/",
   "browserslist": {
     "production": [
       ">0.2%",
