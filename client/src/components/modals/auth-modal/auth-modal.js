@@ -13,8 +13,12 @@ import {LANGUAGE_ENGLISH} from "../../../constants"
 import styles from './auth-modal.module.css'
 
 
-const InvalidData = (email, password) => {
+const invalidDataLogin = (email, password) => {
     return !(email && email.includes('@') && password.length >= 6)
+}
+
+const invalidDataReg = (email, name, password) => {
+    return !(!invalidDataLogin(email, password) && name)
 }
 
 const AuthModal = () => {
@@ -69,13 +73,19 @@ const AuthModal = () => {
     }
 
     const loginHandler = async () => {
-        if (InvalidData(email, password)) {
-            try {
-                const {data: {token, userId, userIsAdmin}} = await axiosRequest.auth({email, password})
-                login(token, userId, userIsAdmin)
-            } catch (e) {
-
+            if (!invalidDataLogin(email, password)) {
+                try {
+                    const {data: {token, userId, userIsAdmin}} = await axiosRequest.login({email, password})
+                    login(token, userId, userIsAdmin)
+                } catch (e) {}
             }
+    }
+
+    const regHandler = async () => {
+        if (!invalidDataReg(email, name, password)) {
+            try {
+                await axiosRequest.register({email, name, password, language})
+            } catch (e) {}
         }
     }
 
@@ -93,8 +103,8 @@ const AuthModal = () => {
         <AnimateModal
             modalHeading={authModal ? 'Log in to your account' : 'Create your account'}
             primaryButtonText={authModal ? "Log in" : 'Sign Up'}
-            primaryButtonDisabled={InvalidData(email, password)}
-            onRequestSubmit={loginHandler}
+            primaryButtonDisabled={authModal ? invalidDataLogin(email, password) : invalidDataReg(email, name, password)}
+            onRequestSubmit={authModal ? loginHandler : regHandler}
             onClose={memoizedCloseModal}
         >
             {

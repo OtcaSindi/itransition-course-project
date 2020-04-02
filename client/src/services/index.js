@@ -83,10 +83,14 @@ const create = (baseURL = '') => {
         api.get('/api/users/logout')
     }
 
-    const auth = async (form) => {
+    const login = async (form) => {
         const data = await api.post('/api/auth/login', form)
         setHeader(data.token)
         return data
+    }
+
+    const register = async (form) => {
+        return await api.post('/api/auth/register', form)
     }
 
     const getCollectionsById = async (token, userId) => {
@@ -146,7 +150,8 @@ const create = (baseURL = '') => {
 
 
     return {
-        auth,
+        login,
+        register,
         getUsers,
         deleteById,
         blockById,

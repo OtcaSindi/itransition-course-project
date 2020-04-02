@@ -8,13 +8,14 @@ const User = require('../models/User')
 
 const router = Router()
 
-const createUser = async (email, name, password) => {
+const createUser = async (email, name, password, language) => {
     const hashPassword = await bcrypt.hash(password, 12)
 
     return new User({
         email,
         name,
-        password: hashPassword
+        password: hashPassword,
+        language
     })
 }
 
@@ -48,7 +49,8 @@ router.post(
             const {
                 email,
                 password,
-                name
+                name,
+                language
             } = req.body
 
             const candidate = await User.findOne({email})
@@ -57,8 +59,7 @@ router.post(
                 res.status(400).json({message: 'This user already exists.'})
             }
 
-            const user = createUser(email, name, password)
-
+            const user = await createUser(email, name, password, language)
             await user.save()
             res.status(201).json({message: 'User created.'})
 
