@@ -36,35 +36,39 @@ const headersItems = [
 const batchActions = [
     {
         name: 'Block',
-        image: Blockchain16
+        key: 'block'
     },
     {
         name: 'Unblock',
-        image: ''
+        key: 'unblock'
     },
     {
         name: 'Delete',
-        image: Delete16
+        key: 'delete'
     },
     {
-        name: 'MakeAdmin',
-        image: ''
+        name: 'Make admin',
+        key: 'make_admin'
     },
 
 ]
 
 const overflowActions = [
     {
-        name: 'Block'
+        name: 'Block',
+        key: 'block'
     },
     {
-        name: 'Unblock'
+        name: 'Unblock',
+        key: 'unblock'
     },
     {
-        name: 'Delete'
+        name: 'Delete',
+        key: 'delete'
     },
     {
-        name: 'MakeAdmin'
+        name: 'MakeAdmin',
+        key: 'make_admin'
     },
 ]
 
@@ -79,21 +83,21 @@ const initialRowsMapper = map(({id, name, email, blocked, isAdmin}) => {
 })
 
 const renderUserModals = {
-    Block: UserActionModal,
-    Unblock: UserActionModal,
-    Delete: UserActionModal,
-    MakeAdmin: UserActionModal,
+    block: UserActionModal,
+    unblock: UserActionModal,
+    delete: UserActionModal,
+    make_admin: UserActionModal,
 }
 
 const selectUserRequest = (action) => {
     switch (action) {
-        case 'Block':
+        case 'block':
             return blockById
-        case 'Unblock':
+        case 'unblock':
             return unblockById
-        case 'Delete':
+        case 'delete':
             return deleteById
-        case 'MakeAdmin':
+        case 'make_admin':
             return makeAdminById
         default:
             return null

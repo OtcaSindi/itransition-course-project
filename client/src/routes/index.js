@@ -4,7 +4,7 @@ import {Switch, Route} from 'react-router-dom'
 import UsersPage from '../pages/users-page/users-page'
 import MainPage from '../pages/MainPage'
 import CollectionsPage from "../pages/collections-page"
-import CollectionPage from "../pages/collection-page"
+import ItemsPage from "../pages/items-page"
 import AuthModal from "../components/modals/auth-modal"
 import {AuthContext} from "../context/AuthContext"
 import {Redirect} from "react-router"
@@ -28,7 +28,7 @@ const Routes = ({isAuthenticated, userIsAdmin}) => {
                 <Route path="/collections" exact render={() => (<CollectionsPage/>)}/>
 
                 {isAuthenticated && <Route path="/collections/:id" exact
-                                           render={({match}) => (<CollectionPage collectionId={match.params.id}/>)}/>}
+                                           render={({match}) => (<ItemsPage collectionId={match.params.id}/>)}/>}
 
                 {/*<Redirect to="/news"/>*/}
             </Switch>

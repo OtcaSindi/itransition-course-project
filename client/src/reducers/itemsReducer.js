@@ -2,7 +2,7 @@ const initialState = {
     data: [],
     collection: {},
     loading: false,
-    error: null
+    errorStatus: null
 }
 
 const itemsReducer = (state = initialState, action) => {
@@ -30,9 +30,11 @@ const itemsReducer = (state = initialState, action) => {
 
         case 'FETCH_ITEMS_FAILURE': {
 
+            const {response: {status}} = action.payload
+
             return {
                 ...state,
-                error: action.payload
+                errorStatus: status
             }
         }
 

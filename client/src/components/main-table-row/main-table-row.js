@@ -83,10 +83,10 @@ const MainTableRow = (
                         <OverflowMenu flipped>
                             {OverflowActionInfoComponent &&
                             <OverflowActionInfoComponent id={row.id}/>}
-                            {map(overflowActions, ({name, onClick}, idx) => (
-                                <OverflowMenuItem key={name}
+                            {map(overflowActions, ({name, key, onClick}) => (
+                                <OverflowMenuItem key={key}
                                                   itemText={name}
-                                                  onClick={e => onClick(e, [row])}
+                                                  onClick={() => onClick(key, [row])}
                                 />
                             ))}
                         </OverflowMenu>

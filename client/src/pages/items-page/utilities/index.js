@@ -1,9 +1,9 @@
 import map from "lodash/fp/map"
 
-import {dateFormat} from "../../../commonFunctions"
+import {dateFormat} from "../../../utilities-functions"
 import DeleteItemModal from "../../../components/modals/delete-items-modal"
-import ModalOnBatchToolbarActionsItem from "../../../components/modals/modal-on-batch-toolbar-action-item"
-import {createItemByCollectionId, editItemById} from "../../../services"
+import ModalOnBatchToolbarActionsItem from "../../../components/modals/create-edit-action-item-modal"
+import {createItemByCollectionId, deleteItemById, editItemById} from "../../../services"
 
 const headersItems = [
     {
@@ -26,22 +26,26 @@ const headersItems = [
 
 const batchActions = [
     {
-        name: 'Delete'
+        name: 'Delete',
+        key: 'delete'
     },
 ]
 
 const overflowActions = [
     {
-        name: 'Edit'
+        name: 'Edit',
+        key: 'edit'
     },
     {
-        name: 'Delete'
+        name: 'Delete',
+        key: 'delete'
     },
 ]
 
 const toolbarActions = [
     {
-        name: 'Create'
+        name: 'Create',
+        key: 'create'
     }
 ]
 
@@ -59,17 +63,19 @@ const initialRowsMapper = map(({id, title, description, dateCreation, likes, ima
 })
 
 const renderItemModals = {
-    Delete: DeleteItemModal,
-    Edit: ModalOnBatchToolbarActionsItem,
-    Create: ModalOnBatchToolbarActionsItem
+    delete: DeleteItemModal,
+    edit: ModalOnBatchToolbarActionsItem,
+    create: ModalOnBatchToolbarActionsItem
 }
 
 const selectItemRequest = (action) => {
     switch (action) {
-        case 'Edit':
+        case 'edit':
             return editItemById
-        case 'Create':
+        case 'create':
             return createItemByCollectionId
+        case 'delete':
+            return deleteItemById
         default:
             return null
     }

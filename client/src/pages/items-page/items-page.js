@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useMemo} from 'react'
+import React, {useCallback, useContext, useEffect, useMemo} from 'react'
 import {useSelector} from "react-redux"
 
 import DynamicComponent from "../../components/dynamic-component"
@@ -18,10 +18,18 @@ import {
     renderItemModals,
     selectItemRequest
 } from "./utilities"
+import {transformActionKeyToTitle} from "../../utilities-functions"
 
-const CollectionPage = ({collectionId}) => {
+const ItemsPage = ({collectionId}) => {
 
-    const {token} = useContext(AuthContext)
+    const {token, logout} = useContext(AuthContext)
+    const {collection, errorStatus} = useSelector(itemsReducerSelector)
+
+    useEffect(() => {
+        if (errorStatus === 401) {
+            logout()
+        }
+    }, [errorStatus])
 
     const memoizedAction = useMemo(() => {
         return fetchItems(token, collectionId)
@@ -58,15 +66,13 @@ const CollectionPage = ({collectionId}) => {
         onClose()
     }, [setReFetch, onClose])
 
-    const {collection} = useSelector(itemsReducerSelector)
-
     return (
         <>
             {/*<button onClick={fireN}> Hello</button>*/}
             <DynamicComponent
                 component={renderItemModals[menuAction.action]}
                 primaryRequest={selectItemRequest(menuAction.action)}
-                operation={menuAction.action}
+                operation={transformActionKeyToTitle(menuAction.action)}
                 collection={collection}
                 {...menuAction}
                 onClose={onModalClose}
@@ -81,4 +87,4 @@ const CollectionPage = ({collectionId}) => {
     )
 }
 
-export default CollectionPage
+export default ItemsPage

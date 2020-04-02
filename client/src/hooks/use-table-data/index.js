@@ -33,8 +33,6 @@ export const useTableData = (
             menuActions: [batchActions, overflowActions, toolbarActions]
         })
 
-    console.log(initialRowsMapper(data))
-
     return {
         tableProps: {
             headersItems,

@@ -63,11 +63,11 @@ const MainTable = (
                     </div>}>
                     <TableToolbar>
                         {selectedRows.length !== 0 && <TableBatchActions {...getBatchActionProps()} >
-                            {map(batchActions, ({name, onClick}) => (
+                            {map(batchActions, ({name, key, onClick}) => (
                                 <TableBatchAction
                                     renderIcon={null}
-                                    key={name}
-                                    onClick={e => onClick(e, selectedRows)}
+                                    key={key}
+                                    onClick={() => onClick(key, selectedRows)}
                                 >
                                     {name}
                                 </TableBatchAction>
@@ -79,11 +79,11 @@ const MainTable = (
                                     <TableToolbarSearch
                                         persistent
                                         onChange={onInputChange}/>
-                                    {map(toolbarActions, ({name, onClick}) => {
+                                    {map(toolbarActions, ({name, key, onClick}) => {
                                         return (
                                             <Button
-                                                key={name}
-                                                onClick={onClick}
+                                                key={key}
+                                                onClick={() => onClick(key)}
                                                 size='default'
                                                 kind="primary"
                                                 renderIcon={Add16}

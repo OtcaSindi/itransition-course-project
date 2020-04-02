@@ -5,11 +5,11 @@ import AnimateModal from "../animate-modal"
 import {useSelectorItemById} from "../../../hooks/use-selector-item-by-id"
 import {AuthContext} from "../../../context/AuthContext"
 
-import './modal-on-batch-toolbar-action-item.css'
-import styles from './modal-on-batch-toolbar-action-item.module.css'
+import './create-edit-action-item-modal.css'
+import styles from './create-edit-action-item-modal.module.css'
 import {itemsReducerSelector} from "../../../selectors"
 
-const ModalOnBatchToolbarActionsItem = ({onClose, items, operation, collection, primaryRequest}) => {
+const CreateEditActionItemModal = ({onClose, items, operation, collection, primaryRequest}) => {
 
     const {token} = useContext(AuthContext)
 
@@ -121,4 +121,4 @@ const ModalOnBatchToolbarActionsItem = ({onClose, items, operation, collection, 
     )
 }
 
-export default ModalOnBatchToolbarActionsItem
+export default CreateEditActionItemModal

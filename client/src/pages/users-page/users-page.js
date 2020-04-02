@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useMemo} from "react"
+import React, {useCallback, useContext, useEffect, useMemo} from "react"
 
 import {AuthContext} from "../../context/AuthContext"
 import {fetchUsers} from "../../actionsCreator"
@@ -16,10 +16,19 @@ import {
 import {useTableData} from "../../hooks/use-table-data"
 import MainTable from "../../components/main-table"
 import DynamicComponent from "../../components/dynamic-component"
+import {transformActionKeyToTitle} from "../../utilities-functions"
+import {useSelector} from "react-redux"
 
 const UsersPage = () => {
 
-    const {token} = useContext(AuthContext)
+    const {token, logout} = useContext(AuthContext)
+    const {errorStatus} = useSelector(selector)
+
+    useEffect(() => {
+        if (errorStatus === 401) {
+            logout()
+        }
+    }, [errorStatus])
 
     const memoizedAction = useMemo(() => {
         return fetchUsers(token)
@@ -49,7 +58,7 @@ const UsersPage = () => {
             <DynamicComponent
                 component={renderUserModals[menuAction.action]}
                 primaryRequest={selectUserRequest(menuAction.action)}
-                operation={menuAction.action}
+                operation={transformActionKeyToTitle(menuAction.action)}
                 {...menuAction}
                 onClose={onModalClose}
             />
