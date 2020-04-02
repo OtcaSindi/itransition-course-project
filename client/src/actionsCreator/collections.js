@@ -13,10 +13,10 @@ const collectionsLoaded = (newCollections) => {
     }
 }
 
-const collectionsError = (error) => {
+const collectionsError = (errorStatus) => {
     return {
         type: 'FETCH_COLLECTIONS_FAILURE',
-        payload: error
+        payload: errorStatus
     }
 }
 
@@ -27,7 +27,7 @@ const fetchCollections = (token, userId) => (dispatch) => {
             dispatch(collectionsLoaded(data))
         })
         .catch((err) => {
-                dispatch(collectionsError(err))
+                dispatch(collectionsError(err.response.status))
             }
         )
 }

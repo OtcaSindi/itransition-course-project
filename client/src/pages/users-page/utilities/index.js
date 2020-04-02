@@ -2,6 +2,7 @@ import map from "lodash/fp/map"
 import {BLOCKED, NOT_BLOCKED, ADMIN, USER} from '../../../constants'
 import UserActionModal from "../../../components/modals/user-action-modal"
 import axiosRequest from "../../../services"
+import {Delete16, Blockchain16, } from '@carbon/icons-react'
 
 const headersItems = [
     {
@@ -28,16 +29,20 @@ const headersItems = [
 
 const batchActions = [
     {
-        name: 'Block'
+        name: 'Block',
+        image: Blockchain16
     },
     {
-        name: 'Unblock'
+        name: 'Unblock',
+        image: ''
     },
     {
-        name: 'Delete'
+        name: 'Delete',
+        image: Delete16
     },
     {
-        name: 'MakeAdmin'
+        name: 'MakeAdmin',
+        image: ''
     },
 
 ]

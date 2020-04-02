@@ -24,6 +24,9 @@ const MODAL_HEADER_DELETE = 'Delete'
 const MODAL_LABEL_ITEMS = 'Items'
 const MODAL_LABEL_USERS = 'Users'
 
+const LANGUAGE_ENGLISH = 'English'
+const LANGUAGE_RUSSIAN = 'Russian'
+
 export {
     THEME_GAMES,
     THEME_BOOKS,
@@ -40,4 +43,7 @@ export {
 
     MODAL_LABEL_ITEMS,
     MODAL_LABEL_USERS,
+
+    LANGUAGE_ENGLISH,
+    LANGUAGE_RUSSIAN,
 }

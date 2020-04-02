@@ -9,6 +9,15 @@ const collectionsForFront = require('../data-for-front/collections-for-front')
 
 const router = Router()
 
+router.get('/', async (req, res) => {
+    try {
+        const items = await Item.find()
+        res.status(200).json(itemsForFront(items))
+    } catch (e) {
+        res.status(500).json({message: 'Something went wrong, try again.'})
+    }
+})
+
 router.get('/:idCollection', auth, async (req, res) => {
     try {
         const {idCollection} = req.params

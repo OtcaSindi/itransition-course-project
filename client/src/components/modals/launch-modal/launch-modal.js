@@ -14,7 +14,7 @@ const LaunchModal = (
         primaryButtonText,
         primaryButtonAction,
         secondaryButtonText,
-        inputsText =[],
+        inputsText = [],
         select,
         open,
         onClose,
@@ -61,7 +61,7 @@ const LaunchModal = (
             <br/>
 
             {FileUploaderImage &&
-                (image ?
+            (image ?
                 <img id="target" style={{height: '100px'}} src={image} alt="item"/> :
                 <FileUploaderDropContainer accept={['.png', '.jpg']}
                                            onAddFiles={(e, {addedFiles}) => {
@@ -69,8 +69,9 @@ const LaunchModal = (
                                                const reader = new FileReader()
                                                reader.onload = (e) => {
                                                    setImage(e.target.result)
-                                               };
-                                               reader.readAsDataURL(file);}}
+                                               }
+                                               reader.readAsDataURL(file)
+                                           }}
                                            labelText="Drag and drop image(.png, .jpg) here or click to upload"
                                            id="uploader"
                 />)

@@ -4,30 +4,29 @@ import {Provider} from 'react-redux'
 
 import 'materialize-css'
 
-import {useRoutes} from "./routes"
+import Routes from '../src/routes'
 import {useAuth} from "./hooks/use-auth"
 import {AuthContext} from "./context/AuthContext"
 import NavBar from './components/navbar/navbar'
 import store from "./store"
 import {NotificationsProvider} from "./portals/notification-portal"
+import {useOpenAuthModal} from "./hooks/use-open-auth-modal"
+
 
 const App = () => {
-    const {token, login, logout, userId, userIsAdmin, ready} = useAuth()
+    const {token, login, logout, userId, userIsAdmin} = useAuth()
+    const {openModal, setOpenModal} = useOpenAuthModal()
     const isAuthenticated = !!token
-    const routes = useRoutes(isAuthenticated)
 
     return (
         <NotificationsProvider>
             <Provider store={store}>
                 <AuthContext.Provider value={{
-                    token, login, logout, userId, isAuthenticated, userIsAdmin
+                    token, login, logout, userId, isAuthenticated, userIsAdmin, openModal, setOpenModal,
                 }}>
-
                     <Router>
-                        {isAuthenticated && <NavBar/>}
-                        <div className="container">
-                            {routes}
-                        </div>
+                        <NavBar/>
+                        <Routes isAuthenticated={isAuthenticated} userIsAdmin={userIsAdmin}/>
                     </Router>
                 </AuthContext.Provider>
             </Provider>

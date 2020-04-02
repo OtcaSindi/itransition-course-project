@@ -32,6 +32,18 @@ const fetchItems = (token, collectionId) => (dispatch) => {
         )
 }
 
+const fetchAllItems = (token) => (dispatch) => {
+    dispatch(itemsRequested())
+    axiosRequest.getAllItems(token)
+        .then(({data}) => {
+            dispatch(itemsLoaded(data))
+        })
+        .catch((err) => {
+                dispatch(itemsError(err))
+            }
+        )
+}
+
 const createItemRequest = (token, form, userId) => (dispatch) => {
     dispatch(itemsRequested())
     axiosRequest.createCollectionById(token, form, userId || '')
@@ -62,5 +74,6 @@ export {
     itemsError,
     fetchItems,
     createItemRequest,
-    deleteItemRequest
+    deleteItemRequest,
+    fetchAllItems
 }

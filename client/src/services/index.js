@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-const create = (baseURL = '') => {
 
+const create = (baseURL = '') => {
     const api = axios.create({
         baseURL,
         headers: {
@@ -84,10 +84,7 @@ const create = (baseURL = '') => {
     }
 
     const auth = async (form) => {
-        const data = await api.post(
-            '/api/auth/login',
-            form
-            )
+        const data = await api.post('/api/auth/login', form)
         setHeader(data.token)
         return data
     }
@@ -120,6 +117,11 @@ const create = (baseURL = '') => {
     const getItemsByCollectionId = async (token, collectionId) => {
         setHeader(token)
         return await api.get(`/api/items/${collectionId}`)
+    }
+
+    const getAllItems = async (token) => {
+        setHeader(token)
+        return await api.get(`/api/items`)
     }
 
     const createItemByCollectionId = async (token, form, collectionId) => {
@@ -160,6 +162,7 @@ const create = (baseURL = '') => {
         editItemById,
         deleteItemById,
         getItemsByCollectionId,
+        getAllItems,
         addCommentByItemId
     }
 }

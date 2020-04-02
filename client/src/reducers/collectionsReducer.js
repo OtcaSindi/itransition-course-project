@@ -1,7 +1,7 @@
 const initialState = {
     data: [],
     loading: false,
-    error: null
+    errorStatus: null
 }
 
 const collectionsReducer = (state = initialState, action) => {
@@ -31,7 +31,7 @@ const collectionsReducer = (state = initialState, action) => {
 
             return {
                 ...state,
-                error: action.payload
+                errorStatus: action.payload
             }
         }
 

@@ -1,6 +1,5 @@
 import React, {useContext, useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {useHistory} from "react-router"
 
 import CreateCollectionModal from "../../components/create-collection-modal"
 import {AuthContext} from "../../context/AuthContext"
@@ -9,20 +8,20 @@ import {fetchCollections} from "../../actionsCreator"
 
 function CollectionsPage({idUser}) {
 
-    const {loading, error} = useSelector(state => state.collectionsReducer)
-    const {token} = useContext(AuthContext)
+    const {errorStatus} = useSelector(state => state.collectionsReducer)
+    const {token, setOpenModal} = useContext(AuthContext)
     const dispatch = useDispatch()
-    const history = useHistory()
 
     useEffect(() => {
         dispatch(fetchCollections(token, idUser))
-        if (error) {
-            history.push('/collections')
+        if (errorStatus === 401) {
+            setOpenModal(true)
         }
-    }, [dispatch, token, idUser, error, history])
+    }, [dispatch, token, idUser, errorStatus])
 
     return (
         <div className="container">
+            <button onClick={() => setOpenModal(true)}>Hello</button>
             {idUser && <h5 className="center">User's (ID: {idUser}) collections</h5>}
             <div className="modal-and-download">
                 <CreateCollectionModal idUser={idUser}/>

@@ -42,8 +42,6 @@ const MainTable = (
         isExpandRows
     }) => {
 
-    console.log(initialRows)
-
     return (
         <DataTable
             rows={[...initialRows, ]}
@@ -63,17 +61,18 @@ const MainTable = (
                     title={<div className={styles.titleHeader}><span className={styles.textHeader}>{tableTitle}</span>
                     </div>}>
                     <TableToolbar>
-                        <TableBatchActions {...getBatchActionProps()} >
+                        {selectedRows.length !== 0 && <TableBatchActions {...getBatchActionProps()} >
+                            {console.log(selectedRows)}
                             {map(batchActions, ({name, onClick}) => (
                                 <TableBatchAction
-                                    renderIcon={Delete16}
+                                    renderIcon={null}
                                     key={name}
                                     onClick={e => onClick(e, selectedRows)}
                                 >
                                     {name}
                                 </TableBatchAction>
                             ))}
-                        </TableBatchActions>
+                        </TableBatchActions>}
                         <TableToolbarContent>
                             {loading ? <SearchSkeleton className={styles.searchSkeletonToolbar}/> :
                                 <>

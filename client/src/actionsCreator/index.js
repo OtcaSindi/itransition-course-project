@@ -22,7 +22,8 @@ import {
     itemsError,
     fetchItems,
     createItemRequest,
-    deleteItemRequest
+    deleteItemRequest,
+    fetchAllItems
 } from './items'
 
 export {
@@ -42,5 +43,6 @@ export {
     itemsError,
     fetchItems,
     createItemRequest,
-    deleteItemRequest
+    deleteItemRequest,
+    fetchAllItems
 }

@@ -31,7 +31,7 @@ export const NotificationsProvider = memo(({children, className}) => {
     const removeNotification = useCallback(notification => {
         setNotifications(notifications => notifications.filter(n => notification !== n))
     }, [])
-    console.log(notifications)
+
     return (
         <NotificationsContext.Provider value={handleNotificationAdd}>
             {children}
