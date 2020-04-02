@@ -19,7 +19,7 @@ const ContentModalLogin = (
                 labelText="Email Address"
                 id="email"
                 value={email}
-                invalid={invalidEmail}
+                invalid={!!invalidEmail}
                 invalidText={invalidEmail}
                 onChange={handleEmail}/>
             <br/>
@@ -28,7 +28,7 @@ const ContentModalLogin = (
                 id="password"
                 type="password"
                 value={password}
-                invalid={invalidPassword}
+                invalid={!!invalidPassword}
                 invalidText={invalidPassword}
                 onChange={handlePassword}/>
             <br/>

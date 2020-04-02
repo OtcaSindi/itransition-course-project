@@ -168,10 +168,29 @@ const create = (baseURL = '') => {
         deleteItemById,
         getItemsByCollectionId,
         getAllItems,
-        addCommentByItemId
+        addCommentByItemId,
+        setHeader
     }
 }
 
-const axiosRequest = create()
-
-export default axiosRequest
+export const {
+    loginRequest,
+    registerRequest,
+    getUsers,
+    deleteById,
+    blockById,
+    unblockById,
+    makeAdminById,
+    getCollectionsById,
+    editCollectionById,
+    deleteCollectionById,
+    createCollection,
+    createCollectionById,
+    createItemByCollectionId,
+    editItemById,
+    deleteItemById,
+    getItemsByCollectionId,
+    getAllItems,
+    addCommentByItemId,
+    setHeader
+} = create()

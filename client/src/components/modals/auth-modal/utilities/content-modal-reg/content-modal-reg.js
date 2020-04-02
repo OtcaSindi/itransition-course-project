@@ -22,7 +22,7 @@ const ContentModalReg = (
                 labelText="Email Address"
                 id="email"
                 value={email}
-                invalid={invalidEmail}
+                invalid={!!invalidEmail}
                 invalidText={invalidEmail}
                 onChange={handleEmail}/>
             <br/>
@@ -30,7 +30,7 @@ const ContentModalReg = (
                 labelText="Name"
                 id="email"
                 value={name}
-                invalid={inValidName}
+                invalid={!!inValidName}
                 invalidText={inValidName}
                 onChange={handleName}/>
             <br/>
@@ -39,7 +39,7 @@ const ContentModalReg = (
                 id="password"
                 type="password"
                 value={password}
-                invalid={invalidPassword}
+                invalid={!!invalidPassword}
                 invalidText={invalidPassword}
                 onChange={handlePassword}/>
             <br/>

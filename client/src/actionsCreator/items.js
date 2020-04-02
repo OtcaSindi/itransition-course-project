@@ -1,4 +1,9 @@
-import axiosRequest from "../services"
+import {
+    createCollectionById,
+    deleteCollectionById,
+    getAllItems,
+    getItemsByCollectionId
+} from "../services"
 
 const itemsRequested = () => {
     return {
@@ -22,7 +27,7 @@ const itemsError = (error) => {
 
 const fetchItems = (token, collectionId) => (dispatch) => {
     dispatch(itemsRequested())
-    axiosRequest.getItemsByCollectionId(token, collectionId || '')
+    getItemsByCollectionId(token, collectionId || '')
         .then(({data}) => {
             dispatch(itemsLoaded(data))
         })
@@ -34,7 +39,7 @@ const fetchItems = (token, collectionId) => (dispatch) => {
 
 const fetchAllItems = (token) => (dispatch) => {
     dispatch(itemsRequested())
-    axiosRequest.getAllItems(token)
+    getAllItems(token)
         .then(({data}) => {
             dispatch(itemsLoaded(data))
         })
@@ -46,7 +51,7 @@ const fetchAllItems = (token) => (dispatch) => {
 
 const createItemRequest = (token, form, userId) => (dispatch) => {
     dispatch(itemsRequested())
-    axiosRequest.createCollectionById(token, form, userId || '')
+    createCollectionById(token, form, userId || '')
         .then(({data}) => {
             dispatch(itemsLoaded(data))
         })
@@ -58,7 +63,7 @@ const createItemRequest = (token, form, userId) => (dispatch) => {
 
 const deleteItemRequest = (token, id, userId) => (dispatch) => {
     dispatch(itemsRequested())
-    axiosRequest.deleteCollectionById(token, id)
+    deleteCollectionById(token, id)
         .then(() => {
             dispatch(itemsLoaded(token, userId))
         })

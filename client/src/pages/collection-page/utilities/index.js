@@ -3,7 +3,7 @@ import map from "lodash/fp/map"
 import {dateFormat} from "../../../commonFunctions"
 import DeleteItemModal from "../../../components/modals/delete-items-modal"
 import ModalOnBatchToolbarActionsItem from "../../../components/modals/modal-on-batch-toolbar-action-item"
-import axiosRequest from "../../../services"
+import {createItemByCollectionId, editItemById} from "../../../services"
 
 const headersItems = [
     {
@@ -64,9 +64,9 @@ const renderItemModals = {
 const selectItemRequest = (action) => {
     switch (action) {
         case 'Edit':
-            return axiosRequest.editItemById
+            return editItemById
         case 'Create':
-            return axiosRequest.createItemByCollectionId
+            return createItemByCollectionId
         default:
             return null
     }

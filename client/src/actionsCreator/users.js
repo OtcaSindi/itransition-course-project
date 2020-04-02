@@ -1,4 +1,4 @@
-import axiosRequest from "../services"
+import {getUsers} from "../services"
 
 const usersRequested = () => {
     return {
@@ -22,7 +22,7 @@ const usersError = (error) => {
 
 const fetchUsers = (token) => (dispatch) => {
     dispatch(usersRequested())
-    axiosRequest.getUsers(token)
+    getUsers(token)
         .then(({data}) => {
             dispatch(usersLoaded(data))
         })

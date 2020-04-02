@@ -2,7 +2,7 @@ import React, {useCallback, useContext, useState} from "react"
 import {useHistory} from "react-router"
 
 import {AuthContext} from "../../../context/AuthContext"
-import axiosRequest from '../../../services'
+import {loginRequest, registerRequest} from '../../../services'
 import AnimateModal from "../animate-modal"
 import AuthVkLogin from "../../auth-socials/auth-vk-login"
 import AuthGoogleLogin from "../../auth-socials/auth-google-login"
@@ -75,7 +75,7 @@ const AuthModal = () => {
     const loginHandler = async () => {
             if (!invalidDataLogin(email, password)) {
                 try {
-                    const {data: {token, userId, userIsAdmin}} = await axiosRequest.login({email, password})
+                    const {data: {token, userId, userIsAdmin}} = await loginRequest({email, password})
                     login(token, userId, userIsAdmin)
                 } catch (e) {}
             }
@@ -84,7 +84,7 @@ const AuthModal = () => {
     const regHandler = async () => {
         if (!invalidDataReg(email, name, password)) {
             try {
-                await axiosRequest.register({email, name, password, language})
+                await registerRequest({email, name, password, language})
             } catch (e) {}
         }
     }

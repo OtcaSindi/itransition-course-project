@@ -1,9 +1,9 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext} from 'react'
 
 import AnimateModal from "../animate-modal"
 
 import styles from './delete-items-modal.module.css'
-import axiosRequest from "../../../services"
+import {deleteItemById} from "../../../services"
 import {AuthContext} from "../../../context/AuthContext"
 
 const DeleteItemsModal = ({items, operation, onClose}) => {
@@ -18,7 +18,7 @@ const DeleteItemsModal = ({items, operation, onClose}) => {
     })
 
     const deleteItemsById = async () => {
-        items.map(({id}) => axiosRequest.deleteItemById(token, id))
+        items.map(({id}) => deleteItemById(token, id))
         await Promise.all(items)
     }
 

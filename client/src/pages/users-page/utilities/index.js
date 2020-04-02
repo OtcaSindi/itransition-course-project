@@ -1,7 +1,7 @@
 import map from "lodash/fp/map"
 import {BLOCKED, NOT_BLOCKED, ADMIN, USER} from '../../../constants'
 import UserActionModal from "../../../components/modals/user-action-modal"
-import axiosRequest from "../../../services"
+import {blockById, deleteById, makeAdminById, unblockById} from "../../../services"
 import {Delete16, Blockchain16, } from '@carbon/icons-react'
 
 const headersItems = [
@@ -82,13 +82,13 @@ const renderUserModals = {
 const selectUserRequest = (action) => {
     switch (action) {
         case 'Block':
-            return axiosRequest.blockById
+            return blockById
         case 'Unblock':
-            return axiosRequest.unblockById
+            return unblockById
         case 'Delete':
-            return axiosRequest.deleteById
+            return deleteById
         case 'MakeAdmin':
-            return axiosRequest.makeAdminById
+            return makeAdminById
         default:
             return null
     }
