@@ -44,9 +44,9 @@ const AnimateModal = (
         timer.current = setTimeout(onClose, ANIMATION_TIMER)
     }, [onClose])
 
-    const handleRequestSubmit = useCallback(() => {
-        onRequestSubmit()
-        delayRequestClose()
+    const handleRequestSubmit = useCallback(async () => {
+        await onRequestSubmit()
+        await delayRequestClose()
     }, [onRequestSubmit, delayRequestClose])
 
     return (
