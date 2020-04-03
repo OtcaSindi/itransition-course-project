@@ -3,6 +3,7 @@ import React, {useContext} from "react"
 import {AuthContext} from "../../../context/AuthContext"
 import AnimateModal from "../animate-modal"
 import styles from "../delete-items-modal/delete-items-modal.module.css"
+import {useLoadingRequest} from "../../../hooks/use-disabled-primary-button"
 
 const UserActionModal = ({onClose, items, operation, primaryRequest}) => {
 
@@ -15,15 +16,19 @@ const UserActionModal = ({onClose, items, operation, primaryRequest}) => {
         }
     })
 
-    const request = async () => {
-        items.map(({id}) => primaryRequest(token, id))
+    const {loadingRequest, requestWithLoading} = useLoadingRequest(primaryRequest)
+
+    const request = async (closeModal) => {
+        items.map(({id}) => requestWithLoading(token, id))
         await Promise.all(items)
+        closeModal()
     }
 
     return (
         <AnimateModal
             modalLabel={operation}
             primaryButtonText={operation}
+            primaryButtonDisabled={loadingRequest}
             onRequestSubmit={request}
             onClose={onClose}
         >

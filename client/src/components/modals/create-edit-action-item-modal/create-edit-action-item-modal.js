@@ -8,6 +8,7 @@ import {AuthContext} from "../../../context/AuthContext"
 import './create-edit-action-item-modal.css'
 import styles from './create-edit-action-item-modal.module.css'
 import {fileUploaderOnAddedFiles} from "../../../utilities-functions"
+import {useLoadingRequest} from "../../../hooks/use-disabled-primary-button"
 
 const CreateEditActionItemModal = ({onClose, items, operation, collection, primaryRequest}) => {
 
@@ -39,6 +40,8 @@ const CreateEditActionItemModal = ({onClose, items, operation, collection, prima
     const [tags, setTags] = useState(resDefaultTags)
     const [srcImage, setSrcImage] = useState(defaultImage)
 
+    const {loadingRequest, requestWithLoading} = useLoadingRequest(primaryRequest)
+
     const handleTitle = (e) => {
         setTitle(e.target.value)
     }
@@ -58,9 +61,10 @@ const CreateEditActionItemModal = ({onClose, items, operation, collection, prima
             defaultImage === srcImage)
     }
 
-    const editItem = async () => {
+    const requestItem = async (closeModal) => {
         if (isChanged()) {
-            await primaryRequest(token, {title, description, tags, image: srcImage}, id)
+            await requestWithLoading(token, {title, description, tags, image: srcImage}, id)
+            closeModal()
         }
     }
 
@@ -68,8 +72,9 @@ const CreateEditActionItemModal = ({onClose, items, operation, collection, prima
         <AnimateModal
             modalHeading={defaultTitle}
             modalLabel={operation}
+            primaryButtonDisabled={loadingRequest}
             primaryButtonText={operation}
-            onRequestSubmit={editItem}
+            onRequestSubmit={requestItem}
             onClose={onClose}
         >
             <>

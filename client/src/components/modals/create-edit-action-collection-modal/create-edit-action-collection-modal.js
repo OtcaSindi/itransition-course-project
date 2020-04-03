@@ -8,6 +8,7 @@ import styles from './create-edit-action-collection-modal.module.css'
 import {useSelectorCollectionById} from "../../../hooks/use-selector-collection-by-id"
 import {THEME_BOOKS, THEME_GAMES, THEME_MOVIES} from "../../../constants"
 import {fileUploaderOnAddedFiles} from "../../../utilities-functions"
+import {useLoadingRequest} from "../../../hooks/use-disabled-primary-button"
 
 const CreateEditActionCollectionModal = ({onClose, items, userId, operation, primaryRequest}) => {
 
@@ -30,6 +31,8 @@ const CreateEditActionCollectionModal = ({onClose, items, userId, operation, pri
     if (!id) {
         id = userId
     }
+
+    const {loadingRequest, requestWithLoading} = useLoadingRequest(primaryRequest)
 
     const [title, setTitle] = useState(defaultTitle)
     const [description, setDescription] = useState(defaultDescription)
@@ -68,9 +71,9 @@ const CreateEditActionCollectionModal = ({onClose, items, userId, operation, pri
         )
     }
 
-    const submitCollection = async () => {
+    const submitCollection = async (closeModal) => {
         if (isChanged()) {
-            await primaryRequest(token, {
+            await requestWithLoading(token, {
                 title,
                 description,
                 theme,
@@ -78,6 +81,7 @@ const CreateEditActionCollectionModal = ({onClose, items, userId, operation, pri
                 itemTitleDefault,
                 itemTagsDefault
             }, id)
+            closeModal()
         }
     }
 
@@ -86,6 +90,7 @@ const CreateEditActionCollectionModal = ({onClose, items, userId, operation, pri
             modalHeading={defaultTitle}
             modalLabel={operation}
             primaryButtonText={operation}
+            primaryButtonDisabled={loadingRequest}
             onRequestSubmit={submitCollection}
             onClose={onClose}
         >

@@ -44,10 +44,19 @@ const AnimateModal = (
         timer.current = setTimeout(onClose, ANIMATION_TIMER)
     }, [onClose])
 
-    const handleRequestSubmit = useCallback(async () => {
-        await onRequestSubmit()
-        await delayRequestClose()
-    }, [onRequestSubmit, delayRequestClose])
+    const handleRequestSubmit = useCallback(
+        () => {
+            onRequestSubmit(delayRequestClose)
+        },
+        [onRequestSubmit, delayRequestClose],
+    )
+
+    const handleRequestClose = useCallback(
+        () => {
+            onRequestClose(delayRequestClose)
+        },
+        [onRequestClose, delayRequestClose],
+    )
 
     return (
         <ModalComponent

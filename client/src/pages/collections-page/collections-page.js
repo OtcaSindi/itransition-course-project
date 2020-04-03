@@ -16,9 +16,11 @@ import {
 import MainTable from "../../components/main-table"
 import DynamicComponent from "../../components/dynamic-component"
 import {transformActionKeyToTitle} from "../../utilities-functions"
+import {useParams} from "react-router"
 
 const CollectionSPage = ({userId}) => {
-
+    const {id} = useParams()
+    console.log(id, userId)
     const {token, logout} = useContext(AuthContext)
     const {errorStatus} = useSelector(selector)
 

@@ -11,6 +11,7 @@ import ContentModalReg from "./utilities/content-modal-reg"
 import {LANGUAGE_ENGLISH} from "../../../constants"
 
 import styles from './auth-modal.module.css'
+import {useLoadingRequest} from "../../../hooks/use-disabled-primary-button"
 
 
 const invalidDataLogin = (email, password) => {
@@ -35,6 +36,9 @@ const AuthModal = () => {
     const [invalidPassword, setInvalidPassword] = useState('')
 
     const [authModal, setAuthModal] = useState(true)
+
+    const {loadingRequest: loadingLogin, requestWithLoading: loginWithLoading} = useLoadingRequest(loginRequest)
+    const {loadingRequest: loadingReg, requestWithLoading: regWithLoading} = useLoadingRequest(registerRequest)
 
 
     const handleEmail = (e) => {
@@ -72,20 +76,24 @@ const AuthModal = () => {
         }
     }
 
-    const loginHandler = async () => {
-            if (!invalidDataLogin(email, password)) {
-                try {
-                    const {data: {token, userId, userIsAdmin}} = await loginRequest({email, password})
-                    login(token, userId, userIsAdmin)
-                } catch (e) {}
+    const loginHandler = async (closeModal) => {
+        if (!invalidDataLogin(email, password)) {
+            try {
+                const {data: {token, userId, userIsAdmin}} = await loginWithLoading({email, password})
+                login(token, userId, userIsAdmin)
+                closeModal()
+            } catch (e) {
             }
+        }
     }
 
-    const regHandler = async () => {
+    const regHandler = async (closeModal) => {
         if (!invalidDataReg(email, name, password)) {
             try {
-                await registerRequest({email, name, password, language})
-            } catch (e) {}
+                await regWithLoading({email, name, password, language})
+                closeModal()
+            } catch (e) {
+            }
         }
     }
 
@@ -99,11 +107,19 @@ const AuthModal = () => {
         history.push('/news')
     }, [setOpenModal, history])
 
+    const isPrimaryButtonDisabled = () => {
+        return loadingLogin ||
+        loadingReg ||
+        (authModal ?
+            invalidDataLogin(email, password) :
+            invalidDataReg(email, name, password))
+    }
+
     return (
         <AnimateModal
             modalHeading={authModal ? 'Log in to your account' : 'Create your account'}
             primaryButtonText={authModal ? "Log in" : 'Sign Up'}
-            primaryButtonDisabled={authModal ? invalidDataLogin(email, password) : invalidDataReg(email, name, password)}
+            primaryButtonDisabled={isPrimaryButtonDisabled()}
             onRequestSubmit={authModal ? loginHandler : regHandler}
             onClose={memoizedCloseModal}
         >

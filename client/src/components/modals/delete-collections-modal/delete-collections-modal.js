@@ -4,6 +4,7 @@ import AnimateModal from "../animate-modal"
 
 import styles from './delete-collections-modal.module.css'
 import {AuthContext} from "../../../context/AuthContext"
+import {useLoadingRequest} from "../../../hooks/use-disabled-primary-button"
 
 const DeleteCollectionsModal = ({items, operation, onClose, primaryRequest}) => {
 
@@ -17,9 +18,12 @@ const DeleteCollectionsModal = ({items, operation, onClose, primaryRequest}) => 
         }
     })
 
-    const deleteCollectionsById = async () => {
-        items.map(({id}) => primaryRequest(token, id))
+    const {loadingRequest, requestWithLoading} = useLoadingRequest(primaryRequest)
+
+    const deleteCollectionsById = async (closeModal) => {
+        items.map(({id}) => requestWithLoading(token, id))
         await Promise.all(items)
+        closeModal()
     }
 
     return (
@@ -27,6 +31,7 @@ const DeleteCollectionsModal = ({items, operation, onClose, primaryRequest}) => 
             modalLabel={operation}
             primaryButtonText={operation}
             onRequestSubmit={deleteCollectionsById}
+            primaryButtonDisabled={loadingRequest}
             onClose={onClose}
         >
             <div className={styles.centerDeleteModal}>

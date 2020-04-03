@@ -20,7 +20,6 @@ import {
 import {transformActionKeyToTitle} from "../../utilities-functions"
 
 const ItemsPage = ({collectionId}) => {
-
     const {token, logout} = useContext(AuthContext)
     const {collection, errorStatus} = useSelector(selector)
 
