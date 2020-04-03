@@ -1,5 +1,6 @@
 const initialState = {
     data: [],
+    user: {},
     loading: false,
     errorStatus: null
 }
@@ -18,12 +19,13 @@ const collectionsReducer = (state = initialState, action) => {
 
         case 'FETCH_COLLECTIONS_SUCCESS': {
 
-            const data = action.payload
+            const {collections: data, user} = action.payload
 
             return {
                 ...state,
                 loading: false,
-                data
+                data,
+                user
             }
         }
 
