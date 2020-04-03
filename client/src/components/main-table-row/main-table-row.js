@@ -1,57 +1,17 @@
-import React from "react"
+import React, {createRef} from "react"
 import map from "lodash/map"
 import isEmpty from "lodash/isEmpty"
 import {
     OverflowMenu,
     OverflowMenuItem,
     TableCell,
-    TableExpandRow, TableRow,
     TableSelectRow
 } from "carbon-components-react"
 
-import styles from './main-table-row.module.css'
-import MainTableExpandedRowItem from "./main-table-expanded-row-item"
-import MainTableExpandedRowUser from "./main-table-expanded-row-user"
+import DynamicExpandComponent from "./dynamic-expand-component"
+import DynamicExpandedComponent from "./dynamic-expanded-component"
 
 const selectedRowsIds = (arr) => map(arr, ({id}) => id)
-
-const DynamicExpandComponent = ({expandRows, children, ...props}) => {
-    return (
-        (
-            expandRows ?
-                <TableExpandRow {...props}>
-                    {children}
-                </TableExpandRow> :
-                <TableRow>
-                    {children}
-                </TableRow>
-        )
-    )
-}
-
-const DynamicExpandedComponent = ({expandRows, isExpanded, initialRow, colSpan}) => {
-    if (!expandRows) {
-        return null
-    }
-    if (isExpanded) {
-        if (expandRows === 'items') {
-            return (
-                <MainTableExpandedRowItem
-                    initialRow={initialRow}
-                    colSpan={colSpan}
-                />
-            )
-        } else if (expandRows === 'users') {
-            return (
-                <MainTableExpandedRowUser
-                    initialRow={initialRow}
-                    colSpan={colSpan}
-                />
-            )
-        }
-    }
-    return null
-}
 
 const MainTableRow = (
     {
@@ -66,6 +26,8 @@ const MainTableRow = (
         headers,
         expandRows,
     }) => {
+
+    const ref = createRef()
 
     return (
         <>
@@ -82,7 +44,7 @@ const MainTableRow = (
                         !selectedRowsIds(selectedRows).find(id => id === row.id) &&
                         <OverflowMenu flipped>
                             {OverflowActionInfoComponent &&
-                            <OverflowActionInfoComponent id={row.id}/>}
+                            <OverflowActionInfoComponent ref={ref} id={row.id}/>}
                             {map(overflowActions, ({name, key, onClick}) => (
                                 <OverflowMenuItem key={key}
                                                   itemText={name}

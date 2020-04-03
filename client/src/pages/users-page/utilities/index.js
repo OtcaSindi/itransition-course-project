@@ -6,9 +6,10 @@ import {BLOCKED, NOT_BLOCKED, ADMIN, USER} from '../../../constants'
 import UserActionModal from "../../../components/modals/user-action-modal"
 import {blockById, deleteById, makeAdminById, unblockById} from "../../../services"
 import {OverflowMenuItem} from "carbon-components-react"
-import React from "react"
+import React, {forwardRef} from "react"
 import {useAuth} from "../../../hooks/use-auth"
 import {AuthContext} from "../../../context/AuthContext"
+import noop from "lodash/noop"
 
 const headersItems = [
     {
@@ -67,7 +68,7 @@ const overflowActions = [
         key: 'delete'
     },
     {
-        name: 'MakeAdmin',
+        name: 'Make admin',
         key: 'make_admin'
     },
 ]
@@ -104,7 +105,7 @@ const selectUserRequest = (action) => {
     }
 }
 
-const OverflowActionInfoUserComponent = ({id}) => {
+const OverflowActionInfoUserComponent = forwardRef(({id}, ref) => {
     const history = useHistory()
     const {userId} = useAuth(AuthContext)
 
@@ -118,13 +119,14 @@ const OverflowActionInfoUserComponent = ({id}) => {
 
     return (
         <OverflowMenuItem
+            ref={ref}
+            closeMenu={noop}
             key="Info"
             itemText="Info"
             onClick={historyPush(id)}
         />
     )
-
-}
+})
 
 
 export {

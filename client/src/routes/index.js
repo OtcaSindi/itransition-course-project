@@ -2,7 +2,7 @@ import React, {useContext} from 'react'
 import {Switch, Route} from 'react-router-dom'
 
 import UsersPage from '../pages/users-page/users-page'
-import MainPage from '../pages/MainPage'
+import MainPage from '../pages/main-page/main-page'
 import CollectionsPage from "../pages/collections-page"
 import ItemsPage from "../pages/items-page"
 import AuthModal from "../components/modals/auth-modal"
@@ -23,7 +23,7 @@ const Routes = ({isAuthenticated, userIsAdmin}) => {
 
                 {isAuthenticated && userIsAdmin && <Route path="/users/:id" exact
                                                           render={({match}) => (
-                                                              <CollectionsPage idUser={(match.params.id)}/>)}/>}
+                                                              <CollectionsPage userId={(match.params.id)}/>)}/>}
 
                 <Route path="/collections" exact render={() => (<CollectionsPage/>)}/>
 

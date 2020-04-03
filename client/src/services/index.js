@@ -103,9 +103,9 @@ const create = (baseURL = '') => {
         return await api.post('/api/collections/create', form)
     }
 
-    const createCollectionById = async (token, form, userId) => {
+    const createCollectionByUserId = async (token, form, userId) => {
         setHeader(token)
-        return await api.post(`/api/collections/create/${userId}`, form)
+        return await api.post(`/api/collections/create/${userId ? userId : ''}`, form)
     }
 
     const editCollectionById = async (token, form, collectionId) => {
@@ -162,7 +162,7 @@ const create = (baseURL = '') => {
         editCollectionById,
         deleteCollectionById,
         createCollection,
-        createCollectionById,
+        createCollectionByUserId,
         createItemByCollectionId,
         editItemById,
         deleteItemById,
@@ -184,8 +184,7 @@ export const {
     getCollectionsById,
     editCollectionById,
     deleteCollectionById,
-    createCollection,
-    createCollectionById,
+    createCollectionByUserId,
     createItemByCollectionId,
     editItemById,
     deleteItemById,

@@ -6,7 +6,7 @@ import {
     SearchSkeleton,
 } from 'carbon-components-react'
 
-import {Add16, Delete16} from "@carbon/icons-react"
+import {Add16} from "@carbon/icons-react"
 
 import map from 'lodash/map'
 import isEmpty from 'lodash/isEmpty'
@@ -99,7 +99,7 @@ const MainTable = (
                     <Table>
                         <TableHead>
                             <TableRow>
-                                {expandRows && <TableHeader onClick={expandAll}>Expand</TableHeader>}
+                                {expandRows && <TableHeader key="expand" onClick={expandAll}>Expand</TableHeader>}
                                 <TableSelectAll {...getSelectionProps()} />
                                 {headers.map(({header}) => (
                                     <TableHeader key={header} {...getHeaderProps({header})}>

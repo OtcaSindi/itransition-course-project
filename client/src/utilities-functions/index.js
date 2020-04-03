@@ -12,7 +12,17 @@ const transformActionKeyToTitle = (string) => {
         string[0].toUpperCase() + string.slice(1).replace('_', ' ') : null
 }
 
+const fileUploaderOnAddedFiles = (setImage) => (e, {addedFiles}) => {
+    const file = addedFiles[0]
+    const reader = new FileReader()
+    reader.onload = (e) => {
+        setImage(e.target.result)
+    }
+    reader.readAsDataURL(file)
+}
+
 export {
     dateFormat,
-    transformActionKeyToTitle
+    transformActionKeyToTitle,
+    fileUploaderOnAddedFiles
 }

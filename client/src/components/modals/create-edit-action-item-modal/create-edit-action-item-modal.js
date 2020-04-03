@@ -7,7 +7,7 @@ import {AuthContext} from "../../../context/AuthContext"
 
 import './create-edit-action-item-modal.css'
 import styles from './create-edit-action-item-modal.module.css'
-import {itemsReducerSelector} from "../../../selectors"
+import {fileUploaderOnAddedFiles} from "../../../utilities-functions"
 
 const CreateEditActionItemModal = ({onClose, items, operation, collection, primaryRequest}) => {
 
@@ -24,7 +24,7 @@ const CreateEditActionItemModal = ({onClose, items, operation, collection, prima
         description: defaultDescription,
         tags: defaultTags,
         image: defaultImage,
-    } = useSelectorItemById(itemsReducerSelector, id)
+    } = useSelectorItemById(id)
     resDefaultTitle = defaultTitle
     resDefaultTags = defaultTags
 
@@ -105,14 +105,7 @@ const CreateEditActionItemModal = ({onClose, items, operation, collection, prima
                 <br/>
                 <FileUploaderDropContainer
                     accept={['.png']}
-                    onAddFiles={(e, {addedFiles}) => {
-                        const file = addedFiles[0]
-                        const reader = new FileReader()
-                        reader.onload = (e) => {
-                            setSrcImage(e.target.result)
-                        }
-                        reader.readAsDataURL(file)
-                    }}
+                    onAddFiles={fileUploaderOnAddedFiles(setSrcImage)}
                     labelText="Drag and drop image(.png) here or click to upload"
                     id="uploader"
                 />

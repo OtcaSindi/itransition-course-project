@@ -1,6 +1,4 @@
 import {
-    createCollectionById,
-    deleteCollectionById,
     getAllItems,
     getItemsByCollectionId
 } from "../services"
@@ -49,36 +47,10 @@ const fetchAllItems = (token) => (dispatch) => {
         )
 }
 
-const createItemRequest = (token, form, userId) => (dispatch) => {
-    dispatch(itemsRequested())
-    createCollectionById(token, form, userId || '')
-        .then(({data}) => {
-            dispatch(itemsLoaded(data))
-        })
-        .catch((err) => {
-                dispatch(itemsError(err))
-            }
-        )
-}
-
-const deleteItemRequest = (token, id, userId) => (dispatch) => {
-    dispatch(itemsRequested())
-    deleteCollectionById(token, id)
-        .then(() => {
-            dispatch(itemsLoaded(token, userId))
-        })
-        .catch((err) => {
-                dispatch(itemsError(err))
-            }
-        )
-}
-
 export {
     itemsRequested,
     itemsLoaded,
     itemsError,
     fetchItems,
-    createItemRequest,
-    deleteItemRequest,
     fetchAllItems
 }

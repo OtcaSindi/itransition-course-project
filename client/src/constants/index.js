@@ -1,15 +1,6 @@
-const THEME_GAMES = {
-    title: 'Games',
-    color: '#fcd985'
-}
-const THEME_BOOKS = {
-    title: 'Books',
-    color: '#94c0c2'
-}
-const THEME_MOVIES = {
-    title: 'Movies',
-    color: '#f6d2d6'
-}
+const THEME_GAMES = 'Games'
+const THEME_BOOKS = 'Books'
+const THEME_MOVIES = 'Movies'
 
 const BLOCKED = 'Blocked'
 const NOT_BLOCKED = 'Not blocked'

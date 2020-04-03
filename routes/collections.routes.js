@@ -38,9 +38,9 @@ router.post('/create', auth, async (req, res) => {
             itemTagsDefault
         })
         await collection.save()
-        const collections = await Collection.find({owner: req.user.userId})
-        res.status(201).json(collectionsForFront(collections))
+        res.status(201).json(...collectionsForFront([collection]))
     } catch (e) {
+        console.log(e)
         res.status(500).json({message: 'Something went wrong, try again.'})
     }
 })
@@ -56,19 +56,18 @@ router.post('/edit/:id', auth, async (req, res) => {
 
 router.post('/create/:id', auth, checkAdmin, async (req, res) => {
     try {
-        const {title, description, themeTitle, themeColor, itemTitleDefault, itemTagsDefault} = req.body
+        const {title, description, theme, image, itemTitleDefault, itemTagsDefault} = req.body
         const collection = new Collection({
             owner: req.params.id,
             title,
-            themeTitle,
-            themeColor,
+            theme,
             description,
+            image: new Buffer(image),
             itemTitleDefault,
             itemTagsDefault
         })
         await collection.save()
-        const collections = await Collection.find({owner: req.params.id})
-        res.status(201).json(collectionsForFront(collections))
+        res.status(201).json(...collectionsForFront([collection]))
     } catch (e) {
         res.status(500).json({message: 'Something went wrong, try again.'})
     }

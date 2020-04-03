@@ -1,7 +1,8 @@
 import {useSelector} from "react-redux"
+import {itemsReducerSelector} from "../../selectors"
 
-export const useSelectorItemById = (selector, id) => {
-    const {data} = useSelector(selector)
+export const useSelectorItemById = (id) => {
+    const {data} = useSelector(itemsReducerSelector)
     if (!id) {
         return {
             title: '',

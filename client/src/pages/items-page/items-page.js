@@ -2,7 +2,6 @@ import React, {useCallback, useContext, useEffect, useMemo} from 'react'
 import {useSelector} from "react-redux"
 
 import DynamicComponent from "../../components/dynamic-component"
-import {itemsReducerSelector} from '../../selectors'
 import {fetchItems} from "../../actionsCreator"
 import MainTable from "../../components/main-table"
 import {AuthContext} from "../../context/AuthContext"
@@ -23,7 +22,7 @@ import {transformActionKeyToTitle} from "../../utilities-functions"
 const ItemsPage = ({collectionId}) => {
 
     const {token, logout} = useContext(AuthContext)
-    const {collection, errorStatus} = useSelector(itemsReducerSelector)
+    const {collection, errorStatus} = useSelector(selector)
 
     useEffect(() => {
         if (errorStatus === 401) {

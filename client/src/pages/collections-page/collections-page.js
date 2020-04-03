@@ -1,33 +1,75 @@
-import React, {useContext, useEffect} from "react"
-import {useDispatch, useSelector} from "react-redux"
+import React, {useCallback, useContext, useEffect, useMemo} from "react"
+import {useSelector} from "react-redux"
 
-import CreateCollectionModal from "../../components/create-collection-modal"
 import {AuthContext} from "../../context/AuthContext"
-import CollectionsList from "../../components/collections-list"
+import {collectionsReducerSelector as selector} from "../../selectors"
 import {fetchCollections} from "../../actionsCreator"
+import {useTableData} from "../../hooks/use-table-data"
+import {
+    batchActions,
+    headersItems,
+    initialRowsMapper,
+    overflowActions,
+    renderCollectionModal, selectCollectionRequest,
+    toolbarActions
+} from "./utulities"
+import MainTable from "../../components/main-table"
+import DynamicComponent from "../../components/dynamic-component"
+import {transformActionKeyToTitle} from "../../utilities-functions"
 
-function CollectionsPage({idUser}) {
+const CollectionSPage = ({userId}) => {
 
-    const {errorStatus} = useSelector(state => state.collectionsReducer)
-    const {token, setOpenModal} = useContext(AuthContext)
-    const dispatch = useDispatch()
+    const {token, logout} = useContext(AuthContext)
+    const {errorStatus} = useSelector(selector)
 
     useEffect(() => {
-        dispatch(fetchCollections(token, idUser))
         if (errorStatus === 401) {
-            setOpenModal(true)
+            logout()
         }
-    }, [dispatch, token, idUser, errorStatus])
+    }, [logout])
+
+    const memoizedAction = useMemo(() => {
+        return fetchCollections(token, userId)
+    }, [token, userId])
+
+    const {
+        tableProps,
+        menuAction,
+        setReFetch,
+        onClose,
+    } = useTableData({
+        action: memoizedAction,
+        headersItems,
+        selector,
+        initialRowsMapper,
+        batchActions,
+        overflowActions,
+        toolbarActions,
+    })
+
+    const onModalClose = useCallback(() => {
+        setReFetch(i => !i)
+        onClose()
+    }, [setReFetch, onClose])
 
     return (
-        <div className="container">
-            {idUser && <h5 className="center">User's (ID: {idUser}) collections</h5>}
-            <div className="modal-and-download">
-                <CreateCollectionModal idUser={idUser}/>
-            </div>
-            <CollectionsList idUser={idUser}/>
-        </div>
+        <>
+            <DynamicComponent
+                component={renderCollectionModal[menuAction.action]}
+                primaryRequest={selectCollectionRequest(menuAction.action)}
+                operation={transformActionKeyToTitle(menuAction.action)}
+                {...menuAction}
+                onClose={onModalClose}
+                userId={userId}
+            />
+
+            <MainTable
+                tableTitle="Collections"
+                {...tableProps}
+            />
+        </>
     )
+
 }
 
-export default CollectionsPage
+export default CollectionSPage

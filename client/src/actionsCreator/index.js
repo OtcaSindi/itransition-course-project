@@ -21,8 +21,6 @@ import {
     itemsLoaded,
     itemsError,
     fetchItems,
-    createItemRequest,
-    deleteItemRequest,
     fetchAllItems
 } from './items'
 
@@ -42,7 +40,5 @@ export {
     itemsLoaded,
     itemsError,
     fetchItems,
-    createItemRequest,
-    deleteItemRequest,
     fetchAllItems
 }

@@ -1,5 +1,5 @@
 import {
-    createCollectionById,
+    createCollectionByUserId,
     deleteCollectionById,
     editCollectionById,
     getCollectionsById
@@ -32,14 +32,14 @@ const fetchCollections = (token, userId) => (dispatch) => {
             dispatch(collectionsLoaded(data))
         })
         .catch((err) => {
-                dispatch(collectionsError(err.response.status))
+                dispatch(collectionsError(err))
             }
         )
 }
 
 const createCollectionRequest = (token, form, userId) => (dispatch) => {
     dispatch(collectionsRequested())
-    createCollectionById(token, form, userId || '')
+    createCollectionByUserId(token, form, userId || '')
         .then(({data}) => {
             dispatch(collectionsLoaded(data))
         })

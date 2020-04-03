@@ -1,5 +1,6 @@
 import map from "lodash/fp/map"
-import {createCollectionById, editCollectionById, deleteCollectionById} from "../../../services"
+import {createCollectionByUserId, editCollectionById, deleteCollectionById} from "../../../services"
+import CreateEditActionCollectionModal from "../../../components/modals/create-edit-action-collection-modal"
 
 const headersItems = [
     {
@@ -26,22 +27,26 @@ const headersItems = [
 
 const batchActions = [
     {
-        name: 'Delete'
+        name: 'Delete',
+        key: 'delete'
     },
 ]
 
 const overflowActions = [
     {
-        name: 'Edit'
+        name: 'Edit',
+        key: 'edit'
     },
     {
-        name: 'Delete'
+        name: 'Delete',
+        key: 'delete'
     },
 ]
 
 const toolbarActions = [
     {
-        name: 'Create'
+        name: 'Create',
+        key: 'create'
     }
 ]
 
@@ -57,19 +62,19 @@ const initialRowsMapper = map(({id, title, description, theme, image, itemTitleD
     }
 })
 
-const renderItemModals = {
-    Delete: '',
-    Edit: '',
-    Create: ''
+const renderCollectionModal = {
+    delete: '',
+    edit: CreateEditActionCollectionModal,
+    create: CreateEditActionCollectionModal
 }
 
-const selectItemRequest = (action) => {
+const selectCollectionRequest = (action) => {
     switch (action) {
-        case 'Edit':
+        case 'edit':
             return editCollectionById
-        case 'Create':
-            return createCollectionById
-        case 'Delete':
+        case 'create':
+            return createCollectionByUserId
+        case 'delete':
             return deleteCollectionById
         default:
             return null
@@ -82,6 +87,6 @@ export {
     overflowActions,
     toolbarActions,
     initialRowsMapper,
-    renderItemModals,
-    selectItemRequest
+    renderCollectionModal,
+    selectCollectionRequest
 }
