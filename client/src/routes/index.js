@@ -25,12 +25,12 @@ const Routes = ({isAuthenticated, userIsAdmin}) => {
                                                           render={({match}) => (
                                                               <CollectionsPage userId={(match.params.id)}/>)}/>}
 
-                <Route path="/collections" exact render={() => (<CollectionsPage/>)}/>
+                {isAuthenticated && <Route path="/collections" exact component={CollectionsPage}/>}
 
                 {isAuthenticated && <Route path="/collections/:id" exact
                                            render={({match}) => (<ItemsPage collectionId={match.params.id}/>)}/>}
 
-                {/*<Redirect to="/news"/>*/}
+                <Redirect to="/news"/>
             </Switch>
         </>
     )

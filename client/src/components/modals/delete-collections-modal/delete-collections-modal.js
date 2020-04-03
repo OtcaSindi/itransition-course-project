@@ -2,22 +2,22 @@ import React, {useContext} from 'react'
 
 import AnimateModal from "../animate-modal"
 
-import styles from './delete-items-modal.module.css'
+import styles from './delete-collections-modal.module.css'
 import {AuthContext} from "../../../context/AuthContext"
 
-const DeleteItemsModal = ({items, operation, onClose, primaryRequest}) => {
+const DeleteCollectionsModal = ({items, operation, onClose, primaryRequest}) => {
 
     const {token} = useContext(AuthContext)
 
-    const itemsTitles = items.map(({cells, id}) => {
+    const collectionTitlesAndTheme = items.map(({cells, id}) => {
         return {
             id,
             title: cells[0].value,
-            dateCreation: cells[2].value
+            theme: cells[4].value
         }
     })
 
-    const deleteItemsById = async () => {
+    const deleteCollectionsById = async () => {
         items.map(({id}) => primaryRequest(token, id))
         await Promise.all(items)
     }
@@ -26,20 +26,20 @@ const DeleteItemsModal = ({items, operation, onClose, primaryRequest}) => {
         <AnimateModal
             modalLabel={operation}
             primaryButtonText={operation}
-            onRequestSubmit={deleteItemsById}
+            onRequestSubmit={deleteCollectionsById}
             onClose={onClose}
         >
             <div className={styles.centerDeleteModal}>
                 <span>You really want to delete </span>
                 {
-                    itemsTitles.map(({id, title, dateCreation}, idx) => {
-                        if (idx !== itemsTitles.length - 1) {
+                    collectionTitlesAndTheme.map(({id, title, theme}, idx) => {
+                        if (idx !== collectionTitlesAndTheme.length - 1) {
                             return (
-                                <span key={id}><strong>«{title} ({dateCreation})»</strong>, </span>
+                                <span key={id}><strong>«{title} ({theme})»</strong>, </span>
                             )
                         } else {
                             return (
-                                <span key={id}><strong>«{title} ({dateCreation})»</strong>?</span>
+                                <span key={id}><strong>«{title} ({theme})»</strong>?</span>
                             )
                         }
                     })
@@ -49,4 +49,4 @@ const DeleteItemsModal = ({items, operation, onClose, primaryRequest}) => {
     )
 }
 
-export default DeleteItemsModal
+export default DeleteCollectionsModal

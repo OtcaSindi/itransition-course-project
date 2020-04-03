@@ -1,6 +1,13 @@
 import map from "lodash/fp/map"
 import {createCollectionByUserId, editCollectionById, deleteCollectionById} from "../../../services"
 import CreateEditActionCollectionModal from "../../../components/modals/create-edit-action-collection-modal"
+import DeleteCollectionsModal from "../../../components/modals/delete-collections-modal/delete-collections-modal"
+import React, {forwardRef} from "react"
+import {useHistory} from "react-router"
+import {useAuth} from "../../../hooks/use-auth"
+import {AuthContext} from "../../../context/AuthContext"
+import {OverflowMenuItem} from "carbon-components-react"
+import noop from "lodash/noop"
 
 const headersItems = [
     {
@@ -63,7 +70,7 @@ const initialRowsMapper = map(({id, title, description, theme, image, itemTitleD
 })
 
 const renderCollectionModal = {
-    delete: '',
+    delete: DeleteCollectionsModal,
     edit: CreateEditActionCollectionModal,
     create: CreateEditActionCollectionModal
 }
@@ -81,6 +88,25 @@ const selectCollectionRequest = (action) => {
     }
 }
 
+const OverflowActionInfoCollectionComponent = forwardRef(({id}, ref) => {
+    const history = useHistory()
+    const {userId} = useAuth(AuthContext)
+
+    const historyPush = (id) => () => {
+        history.push(`/collections/${id}`)
+    }
+
+    return (
+        <OverflowMenuItem
+            ref={ref}
+            closeMenu={noop}
+            key="Items"
+            itemText="Items"
+            onClick={historyPush(id)}
+        />
+    )
+})
+
 export {
     headersItems,
     batchActions,
@@ -88,5 +114,6 @@ export {
     toolbarActions,
     initialRowsMapper,
     renderCollectionModal,
-    selectCollectionRequest
+    selectCollectionRequest,
+    OverflowActionInfoCollectionComponent
 }

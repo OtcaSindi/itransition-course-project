@@ -8,7 +8,7 @@ import {useTableData} from "../../hooks/use-table-data"
 import {
     batchActions,
     headersItems,
-    initialRowsMapper,
+    initialRowsMapper, OverflowActionInfoCollectionComponent,
     overflowActions,
     renderCollectionModal, selectCollectionRequest,
     toolbarActions
@@ -26,7 +26,7 @@ const CollectionSPage = ({userId}) => {
         if (errorStatus === 401) {
             logout()
         }
-    }, [logout])
+    }, [errorStatus])
 
     const memoizedAction = useMemo(() => {
         return fetchCollections(token, userId)
@@ -66,6 +66,7 @@ const CollectionSPage = ({userId}) => {
             <MainTable
                 tableTitle="Collections"
                 {...tableProps}
+                OverflowActionInfoComponent={OverflowActionInfoCollectionComponent}
             />
         </>
     )
