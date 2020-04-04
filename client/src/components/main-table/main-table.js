@@ -76,9 +76,6 @@ const MainTable = (
                         <TableToolbarContent>
                             {loading ? <SearchSkeleton className={styles.searchSkeletonToolbar}/> :
                                 <>
-                                    <TableToolbarSearch
-                                        persistent
-                                        onChange={onInputChange}/>
                                     {map(toolbarActions, ({name, key, onClick}) => {
                                         return (
                                             <Button
@@ -92,6 +89,9 @@ const MainTable = (
                                             </Button>
                                         )
                                     })}
+                                    <TableToolbarSearch
+                                        persistent
+                                        onChange={onInputChange}/>
                                 </>
                             }
                         </TableToolbarContent>

@@ -143,6 +143,10 @@ const create = (baseURL = '') => {
         return await api.delete(`/api/items/delete/${id}`)
     }
 
+    const searchItems = async (search) => {
+        return await api.post('/api/items/search', search)
+    }
+
     const addCommentByItemId = async (token, form, itemId) => {
         setHeader(token)
         return await api.post(`/api/items/${itemId}/create-comment`, form)
@@ -169,6 +173,7 @@ const create = (baseURL = '') => {
         getItemsByCollectionId,
         getAllItems,
         addCommentByItemId,
+        searchItems,
         setHeader
     }
 }
@@ -190,6 +195,6 @@ export const {
     deleteItemById,
     getItemsByCollectionId,
     getAllItems,
+    searchItems,
     addCommentByItemId,
-    setHeader
 } = create()

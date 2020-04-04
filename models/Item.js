@@ -1,6 +1,6 @@
 const {Schema, model, Types} = require('mongoose')
 
-const schema = new Schema({
+const schemaItem = new Schema({
     owner: {type: Types.ObjectId, required: true},
     title: {type: String, required: true},
     description: {type: String},
@@ -16,4 +16,6 @@ const schema = new Schema({
     ]
 })
 
-module.exports = model('Item', schema)
+schemaItem.index({"$**": 'text'})
+
+module.exports = model('Item', schemaItem)

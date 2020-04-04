@@ -5,7 +5,7 @@ const path = require('path')
 
 const app = express()
 
-app.use(express.urlencoded({limit: '5mb'}));
+app.use(express.urlencoded({extended: true, limit: '5mb'}));
 app.use(express.json({extended: true, limit: '5mb'}))
 
 app.use('/api/auth', require('./routes/auth.routes'))

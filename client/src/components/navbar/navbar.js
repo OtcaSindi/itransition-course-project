@@ -5,7 +5,6 @@ import {useHistory} from 'react-router'
 import {AuthContext} from "../../context/AuthContext"
 
 import styles from './narbar.module.css'
-import {useOpenAuthModal} from "../../hooks/use-open-auth-modal"
 
 const Navbar = () => {
 
@@ -22,7 +21,7 @@ const Navbar = () => {
             {userIsAdmin && <NavLink to="/users" className={styles.navLink}>Users</NavLink>}
             {
                 isAuthenticated ?
-                <NavLink to="/collections" className={styles.navLink}>My collections</NavLink> :
+                    <NavLink to="/collections" className={styles.navLink}>My collections</NavLink> :
                     <a href="/" onClick={(e) => {
                         e.preventDefault()
                         setOpenModal(true)

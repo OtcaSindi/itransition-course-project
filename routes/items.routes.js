@@ -80,4 +80,16 @@ router.post('/:idItem/create-comment', auth, async (req, res) => {
     }
 })
 
+router.post('/search', async (req, res) => {
+    try {
+        await Item.syncIndexes()
+        const {search} = req.body
+        const searchedItems = await Item.find({$text: {$search: search}})
+        res.status(200).json(itemsForFront(searchedItems))
+    } catch (e) {
+        console.log(e)
+        res.status(500).json({message: 'Something went wrong, try again.'})
+    }
+})
+
 module.exports = router
