@@ -8,7 +8,8 @@ const userSchema = new Schema({
     blocked: {type: Boolean, default: false},
     isAdmin: {type: Boolean, default: false},
     collections: [{type: Types.ObjectId, ref: 'Collection'}],
-    language: {type: String, default: LANGUAGE_ENGLISH}
+    language: {type: String, default: LANGUAGE_ENGLISH},
+    idLikedItems: [{type: Types.ObjectId}]
 })
 
 module.exports = model('User', userSchema)

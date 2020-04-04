@@ -34,7 +34,8 @@ const itemsReducer = (state = initialState, action) => {
 
             return {
                 ...state,
-                errorStatus: status
+                errorStatus: status,
+                loading: false
             }
         }
 

@@ -1,5 +1,5 @@
 const itemsForFront = (items) => {
-    return items.map(({_id, title, description, image, tags, likes, dateCreation, comments}) => {
+    return items.map(({_id, title, description, image, tags, countLikes, dateCreation, comments}) => {
         const imageToString = image ? image.toString() : image
         return {
             id: _id,
@@ -7,7 +7,7 @@ const itemsForFront = (items) => {
             description,
             image: imageToString,
             tags,
-            likes,
+            countLikes,
             dateCreation,
             comments
         }

@@ -128,6 +128,11 @@ const create = (baseURL = '') => {
         return await api.get(`/api/items${optionsStr ? optionsStr : ''}`)
     }
 
+    const likedItem = async (token, itemId) => {
+        setHeader(token)
+        return await api.post(`/api/items/liked/${itemId}`)
+    }
+
     const createItemByCollectionId = async (token, form, collectionId) => {
         setHeader(token)
         return await api.post(`/api/items/create/${collectionId}`, form)
@@ -174,7 +179,8 @@ const create = (baseURL = '') => {
         getSearchedItems,
         addCommentByItemId,
         searchItems,
-        setHeader
+        setHeader,
+        likedItem
     }
 }
 
@@ -195,6 +201,6 @@ export const {
     deleteItemById,
     getItemsByCollectionId,
     getSearchedItems,
-    searchItems,
+    likedItem,
     addCommentByItemId,
 } = create()

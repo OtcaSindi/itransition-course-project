@@ -35,7 +35,8 @@ const collectionsReducer = (state = initialState, action) => {
 
             return {
                 ...state,
-                errorStatus: status
+                errorStatus: status,
+                loading: false
             }
         }
 

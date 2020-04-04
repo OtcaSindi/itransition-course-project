@@ -1,4 +1,4 @@
-import React, {useCallback, useContext} from 'react'
+import React, {useContext} from 'react'
 import {Switch, Route} from 'react-router-dom'
 import {Redirect} from "react-router"
 
@@ -8,12 +8,11 @@ import CollectionsPage from "../pages/collections-page"
 import ItemsPage from "../pages/items-page"
 import AuthModal from "../components/modals/auth-modal"
 import {AuthContext} from "../context/AuthContext"
-import {getAllItems} from '../services'
-import map from 'lodash/map'
+import ItemPage from "../pages/item-page"
 
 const Routes = ({isAuthenticated, userIsAdmin}) => {
 
-    const {openModal, token} = useContext(AuthContext)
+    const {openModal} = useContext(AuthContext)
 
     return (
         <>
@@ -24,6 +23,9 @@ const Routes = ({isAuthenticated, userIsAdmin}) => {
                         <HomePage options={search}/>
                     )
                 }}/>
+
+                <Route path="/items/:id" exact
+                                           render={({match}) => (<ItemPage itemId={match.params.id}/>)}/>
 
                 {isAuthenticated && userIsAdmin && <Route path="/users" exact component={UsersPage}/>}
 

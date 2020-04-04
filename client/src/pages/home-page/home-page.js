@@ -10,23 +10,39 @@ import ItemHomePage from "../../components/item-home-page"
 
 const HomePage = ({options}) => {
 
-    const {token} = useContext(AuthContext)
+    const {token, logout} = useContext(AuthContext)
     const dispatch = useDispatch()
-    const {data, loading} = useSelector(itemsMainPageReducerSelector)
+    const {data, loading, errorStatus, user: {idLikedItems}} = useSelector(itemsMainPageReducerSelector)
 
     useEffect(() => {
-        dispatch(fetchAllItemsMainPage(token, options))
-    }, [token, options])
+        if (errorStatus === 401) {
+            logout()
+        } else if (token) {
+            dispatch(fetchAllItemsMainPage(token, options))
+        }
+    }, [token, options, errorStatus])
 
     if (loading) {
         return <Loading className={styles.loader} withOverlay={false} description="Wait, please..."/>
     }
 
+    const items = data.map((item) => {
+        const isCheckLiked = idLikedItems.find((id) => item.id === id)
+        return {
+            ...item,
+            itemLikes: !!isCheckLiked
+        }
+    })
+
     return (
         <div className={styles.container}>
-            {data.map((item) => {
+            {items.map((item) => {
                 return (
-                    <ItemHomePage item={item} limitTags={3}/>
+                    <ItemHomePage
+                        key={item.id}
+                        item={item}
+                        limitTags={3}
+                    />
                 )
             })}
         </div>

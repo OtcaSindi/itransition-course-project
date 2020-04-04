@@ -1,8 +1,9 @@
 import React from 'react'
 
-const ItemPage = ({idItem}) => {
+const ItemPage = ({itemId}) => {
+
     return (
-        <h1>Hello</h1>
+        <h1>{itemId}</h1>
     )
 }
 
