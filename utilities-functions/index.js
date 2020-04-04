@@ -10,4 +10,14 @@ const getCollectionsAndUserByUserId = async (id) => {
     }
 }
 
-module.exports = getCollectionsAndUserByUserId
+const uniqueTags = (tags) => {
+    const setTags = new Set(tags)
+    setTags.delete(' ')
+    setTags.delete('')
+    return Array.from(setTags)
+}
+
+module.exports = {
+    getCollectionsAndUserByUserId,
+    uniqueTags
+}

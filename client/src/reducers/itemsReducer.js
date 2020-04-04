@@ -18,7 +18,7 @@ const itemsReducer = (state = initialState, action) => {
 
         case 'FETCH_ITEMS_SUCCESS': {
 
-            const {items: data, collection} = action.payload
+            const {items: data, collection = {}} = action.payload
 
             return {
                 ...state,

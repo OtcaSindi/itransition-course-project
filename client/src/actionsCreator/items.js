@@ -37,6 +37,7 @@ const fetchItems = (token, collectionId) => (dispatch) => {
 
 const fetchAllItems = (token) => (dispatch) => {
     dispatch(itemsRequested())
+
     getAllItems(token)
         .then(({data}) => {
             dispatch(itemsLoaded(data))
