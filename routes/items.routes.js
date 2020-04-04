@@ -12,9 +12,18 @@ const router = Router()
 
 router.get('/', async (req, res) => {
     try {
-        const items = await Item.find()
-        res.status(200).json({items: itemsForFront(items)})
+        const {search} = req.query
+        let items = []
+        if (search) {
+            await Item.syncIndexes()
+            items = await Item.find({$text: {$search: search}})
+        } else {
+            items = await Item.find()
+        }
+
+        res.status(200).json(itemsForFront(items))
     } catch (e) {
+        console.log(e)
         res.status(500).json({message: 'Something went wrong, try again'})
     }
 })
@@ -88,7 +97,6 @@ router.post('/search', async (req, res) => {
         const searchedItems = await Item.find({$text: {$search: search}})
         res.status(200).json(itemsForFront(searchedItems))
     } catch (e) {
-        console.log(e)
         res.status(500).json({message: 'Something went wrong, try again'})
     }
 })

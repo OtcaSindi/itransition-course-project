@@ -123,9 +123,9 @@ const create = (baseURL = '') => {
         return await api.get(`/api/items/${collectionId}`)
     }
 
-    const getAllItems = async (token) => {
+    const getSearchedItems = async (token, optionsStr) => {
         setHeader(token)
-        return await api.get(`/api/items`)
+        return await api.get(`/api/items${optionsStr ? optionsStr : ''}`)
     }
 
     const createItemByCollectionId = async (token, form, collectionId) => {
@@ -171,7 +171,7 @@ const create = (baseURL = '') => {
         editItemById,
         deleteItemById,
         getItemsByCollectionId,
-        getAllItems,
+        getSearchedItems,
         addCommentByItemId,
         searchItems,
         setHeader
@@ -194,7 +194,7 @@ export const {
     editItemById,
     deleteItemById,
     getItemsByCollectionId,
-    getAllItems,
+    getSearchedItems,
     searchItems,
     addCommentByItemId,
 } = create()

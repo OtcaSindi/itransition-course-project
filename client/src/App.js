@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {BrowserRouter as Router} from "react-router-dom"
 import {Provider} from 'react-redux'
 
@@ -18,11 +18,14 @@ const App = () => {
     const {openModal, setOpenModal} = useOpenAuthModal()
     const isAuthenticated = !!token
 
+    const [searchItems, setSearchItems] = useState('')
+
     return (
         <NotificationsProvider>
             <Provider store={store}>
                 <AuthContext.Provider value={{
-                    token, login, logout, userId, isAuthenticated, userIsAdmin, openModal, setOpenModal,
+                    token, login, logout, userId, isAuthenticated,
+                    userIsAdmin, openModal, setOpenModal, searchItems, setSearchItems
                 }}>
                     <Router>
                         <NavBar/>

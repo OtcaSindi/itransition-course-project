@@ -1,5 +1,4 @@
 import {
-    getAllItems,
     getItemsByCollectionId
 } from "../services"
 
@@ -35,23 +34,9 @@ const fetchItems = (token, collectionId) => (dispatch) => {
         )
 }
 
-const fetchAllItems = (token) => (dispatch) => {
-    dispatch(itemsRequested())
-
-    getAllItems(token)
-        .then(({data}) => {
-            dispatch(itemsLoaded(data))
-        })
-        .catch((err) => {
-                dispatch(itemsError(err))
-            }
-        )
-}
-
 export {
     itemsRequested,
     itemsLoaded,
     itemsError,
     fetchItems,
-    fetchAllItems
 }

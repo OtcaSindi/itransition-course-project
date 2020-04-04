@@ -1,6 +1,8 @@
-import React, {useContext} from 'react'
+import React, {useCallback, useContext} from 'react'
 import {NavLink} from 'react-router-dom'
 import {useHistory} from 'react-router'
+import flow from 'lodash/flow'
+import property from 'lodash/property'
 
 import {AuthContext} from "../../context/AuthContext"
 
@@ -8,7 +10,14 @@ import styles from './narbar.module.css'
 
 const Navbar = () => {
 
-    const {isAuthenticated, logout, userIsAdmin, setOpenModal} = useContext(AuthContext)
+    const {
+        isAuthenticated,
+        logout,
+        userIsAdmin,
+        setOpenModal,
+        searchItems,
+        setSearchItems
+    } = useContext(AuthContext)
     const history = useHistory()
 
     const logoutHandler = async () => {
@@ -16,8 +25,24 @@ const Navbar = () => {
         history.push('/')
     }
 
+    const setVal = useCallback(flow([
+        property('target.value'),
+        setSearchItems,
+    ]), [setSearchItems])
+
     return (
         <div className={styles.navbar}>
+            <input
+                type="text"
+                name="search"
+                value={searchItems}
+                onChange={setVal}
+                onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+                        history.push(`/home?search=${searchItems.replace(' ', '+')}`)
+                    }
+                }}
+            />
             {userIsAdmin && <NavLink to="/users" className={styles.navLink}>Users</NavLink>}
             {
                 isAuthenticated ?
@@ -31,7 +56,7 @@ const Navbar = () => {
                         My collections
                     </a>
             }
-            <NavLink to="/news" className={styles.navLink}>News</NavLink>
+            <NavLink to="/home" className={styles.navLink}>Home</NavLink>
             {
                 isAuthenticated ?
                     <a href="/" className={styles.navLink} onClick={logoutHandler}>Log out</a> :

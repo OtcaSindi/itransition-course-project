@@ -21,8 +21,14 @@ import {
     itemsLoaded,
     itemsError,
     fetchItems,
-    fetchAllItems
 } from './items'
+
+import {
+    itemsMainPageRequested,
+    itemsMainPageLoaded,
+    itemsMainPageError,
+    fetchAllItemsMainPage
+} from "./items-main-page"
 
 export {
     usersRequested,
@@ -40,5 +46,8 @@ export {
     itemsLoaded,
     itemsError,
     fetchItems,
-    fetchAllItems
+    itemsMainPageRequested,
+    itemsMainPageLoaded,
+    itemsMainPageError,
+    fetchAllItemsMainPage
 }

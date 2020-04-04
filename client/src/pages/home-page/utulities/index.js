@@ -1,5 +1,4 @@
 import map from "lodash/fp/map"
-import {dateFormat} from "../../../utilities-functions"
 
 
 const initialRowsMapper = map(({id, title, description, dateCreation, likes, image, tags, comments}) => {

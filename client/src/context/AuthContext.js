@@ -8,5 +8,7 @@ export const AuthContext = createContext({
     logout: noop,
     isAuthenticated: false,
     openModal: null,
-    setOpenModal: noop
+    setOpenModal: noop,
+    searchItems: '',
+    setSearchItems: noop
 })
