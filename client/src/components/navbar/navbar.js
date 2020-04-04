@@ -32,7 +32,7 @@ const Navbar = () => {
 
     return (
         <div className={styles.navbar}>
-            <input
+            <input className={styles.searchPanel}
                 type="text"
                 name="search"
                 value={searchItems}
@@ -43,6 +43,7 @@ const Navbar = () => {
                     }
                 }}
             />
+            <NavLink to="/home" className={styles.navLink}>Home</NavLink>
             {userIsAdmin && <NavLink to="/users" className={styles.navLink}>Users</NavLink>}
             {
                 isAuthenticated ?
@@ -56,7 +57,6 @@ const Navbar = () => {
                         My collections
                     </a>
             }
-            <NavLink to="/home" className={styles.navLink}>Home</NavLink>
             {
                 isAuthenticated ?
                     <a href="/" className={styles.navLink} onClick={logoutHandler}>Log out</a> :

@@ -44,7 +44,6 @@ router.post('/create', auth, async (req, res) => {
         await collection.save()
         res.status(201).json(...collectionsForFront([collection]))
     } catch (e) {
-        console.log(e)
         res.status(500).json({message: 'Something went wrong, try again'})
     }
 })

@@ -23,7 +23,6 @@ router.get('/', async (req, res) => {
 
         res.status(200).json(itemsForFront(items))
     } catch (e) {
-        console.log(e)
         res.status(500).json({message: 'Something went wrong, try again'})
     }
 })

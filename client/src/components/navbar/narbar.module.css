@@ -10,6 +10,17 @@
     width: 100%;
 }
 
+.searchPanel {
+    background-image: url('../../image-svg/PinClipart.com_solution-clip-art_919100.png');
+    background-position: 2px;
+    background-size: 17px 17px;
+    background-repeat: no-repeat;
+    margin-right: 10px;
+}
+.searchPanel[type=text] {
+    padding-left: 23px;
+}
+
 .navLink {
     color: #fff;
     display: inline-block;

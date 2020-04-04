@@ -29,7 +29,6 @@ const itemsMainPageReducer = (state = initialState, action) => {
         case 'FETCH_ITEMS_MAIN_PAGE_FAILURE': {
 
             const {response: {status}} = action.payload
-            console.log(status)
 
             return {
                 ...state,
