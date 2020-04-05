@@ -121,8 +121,8 @@ const OverflowActionInfoUserComponent = forwardRef(({id}, ref) => {
         <OverflowMenuItem
             ref={ref}
             closeMenu={noop}
-            key="Info"
-            itemText="Info"
+            key="Collections"
+            itemText="Collections"
             onClick={historyPush(id)}
         />
     )

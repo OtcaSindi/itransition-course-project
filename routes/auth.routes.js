@@ -22,7 +22,8 @@ const createUser = async (email, name, password, language) => {
 const createToken = (user, jwtSecret) => {
     return jwt.sign(
         {
-            userId: user.id
+            userId: user.id,
+            userIsAdmin: user.isAdmin
         },
         config.get(jwtSecret)
     )
