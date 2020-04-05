@@ -114,6 +114,7 @@ const MainTable = (
                                 const {onExpand, ...rest} = getRowProps({row})
                                 return (
                                     <MainTableRow
+                                        loading={loading}
                                         expandRows={expandRows}
                                         key={row.id}
                                         initialRow={initialRows[idx]}

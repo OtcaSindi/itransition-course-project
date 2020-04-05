@@ -5,7 +5,8 @@ import {
     OverflowMenu,
     OverflowMenuItem,
     TableCell,
-    TableSelectRow
+    TableSelectRow,
+    SkeletonText
 } from "carbon-components-react"
 
 import DynamicExpandComponent from "./dynamic-expand-component"
@@ -15,6 +16,7 @@ const selectedRowsIds = (arr) => map(arr, ({id}) => id)
 
 const MainTableRow = (
     {
+        loading,
         row,
         initialRow,
         onExpand,
@@ -35,7 +37,7 @@ const MainTableRow = (
                 <TableSelectRow {...getSelectionProps({row})}/>
                 {row.cells.map(cell => (
                     <TableCell key={cell.id}>
-                        {cell.value}
+                        {loading ? <SkeletonText/> : cell.value}
                     </TableCell>
                 ))}
                 {!isEmpty(overflowActions) &&

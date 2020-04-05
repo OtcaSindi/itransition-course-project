@@ -30,7 +30,9 @@ const App = () => {
                 }}>
                     <Router>
                         <NavBar/>
-                        <Routes isAuthenticated={isAuthenticated} userIsAdmin={userIsAdmin}/>
+                        <div className="contentApp">
+                            <Routes isAuthenticated={isAuthenticated} userIsAdmin={userIsAdmin}/>
+                        </div>
                     </Router>
                 </AuthContext.Provider>
             </Provider>

@@ -14,7 +14,7 @@ const DeleteCollectionsModal = ({items, operation, onClose, primaryRequest}) => 
         return {
             id,
             title: cells[0].value,
-            theme: cells[4].value
+            theme: cells[3].value
         }
     })
 
