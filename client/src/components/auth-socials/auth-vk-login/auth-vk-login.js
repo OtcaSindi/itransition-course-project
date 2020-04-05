@@ -5,11 +5,13 @@ import {AuthContext} from "../../../context/AuthContext"
 import {useHttp} from "../../../hooks/use-http"
 
 import styles from '../auth-socials.module.css'
+import {useResetAllErrors} from "../../../hooks/use-reset-all-errors"
 
 const AuthVkLogin = () => {
 
     const authorization = useContext(AuthContext)
     const {request} = useHttp()
+    const {resetAllErrors} = useResetAllErrors()
 
     const vkResponse = async (res) => {
         const {first_name, last_name, id, href} = res.session.user
@@ -19,6 +21,7 @@ const AuthVkLogin = () => {
             password: id,
         }
         const {token, userId, userIsAdmin} = await request('/api/auth/social', 'POST', authData)
+        resetAllErrors()
         authorization.login(token, userId, userIsAdmin)
     }
 

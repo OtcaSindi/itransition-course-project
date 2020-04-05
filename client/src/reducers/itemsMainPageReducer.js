@@ -18,7 +18,7 @@ const itemsMainPageReducer = (state = initialState, action) => {
 
         case 'FETCH_ITEMS_MAIN_PAGE_SUCCESS': {
 
-            const {items: data, user} = action.payload
+            const {items: data, user = {}} = action.payload
 
             return {
                 ...state,
@@ -30,7 +30,8 @@ const itemsMainPageReducer = (state = initialState, action) => {
 
         case 'FETCH_ITEMS_MAIN_PAGE_FAILURE': {
 
-            const {response: {status}} = action.payload
+            const {response = {}} = action.payload
+            const {status = null} = response
 
             return {
                 ...state,

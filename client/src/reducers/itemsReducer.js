@@ -30,7 +30,8 @@ const itemsReducer = (state = initialState, action) => {
 
         case 'FETCH_ITEMS_FAILURE': {
 
-            const {response: {status}} = action.payload
+            const {response = {}} = action.payload
+            const {status = null} = response
 
             return {
                 ...state,

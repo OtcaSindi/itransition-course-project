@@ -11,7 +11,7 @@ const {uniqueTags} = require('../utilities-functions')
 
 const router = Router()
 
-router.get('/', auth, async (req, res) => {
+router.get('/items-auth', auth, async (req, res) => {
     try {
         const {search} = req.query
         const user = await User.findOne({_id: req.user.userId})
@@ -26,7 +26,36 @@ router.get('/', auth, async (req, res) => {
 
         res.status(200).json({items: itemsForFront(items), user})
     } catch (e) {
-        console.log(e)
+        res.status(500).json({message: 'Something went wrong, try again'})
+    }
+})
+
+router.get('/items-no-auth', async (req, res) => {
+    try {
+        const {search} = req.query
+
+        let items = []
+        if (search) {
+            await Item.syncIndexes()
+            items = await Item.find({$text: {$search: search}})
+        } else {
+            items = await Item.find()
+        }
+
+        res.status(200).json({items: itemsForFront(items)})
+    } catch (e) {
+        res.status(500).json({message: 'Something went wrong, try again'})
+    }
+})
+
+router.get('/id-auth/:itemId', auth, (req, res) => {
+    try {
+        const {itemId} = req.params
+        const item = Item.findOne({_id: itemId})
+        const user = User.findOne({_id: req.user.userId})
+
+        res.status(200).json({items: itemsForFront(item)})
+    } catch (e) {
         res.status(500).json({message: 'Something went wrong, try again'})
     }
 })

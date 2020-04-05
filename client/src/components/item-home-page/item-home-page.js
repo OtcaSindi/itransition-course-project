@@ -7,6 +7,7 @@ import {AuthContext} from "../../context/AuthContext"
 
 import styles from "./item-home-page.module.css"
 import {useHandlerLike} from "../../hooks/use-handler-like"
+import {itemsMainPageError} from "../../actionsCreator"
 
 const ItemHomePage = ({item, limitTags}) => {
 
@@ -28,7 +29,8 @@ const ItemHomePage = ({item, limitTags}) => {
         countLikes,
         itemLikes,
         styleLikeOn: styles.likeOn,
-        styleLikeOff: styles.likeOff
+        styleLikeOff: styles.likeOff,
+        actionForError: itemsMainPageError
     })
 
     const history = useHistory()

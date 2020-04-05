@@ -9,9 +9,10 @@ import AuthGoogleLogin from "../../auth-socials/auth-google-login"
 import ContentModalLogin from "./utilities/content-modal-login"
 import ContentModalReg from "./utilities/content-modal-reg"
 import {LANGUAGE_ENGLISH} from "../../../constants"
+import {useLoadingRequest} from "../../../hooks/use-disabled-primary-button"
+import {useResetAllErrors} from "../../../hooks/use-reset-all-errors"
 
 import styles from './auth-modal.module.css'
-import {useLoadingRequest} from "../../../hooks/use-disabled-primary-button"
 
 
 const invalidDataLogin = (email, password) => {
@@ -25,7 +26,6 @@ const invalidDataReg = (email, name, password) => {
 const AuthModal = () => {
 
     const {login, setOpenModal} = useContext(AuthContext)
-    const history = useHistory()
 
     const [email, setEmail] = useState('')
     const [name, setName] = useState('')
@@ -40,6 +40,7 @@ const AuthModal = () => {
     const {loadingRequest: loadingLogin, requestWithLoading: loginWithLoading} = useLoadingRequest(loginRequest)
     const {loadingRequest: loadingReg, requestWithLoading: regWithLoading} = useLoadingRequest(registerRequest)
 
+    const {resetAllErrors} = useResetAllErrors()
 
     const handleEmail = (e) => {
         const {value} = e.target
@@ -81,6 +82,7 @@ const AuthModal = () => {
             try {
                 const {data: {token, userId, userIsAdmin}} = await loginWithLoading({email, password})
                 login(token, userId, userIsAdmin)
+                resetAllErrors()
                 closeModal()
             } catch (e) {
             }
@@ -104,8 +106,7 @@ const AuthModal = () => {
 
     const memoizedCloseModal = useCallback(() => {
         setOpenModal(false)
-        history.push('/news')
-    }, [setOpenModal, history])
+    }, [setOpenModal])
 
     const isPrimaryButtonDisabled = () => {
         return loadingLogin ||
@@ -120,7 +121,7 @@ const AuthModal = () => {
             modalHeading={authModal ? 'Log in to your account' : 'Create your account'}
             primaryButtonText={authModal ? "Log in" : 'Sign Up'}
             primaryButtonDisabled={isPrimaryButtonDisabled()}
-            onRequestSubmit={authModal ? loginHandler : regHandler}
+            onRequestSubmit={authModal ? (loginHandler) : regHandler}
             onClose={memoizedCloseModal}
         >
             {

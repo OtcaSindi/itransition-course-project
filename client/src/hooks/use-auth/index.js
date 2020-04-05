@@ -20,7 +20,7 @@ export const useAuth = () => {
         }))
     }, [])
 
-    const logout = useCallback(async () => {
+    const logout = useCallback(() => {
         setToken(null)
         setUserId(null)
         setUserIsAdmin(null)

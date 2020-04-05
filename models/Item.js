@@ -10,7 +10,7 @@ const schemaItem = new Schema({
     dateCreation: {type: Date, default: Date.now},
     comments: [
         {
-            user: {type: Types.ObjectId},
+            userName: {type: String},
             comment: {type: String}
         }
     ]

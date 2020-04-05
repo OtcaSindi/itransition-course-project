@@ -18,25 +18,29 @@ const Routes = ({isAuthenticated, userIsAdmin}) => {
         <>
             {!isAuthenticated && openModal && <AuthModal/>}
             <Switch>
-                <Route path="/home" exact render={({location: {search}}) => {
-                    return (
-                        <HomePage options={search}/>
-                    )
-                }}/>
+                <Route path="/home" exact
+                       render={({location: {search}}) => (<HomePage options={search}/>)}/>
 
                 <Route path="/items/:id" exact
-                                           render={({match}) => (<ItemPage itemId={match.params.id}/>)}/>
+                       render={({match}) => (<ItemPage itemId={match.params.id}/>)}/>
 
-                {isAuthenticated && userIsAdmin && <Route path="/users" exact component={UsersPage}/>}
+                {isAuthenticated && userIsAdmin &&
+                    <Route path="/users" exact component={UsersPage}/>
+                }
 
-                {isAuthenticated && userIsAdmin && <Route path="/users/:id" exact
-                                                          render={({match}) => (
-                                                              <CollectionsPage userId={(match.params.id)}/>)}/>}
+                {isAuthenticated && userIsAdmin &&
+                    <Route path="/users/:id" exact render={({match}) => (
+                        <CollectionsPage userId={(match.params.id)}/>)}/>
+                }
 
-                {isAuthenticated && <Route path="/collections" exact component={CollectionsPage}/>}
+                {isAuthenticated &&
+                    <Route path="/collections" exact component={CollectionsPage}/>
+                }
 
-                {isAuthenticated && <Route path="/collections/:id" exact
-                                           render={({match}) => (<ItemsPage collectionId={match.params.id}/>)}/>}
+                {isAuthenticated &&
+                    <Route path="/collections/:id" exact
+                           render={({match}) => (<ItemsPage collectionId={match.params.id}/>)}/>
+                }
 
                 <Redirect to="/home"/>
             </Switch>

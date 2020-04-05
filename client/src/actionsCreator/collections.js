@@ -18,10 +18,10 @@ const collectionsLoaded = (newCollections) => {
     }
 }
 
-const collectionsError = (errorStatus) => {
+const collectionsError = (error) => {
     return {
         type: 'FETCH_COLLECTIONS_FAILURE',
-        payload: errorStatus
+        payload: error
     }
 }
 

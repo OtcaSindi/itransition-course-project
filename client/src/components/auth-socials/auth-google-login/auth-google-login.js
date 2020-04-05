@@ -5,11 +5,13 @@ import {AuthContext} from "../../../context/AuthContext"
 import {useHttp} from "../../../hooks/use-http"
 
 import styles from "../auth-socials.module.css"
+import {useResetAllErrors} from "../../../hooks/use-reset-all-errors"
 
 const AuthGoogleLogin = () => {
 
     const authorization = useContext(AuthContext)
     const {request} = useHttp()
+    const {resetAllErrors} = useResetAllErrors()
 
     const googleResponse = async (res) => {
         const {email, name, googleId} = res.profileObj
@@ -19,6 +21,7 @@ const AuthGoogleLogin = () => {
             password: googleId
         }
         const {token, userId, userIsAdmin} = await request('/api/auth/social', 'POST', authData)
+        resetAllErrors()
         authorization.login(token, userId, userIsAdmin)
     }
 

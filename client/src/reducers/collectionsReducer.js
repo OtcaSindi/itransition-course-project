@@ -31,7 +31,8 @@ const collectionsReducer = (state = initialState, action) => {
 
         case 'FETCH_COLLECTIONS_FAILURE': {
 
-            const {response: {status}} = action.payload
+            const {response = {}} = action.payload
+            const {status = null} = response
 
             return {
                 ...state,

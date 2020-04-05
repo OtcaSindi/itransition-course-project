@@ -1,5 +1,5 @@
 import {
-    getSearchedItems,
+    getSearchedItemsAuth, getSearchedItemsNoAuth,
 } from "../services"
 
 const itemsMainPageRequested = () => {
@@ -24,7 +24,8 @@ const itemsMainPageError = (error) => {
 
 const fetchAllItemsMainPage = (token, options) => (dispatch) => {
     dispatch(itemsMainPageRequested())
-    getSearchedItems(token, options)
+    const request = token ? getSearchedItemsAuth : getSearchedItemsNoAuth
+    request(token, options)
         .then(({data}) => {
             dispatch(itemsMainPageLoaded(data))
         })

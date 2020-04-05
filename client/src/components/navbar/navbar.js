@@ -22,7 +22,12 @@ const Navbar = () => {
 
     const logoutHandler = async () => {
         await logout()
-        history.push('/')
+        history.push('/home')
+    }
+
+    const loginHandler = (e) => {
+        e.preventDefault()
+        setOpenModal(true)
     }
 
     const setVal = useCallback(flow([
@@ -33,41 +38,29 @@ const Navbar = () => {
     return (
         <div className={styles.navbar}>
             <input className={styles.searchPanel}
-                type="text"
-                name="search"
-                value={searchItems}
-                onChange={setVal}
-                onKeyPress={(e) => {
-                    if (e.key === 'Enter') {
-                        history.push(`/home?search=${searchItems.replace(' ', '+')}`)
-                    }
-                }}
+                   type="text"
+                   name="search"
+                   value={searchItems}
+                   onChange={setVal}
+                   onKeyPress={(e) => {
+                       if (e.key === 'Enter') {
+                           history.push(`/home?search=${searchItems.replace(' ', '+')}`)
+                       }
+                   }}
             />
             <NavLink to="/home" className={styles.navLink}>Home</NavLink>
             {userIsAdmin && <NavLink to="/users" className={styles.navLink}>Users</NavLink>}
-            {
-                isAuthenticated ?
-                    <NavLink to="/collections" className={styles.navLink}>My collections</NavLink> :
-                    <a href="/" onClick={(e) => {
-                        e.preventDefault()
-                        setOpenModal(true)
-                    }}
-                       className={styles.navLink}
-                    >
-                        My collections
-                    </a>
+            {isAuthenticated ?
+                <NavLink to="/collections" className={styles.navLink}>My collections</NavLink> :
+                <NavLink to="/" onClick={loginHandler} className={styles.navLink}>
+                    My collections
+                </NavLink>
             }
-            {
-                isAuthenticated ?
-                    <a href="/" className={styles.navLink} onClick={logoutHandler}>Log out</a> :
-                    <a href="/" onClick={(e) => {
-                        e.preventDefault()
-                        setOpenModal(true)
-                    }}
-                       className={styles.navLink}
-                    >
-                        Log in
-                    </a>
+            {isAuthenticated ?
+                <NavLink to="/" className={styles.navLink} onClick={logoutHandler}>Log out</NavLink> :
+                <NavLink to="/" onClick={loginHandler} className={styles.navLink}>
+                    Log in
+                </NavLink>
             }
         </div>
     )

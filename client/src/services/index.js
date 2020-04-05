@@ -123,9 +123,14 @@ const create = (baseURL = '') => {
         return await api.get(`/api/items/${collectionId}`)
     }
 
-    const getSearchedItems = async (token, optionsStr) => {
+    const getSearchedItemsAuth = async (token, optionsStr) => {
         setHeader(token)
-        return await api.get(`/api/items${optionsStr ? optionsStr : ''}`)
+        return await api.get(`/api/items/items-auth${optionsStr ? optionsStr : ''}`)
+    }
+
+    const getSearchedItemsNoAuth = async (token, optionsStr) => {
+        setHeader(token)
+        return await api.get(`/api/items/items-no-auth${optionsStr ? optionsStr : ''}`)
     }
 
     const likedItem = async (token, itemId) => {
@@ -176,7 +181,8 @@ const create = (baseURL = '') => {
         editItemById,
         deleteItemById,
         getItemsByCollectionId,
-        getSearchedItems,
+        getSearchedItemsAuth,
+        getSearchedItemsNoAuth,
         addCommentByItemId,
         searchItems,
         setHeader,
@@ -200,7 +206,8 @@ export const {
     editItemById,
     deleteItemById,
     getItemsByCollectionId,
-    getSearchedItems,
+    getSearchedItemsAuth,
+    getSearchedItemsNoAuth,
     likedItem,
     addCommentByItemId,
 } = create()
