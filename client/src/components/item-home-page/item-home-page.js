@@ -1,11 +1,12 @@
-import React, {useCallback, useContext, useState} from 'react'
+import React, {useCallback, useContext} from 'react'
 import {useHistory} from "react-router"
 
 import {imgHeart} from "../../image-svg"
 import {likedItem} from "../../services"
+import {AuthContext} from "../../context/AuthContext"
 
 import styles from "./item-home-page.module.css"
-import {AuthContext} from "../../context/AuthContext"
+import {useHandlerLike} from "../../hooks/use-handler-like"
 
 const ItemHomePage = ({item, limitTags}) => {
 
@@ -18,8 +19,17 @@ const ItemHomePage = ({item, limitTags}) => {
         tagsAfterLimit = tags.slice(0, limitTags)
     }
 
-    const [defaultCountLikes, setDefaultCountLikes] = useState(countLikes)
-    const [defaultClassLike, setDefaultClassLike] = useState(itemLikes ? styles.likeOn : styles.likeOff)
+    const {
+        requestLiked,
+        resCountLikes,
+        classLike
+    } = useHandlerLike({
+        likedItem,
+        countLikes,
+        itemLikes,
+        styleLikeOn: styles.likeOn,
+        styleLikeOff: styles.likeOff
+    })
 
     const history = useHistory()
     const historyPush = useCallback((itemId) => {
@@ -27,15 +37,8 @@ const ItemHomePage = ({item, limitTags}) => {
     }, [history])
 
     const userLikedItem = useCallback(async () => {
-        await likedItem(token, id)
-        if (defaultClassLike === styles.likeOn) {
-            setDefaultClassLike(styles.likeOff)
-            setDefaultCountLikes(count => count - 1)
-        } else if (defaultClassLike === styles.likeOff) {
-            setDefaultClassLike(styles.likeOn)
-            setDefaultCountLikes(count => count + 1)
-        }
-    }, [token, id, defaultClassLike])
+        await requestLiked(token, id)
+    }, [token, id, requestLiked])
 
     return (
         <div className={styles.card}>
@@ -51,16 +54,17 @@ const ItemHomePage = ({item, limitTags}) => {
                         No picture
                     </div>
             }
-
             <div className={styles.cardTitleAndLikes}>
                 <div className={styles.cardTitle}>
                     <strong>{title}</strong>
                 </div>
                 <div className={styles.countLikesAndHeart}>
-                    <div>{defaultCountLikes}</div>
+                    <div>{resCountLikes}</div>
                     <img onClick={userLikedItem}
-                         className={defaultClassLike}
-                         src={imgHeart}/>
+                         className={classLike}
+                         src={imgHeart}
+                         alt={title}
+                    />
                 </div>
             </div>
             <div className={styles.lengthComments}>Comments: {comments.length}</div>
