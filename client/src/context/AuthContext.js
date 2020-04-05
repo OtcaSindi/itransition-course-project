@@ -10,5 +10,6 @@ export const AuthContext = createContext({
     openModal: null,
     setOpenModal: noop,
     searchItems: '',
-    setSearchItems: noop
+    setSearchItems: noop,
+    idLikedItems: null
 })

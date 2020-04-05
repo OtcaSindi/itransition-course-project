@@ -15,10 +15,12 @@ export const useHandlerLike = (
     const dispatch = useDispatch()
     const {setOpenModal} = useContext(AuthContext)
 
+    const [isNowRequest, setIsNowRequest] = useState(false)
     const [resCountLikes, setResCountLikes] = useState(defaultCountLikes)
     const [classLike, setClassLike] = useState(defaultItemLikes ? styleLikeOn : styleLikeOff)
 
     const requestLiked = useCallback(async (...args) => {
+        setIsNowRequest(true)
         likedItem(...args)
             .then(() => {
                 if (classLike === styleLikeOn) {
@@ -28,8 +30,12 @@ export const useHandlerLike = (
                     setClassLike(styleLikeOn)
                     setResCountLikes(count => count + 1)
                 }
+
+                setIsNowRequest(false)
             })
             .catch((err) => {
+                setIsNowRequest(false)
+
                 if (err.response.status === 401) {
                     setOpenModal(true)
                 }
@@ -40,6 +46,7 @@ export const useHandlerLike = (
     return {
         resCountLikes,
         requestLiked,
-        classLike
+        classLike,
+        isNowRequest
     }
 }

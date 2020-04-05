@@ -4,6 +4,10 @@ import {dateFormat} from "../../../utilities-functions"
 import DeleteItemModal from "../../../components/modals/delete-items-modal"
 import ModalOnBatchToolbarActionsItem from "../../../components/modals/create-edit-action-item-modal"
 import {createItemByCollectionId, deleteItemById, editItemById} from "../../../services"
+import React, {forwardRef} from "react"
+import {useHistory} from "react-router"
+import {OverflowMenuItem} from "carbon-components-react"
+import noop from "lodash/noop"
 
 const headersItems = [
     {
@@ -20,7 +24,7 @@ const headersItems = [
     },
     {
         header: 'Likes',
-        key: 'likes'
+        key: 'countLikes'
     },
 ]
 
@@ -49,14 +53,14 @@ const toolbarActions = [
     }
 ]
 
-const initialRowsMapper = map(({id, title, description, dateCreation, likes, image, tags, comments}) => {
+const initialRowsMapper = map(({id, title, description, dateCreation, countLikes, image, tags, comments}) => {
     return {
         id,
         title,
         description,
         image,
         tags,
-        likes,
+        countLikes,
         dateCreation: dateFormat(dateCreation),
         comments
     }
@@ -81,6 +85,24 @@ const selectItemRequest = (action) => {
     }
 }
 
+const OverflowActionInfoItemComponent = forwardRef(({id}, ref) => {
+    const history = useHistory()
+
+    const historyPush = (id) => () => {
+        history.push(`/items/${id}`)
+    }
+
+    return (
+        <OverflowMenuItem
+            ref={ref}
+            closeMenu={noop}
+            key="Items"
+            itemText="Info"
+            onClick={historyPush(id)}
+        />
+    )
+})
+
 export {
     headersItems,
     batchActions,
@@ -88,5 +110,6 @@ export {
     toolbarActions,
     initialRowsMapper,
     renderItemModals,
-    selectItemRequest
+    selectItemRequest,
+    OverflowActionInfoItemComponent
 }

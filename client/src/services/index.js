@@ -123,14 +123,12 @@ const create = (baseURL = '') => {
         return await api.get(`/api/items/${collectionId}`)
     }
 
-    const getSearchedItemsAuth = async (token, optionsStr) => {
-        setHeader(token)
-        return await api.get(`/api/items/items-auth${optionsStr ? optionsStr : ''}`)
+    const getSearchedItems = async (optionsStr) => {
+        return await api.get(`/api/items/searched${optionsStr ? optionsStr : ''}`)
     }
 
-    const getSearchedItemsNoAuth = async (token, optionsStr) => {
-        setHeader(token)
-        return await api.get(`/api/items/items-no-auth${optionsStr ? optionsStr : ''}`)
+    const getItemById = async (itemId) => {
+        return await api.get(`/api/items/searched/${itemId}`)
     }
 
     const likedItem = async (token, itemId) => {
@@ -153,13 +151,9 @@ const create = (baseURL = '') => {
         return await api.delete(`/api/items/delete/${id}`)
     }
 
-    const searchItems = async (search) => {
-        return await api.post('/api/items/search', search)
-    }
-
     const addCommentByItemId = async (token, form, itemId) => {
         setHeader(token)
-        return await api.post(`/api/items/${itemId}/create-comment`, form)
+        return await api.post(`/api/items/create-comment/${itemId}`, form)
     }
 
 
@@ -181,10 +175,9 @@ const create = (baseURL = '') => {
         editItemById,
         deleteItemById,
         getItemsByCollectionId,
-        getSearchedItemsAuth,
-        getSearchedItemsNoAuth,
+        getSearchedItems,
         addCommentByItemId,
-        searchItems,
+        getItemById,
         setHeader,
         likedItem
     }
@@ -206,8 +199,8 @@ export const {
     editItemById,
     deleteItemById,
     getItemsByCollectionId,
-    getSearchedItemsAuth,
-    getSearchedItemsNoAuth,
+    getSearchedItems,
     likedItem,
+    getItemById,
     addCommentByItemId,
 } = create()

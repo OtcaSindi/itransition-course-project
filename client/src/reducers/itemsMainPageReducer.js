@@ -1,6 +1,5 @@
 const initialState = {
     data: [],
-    user: {},
     loading: false,
     errorStatus: null
 }
@@ -18,13 +17,12 @@ const itemsMainPageReducer = (state = initialState, action) => {
 
         case 'FETCH_ITEMS_MAIN_PAGE_SUCCESS': {
 
-            const {items: data, user = {}} = action.payload
+            const {items: data} = action.payload
 
             return {
                 ...state,
                 loading: false,
                 data,
-                user
             }
         }
 

@@ -4,11 +4,11 @@ export const storageName = 'userData'
 
 export const useAuth = () => {
     const [token, setToken] = useState(null)
-    const [ready, setReady] = useState(false)
     const [userId, setUserId] = useState(null)
+    const [idLikedItems, setIdLikedItems] = useState(null)
     const [userIsAdmin, setUserIsAdmin] = useState(false)
 
-    const login = useCallback((token, userId, userIsAdmin) => {
+    const login = useCallback((token, userId, userIsAdmin, setIdLikedItems) => {
         setToken(token)
         setUserId(userId)
         setUserIsAdmin(userIsAdmin)
@@ -17,6 +17,7 @@ export const useAuth = () => {
             token,
             userId,
             userIsAdmin,
+            idLikedItems
         }))
     }, [])
 
@@ -24,17 +25,17 @@ export const useAuth = () => {
         setToken(null)
         setUserId(null)
         setUserIsAdmin(null)
+        setIdLikedItems([])
         localStorage.removeItem(storageName)
     }, [])
 
     useEffect(() => {
         const data = JSON.parse(localStorage.getItem(storageName))
         if (data) {
-            const {token, userId, userIsAdmin} = data
-            login(token, userId, userIsAdmin)
+            const {token, userId, userIsAdmin, setIdLikedItems} = data
+            login(token, userId, userIsAdmin, setIdLikedItems)
         }
-        setReady(true)
-    }, [login])
+    }, [])
 
-    return { login, logout, token, userId, userIsAdmin, ready}
+    return {login, logout, token, userId, userIsAdmin, idLikedItems}
 }

@@ -99,14 +99,14 @@ const MainTable = (
                     <Table>
                         <TableHead>
                             <TableRow>
-                                {expandRows && <TableHeader key="expand" onClick={expandAll}>Expand</TableHeader>}
+                                {expandRows && <TableHeader key="expandHeader" onClick={expandAll}>Expand</TableHeader>}
                                 <TableSelectAll {...getSelectionProps()} />
                                 {headers.map(({header}) => (
                                     <TableHeader key={header} {...getHeaderProps({header})}>
                                         {header}
                                     </TableHeader>
                                 ))}
-                                {!isEmpty(overflowActions) && <TableHeader/>}
+                                {!isEmpty(overflowActions) && <TableHeader key="overflowHeader"/>}
                             </TableRow>
                         </TableHead>
                         <TableBody>

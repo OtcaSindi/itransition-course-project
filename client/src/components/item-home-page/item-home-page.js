@@ -23,7 +23,8 @@ const ItemHomePage = ({item, limitTags}) => {
     const {
         requestLiked,
         resCountLikes,
-        classLike
+        classLike,
+        isNowRequest
     } = useHandlerLike({
         likedItem,
         countLikes,
@@ -39,8 +40,10 @@ const ItemHomePage = ({item, limitTags}) => {
     }, [history])
 
     const userLikedItem = useCallback(async () => {
-        await requestLiked(token, id)
-    }, [token, id, requestLiked])
+        if (!isNowRequest) {
+            await requestLiked(token, id)
+        }
+    }, [token, id, requestLiked, isNowRequest])
 
     return (
         <div className={styles.card}>

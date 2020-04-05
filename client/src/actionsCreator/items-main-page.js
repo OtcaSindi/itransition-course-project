@@ -1,5 +1,6 @@
 import {
-    getSearchedItemsAuth, getSearchedItemsNoAuth,
+    getSearchedItems,
+    getItemById
 } from "../services"
 
 const itemsMainPageRequested = () => {
@@ -22,10 +23,21 @@ const itemsMainPageError = (error) => {
     }
 }
 
-const fetchAllItemsMainPage = (token, options) => (dispatch) => {
+const fetchSearchedItemsMainPage = (options) => (dispatch) => {
     dispatch(itemsMainPageRequested())
-    const request = token ? getSearchedItemsAuth : getSearchedItemsNoAuth
-    request(token, options)
+    getSearchedItems(options)
+        .then(({data}) => {
+            dispatch(itemsMainPageLoaded(data))
+        })
+        .catch((err) => {
+                dispatch(itemsMainPageError(err))
+            }
+        )
+}
+
+const fetchSearchedItemById = (itemId) => (dispatch) => {
+    dispatch(itemsMainPageRequested())
+    getItemById(itemId)
         .then(({data}) => {
             dispatch(itemsMainPageLoaded(data))
         })
@@ -39,5 +51,6 @@ export {
     itemsMainPageRequested,
     itemsMainPageLoaded,
     itemsMainPageError,
-    fetchAllItemsMainPage
+    fetchSearchedItemsMainPage,
+    fetchSearchedItemById
 }

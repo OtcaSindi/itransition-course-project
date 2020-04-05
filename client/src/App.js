@@ -14,7 +14,7 @@ import {useOpenAuthModal} from "./hooks/use-open-auth-modal"
 
 
 const App = () => {
-    const {token, login, logout, userId, userIsAdmin} = useAuth()
+    const {token, login, logout, userId, userIsAdmin, idLikedItems} = useAuth()
     const {openModal, setOpenModal} = useOpenAuthModal()
     const isAuthenticated = !!token
 
@@ -25,7 +25,8 @@ const App = () => {
             <Provider store={store}>
                 <AuthContext.Provider value={{
                     token, login, logout, userId, isAuthenticated,
-                    userIsAdmin, openModal, setOpenModal, searchItems, setSearchItems
+                    userIsAdmin, openModal, setOpenModal, searchItems,
+                    setSearchItems, idLikedItems
                 }}>
                     <Router>
                         <NavBar/>

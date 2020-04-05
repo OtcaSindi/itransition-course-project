@@ -66,6 +66,7 @@ const CollectionSPage = ({userId}) => {
                 tableTitle={userId ? `${user.name}'s collections`: 'My collections'}
                 {...tableProps}
                 OverflowActionInfoComponent={OverflowActionInfoCollectionComponent}
+                expandRows="collections"
             />
         </>
     )

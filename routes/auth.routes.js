@@ -22,8 +22,7 @@ const createUser = async (email, name, password, language) => {
 const createToken = (user, jwtSecret) => {
     return jwt.sign(
         {
-            userId: user.id,
-            userIsAdmin: user.isAdmin
+            userId: user.id
         },
         config.get(jwtSecret)
     )
@@ -105,7 +104,12 @@ router.post(
 
             const token = createToken(user, 'jwtSecret')
 
-            res.status(200).json({token, userId: user.id, userIsAdmin: user.isAdmin})
+            res.status(200).json({
+                token,
+                userId: user.id,
+                userIsAdmin: user.isAdmin,
+                idLikedItems: user.idLikedItems
+            })
 
         } catch (e) {
             res.status(500).json({message: 'Something went wrong, try again.'})

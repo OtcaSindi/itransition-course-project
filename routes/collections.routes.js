@@ -78,7 +78,7 @@ router.post('/create/:id', auth, checkAdmin, async (req, res) => {
     }
 })
 
-router.delete('/delete/:id', auth, checkAdmin, async (req, res) => {
+router.delete('/delete/:id', auth, async (req, res) => {
     try {
         await Collection.deleteOne({_id: req.params.id})
         res.status(200).json({message: 'Collection deleted'})

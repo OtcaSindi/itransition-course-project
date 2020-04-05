@@ -27,7 +27,8 @@ import {
     itemsMainPageRequested,
     itemsMainPageLoaded,
     itemsMainPageError,
-    fetchAllItemsMainPage
+    fetchSearchedItemsMainPage,
+    fetchSearchedItemById
 } from "./items-main-page"
 
 export {
@@ -49,5 +50,6 @@ export {
     itemsMainPageRequested,
     itemsMainPageLoaded,
     itemsMainPageError,
-    fetchAllItemsMainPage
+    fetchSearchedItemsMainPage,
+    fetchSearchedItemById
 }

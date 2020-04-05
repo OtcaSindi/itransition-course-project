@@ -11,26 +11,7 @@ const {uniqueTags} = require('../utilities-functions')
 
 const router = Router()
 
-router.get('/items-auth', auth, async (req, res) => {
-    try {
-        const {search} = req.query
-        const user = await User.findOne({_id: req.user.userId})
-
-        let items = []
-        if (search) {
-            await Item.syncIndexes()
-            items = await Item.find({$text: {$search: search}})
-        } else {
-            items = await Item.find()
-        }
-
-        res.status(200).json({items: itemsForFront(items), user})
-    } catch (e) {
-        res.status(500).json({message: 'Something went wrong, try again'})
-    }
-})
-
-router.get('/items-no-auth', async (req, res) => {
+router.get('/searched', async (req, res) => {
     try {
         const {search} = req.query
 
@@ -48,13 +29,10 @@ router.get('/items-no-auth', async (req, res) => {
     }
 })
 
-router.get('/id-auth/:itemId', auth, (req, res) => {
+router.get('/searched/:itemId', async (req, res) => {
     try {
-        const {itemId} = req.params
-        const item = Item.findOne({_id: itemId})
-        const user = User.findOne({_id: req.user.userId})
-
-        res.status(200).json({items: itemsForFront(item)})
+        const item = await Item.findOne({_id: req.params.itemId})
+        res.status(200).json({items: itemsForFront([item])})
     } catch (e) {
         res.status(500).json({message: 'Something went wrong, try again'})
     }
@@ -113,7 +91,7 @@ router.delete('/delete/:id', auth, async (req, res) => {
     }
 })
 
-router.post('/:idItem/create-comment', auth, async (req, res) => {
+router.post('/create-comment/:idItem', auth, async (req, res) => {
     try {
         const {comment} = req.body
         const item = await Item.findById(req.params.idItem)

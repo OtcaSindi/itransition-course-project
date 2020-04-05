@@ -39,7 +39,7 @@
     height: 200px;
     border-radius: 9px;
     cursor: pointer;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     background-color: #c8c8c8;
     box-shadow: 0 0 15px #7a7a7a;
     transition: opacity .2s;

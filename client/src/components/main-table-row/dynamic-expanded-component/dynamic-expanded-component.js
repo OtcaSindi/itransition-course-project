@@ -1,6 +1,8 @@
+import React from "react"
+
 import MainTableExpandedRowItem from "./main-table-expanded-row-item"
 import MainTableExpandedRowUser from "./main-table-expanded-row-user"
-import React from "react"
+import MainTableExpandedRowCollection from "./main-table-expanded-row-collection"
 
 const DynamicExpandedComponent = ({expandRows, isExpanded, initialRow, colSpan}) => {
     if (!expandRows) {
@@ -17,6 +19,13 @@ const DynamicExpandedComponent = ({expandRows, isExpanded, initialRow, colSpan})
         } else if (expandRows === 'users') {
             return (
                 <MainTableExpandedRowUser
+                    initialRow={initialRow}
+                    colSpan={colSpan}
+                />
+            )
+        } else if (expandRows === 'collections') {
+            return (
+                <MainTableExpandedRowCollection
                     initialRow={initialRow}
                     colSpan={colSpan}
                 />

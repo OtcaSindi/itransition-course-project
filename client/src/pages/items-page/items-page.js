@@ -15,7 +15,7 @@ import {
     toolbarActions,
     initialRowsMapper,
     renderItemModals,
-    selectItemRequest
+    selectItemRequest, OverflowActionInfoItemComponent
 } from "./utilities"
 import {transformActionKeyToTitle} from "../../utilities-functions"
 
@@ -80,6 +80,7 @@ const ItemsPage = ({collectionId}) => {
                 tableTitle={collection.title ? `Items "${collection.title}"` : 'Items'}
                 {...tableProps}
                 expandRows="items"
+                OverflowActionInfoComponent={OverflowActionInfoItemComponent}
             />
         </>
     )

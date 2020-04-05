@@ -14,7 +14,7 @@ router.get('/', auth, checkAdmin, async (req, res) => {
         const users = await User.find()
         res.status(200).json(usersForFront(users))
     } catch (e) {
-        res.status(400).json({message: 'Something went wrong, try again'})
+        res.status(500).json({message: 'Something went wrong, try again'})
     }
 })
 
@@ -38,7 +38,7 @@ router.post('/block/:id', auth, checkAdmin, async (req, res) => {
         await User.findByIdAndUpdate(req.params.id, {blocked: true})
         res.status(200).json({message: 'User successfully changed'})
     } catch (e) {
-        res.status(400).json({message: 'Something went wrong, try again'})
+        res.status(500).json({message: 'Something went wrong, try again'})
     }
 })
 
@@ -47,7 +47,7 @@ router.post('/unblock/:id', auth, checkAdmin, async (req, res) => {
         await User.findByIdAndUpdate(req.params.id, {blocked: false})
         res.status(200).json({message: 'User successfully changed'})
     } catch (e) {
-        res.status(400).json({message: 'Something went wrong, try again'})
+        res.status(500).json({message: 'Something went wrong, try again'})
     }
 })
 
@@ -62,7 +62,7 @@ router.post('/make-admin/:id', auth, checkAdmin, async (req, res) => {
             res.status(202).json({message: 'User is already admin'})
         }
     } catch (e) {
-        res.status(400).json({message: 'Something went wrong, try again'})
+        res.status(500).json({message: 'Something went wrong, try again'})
     }
 })
 
