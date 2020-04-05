@@ -12,6 +12,7 @@ export const useLoadingRequest = (request) => {
 
     return {
         loadingRequest,
-        requestWithLoading
+        requestWithLoading,
+        setLoadingRequest
     }
 }

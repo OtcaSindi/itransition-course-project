@@ -37,8 +37,16 @@ const AuthModal = () => {
 
     const [authModal, setAuthModal] = useState(true)
 
-    const {loadingRequest: loadingLogin, requestWithLoading: loginWithLoading} = useLoadingRequest(loginRequest)
-    const {loadingRequest: loadingReg, requestWithLoading: regWithLoading} = useLoadingRequest(registerRequest)
+    const {
+        loadingRequest: loadingLogin,
+        requestWithLoading: loginWithLoading,
+        setLoadingRequest: setLoginWithLoading
+    } = useLoadingRequest(loginRequest)
+    const {
+        loadingRequest: loadingReg,
+        requestWithLoading: regWithLoading,
+        setLoadingRequest: setRegWithLoading
+    } = useLoadingRequest(registerRequest)
 
     const {resetAllErrors} = useResetAllErrors()
 
@@ -80,11 +88,26 @@ const AuthModal = () => {
     const loginHandler = async (closeModal) => {
         if (!invalidDataLogin(email, password)) {
             try {
-                const {data: {token, userId, userIsAdmin}} = await loginWithLoading({email, password})
-                login(token, userId, userIsAdmin)
+                const {
+                    data: {
+                        token,
+                        userId,
+                        userIsAdmin,
+                        idLikedItems
+                    }
+                } = await loginWithLoading({email, password})
+                login(token, userId, userIsAdmin, idLikedItems)
                 resetAllErrors()
                 closeModal()
             } catch (e) {
+                if (e.response.status === 400) {
+                    const {message} = e.response.data
+                    message.includes('password') ?
+                        setInvalidPassword(message) :
+                        setInvalidEmail(message)
+                    setLoginWithLoading(false)
+                    resetAllErrors()
+                }
             }
         }
     }
@@ -110,10 +133,10 @@ const AuthModal = () => {
 
     const isPrimaryButtonDisabled = () => {
         return loadingLogin ||
-        loadingReg ||
-        (authModal ?
-            invalidDataLogin(email, password) :
-            invalidDataReg(email, name, password))
+            loadingReg ||
+            (authModal ?
+                invalidDataLogin(email, password) :
+                invalidDataReg(email, name, password))
     }
 
     return (

@@ -9,7 +9,7 @@ import {useResetAllErrors} from "../../../hooks/use-reset-all-errors"
 
 const AuthGoogleLogin = () => {
 
-    const authorization = useContext(AuthContext)
+    const {login} = useContext(AuthContext)
     const {request} = useHttp()
     const {resetAllErrors} = useResetAllErrors()
 
@@ -20,9 +20,14 @@ const AuthGoogleLogin = () => {
             name,
             password: googleId
         }
-        const {token, userId, userIsAdmin} = await request('/api/auth/social', 'POST', authData)
+        const {
+            token,
+            userId,
+            userIsAdmin,
+            idLikedItems
+        } = await request('/api/auth/social', 'POST', authData)
         resetAllErrors()
-        authorization.login(token, userId, userIsAdmin)
+        login(token, userId, userIsAdmin, idLikedItems)
     }
 
     return (

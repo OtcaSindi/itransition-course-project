@@ -5,8 +5,8 @@ import {fetchSearchedItemsMainPage} from "../../actionsCreator"
 import {AuthContext} from "../../context/AuthContext"
 import {itemsMainPageReducerSelector} from "../../selectors"
 import styles from './home-page.module.css'
-import {Loading} from "carbon-components-react"
 import ItemHomePage from "../../components/item-home-page"
+import Loader from "../../components/loader"
 
 const HomePage = ({options}) => {
 
@@ -24,16 +24,16 @@ const HomePage = ({options}) => {
 
     const items = useMemo(() => {
         return idLikedItems ? data.map((item) => {
-            const isCheckLiked = idLikedItems.find((id) => item.id === id)
+            const isCheckLiked = idLikedItems.includes(item.id)
             return {
                 ...item,
-                itemLikes: !!isCheckLiked
+                itemLikes: isCheckLiked
             }
         }).reverse() : data.reverse()
     }, [data, idLikedItems])
 
     if (loading) {
-        return <Loading className={styles.loader} withOverlay={false} description="Wait, please..."/>
+        return <Loader/>
     }
 
     return (

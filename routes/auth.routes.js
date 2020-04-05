@@ -32,7 +32,7 @@ const createToken = (user, jwtSecret) => {
 router.post(
     '/register',
     [
-        check('email', 'Invalid email.').isEmail(),
+        check('email', 'Invalid email').isEmail(),
         //check('password', 'The minimum password length is 6 characters.').isLength({min: 6})
     ],
     async (req, res) => {
@@ -41,7 +41,7 @@ router.post(
 
             if (!errors.isEmpty()) {
                 return res.status(400).json({
-                    message: 'Incorrect data during registration.',
+                    message: 'Incorrect data during registration',
                     errors: errors.array()
                 })
             }
@@ -56,15 +56,15 @@ router.post(
             const candidate = await User.findOne({email})
 
             if (candidate) {
-                res.status(400).json({message: 'This user already exists.'})
+                res.status(400).json({message: 'This user already exists'})
             }
 
             const user = await createUser(email, name, password, language)
             await user.save()
-            res.status(201).json({message: 'User created.'})
+            res.status(201).json({message: 'User created'})
 
         } catch (e) {
-            res.status(500).json({message: 'Something went wrong, try again.'})
+            res.status(500).json({message: 'Something went wrong, try again'})
         }
     }
 )
@@ -72,8 +72,8 @@ router.post(
 router.post(
     '/login',
     [
-        check('email', 'Please enter a valid email.').isEmail().normalizeEmail(),
-        check('password', 'Enter password.').exists()
+        check('email', 'Please enter a valid email').isEmail().normalizeEmail(),
+        check('password', 'Enter password').exists()
     ],
     async (req, res) => {
         try {
@@ -81,7 +81,7 @@ router.post(
             if (!errors.isEmpty()) {
                 return res.status(400).json({
                     errors: errors.array(),
-                    message: 'Incorrect login details.'
+                    message: 'Incorrect login details'
                 })
             }
 
@@ -90,17 +90,17 @@ router.post(
             const user = await User.findOne({email})
 
             if (!user) {
-                return res.status(400).json({message: 'User is not found.'})
+                return res.status(400).json({message: 'User is not found'})
             }
 
             if (user.blocked) {
-                return res.status(400).json({message: 'This user is blocked.'})
+                return res.status(400).json({message: 'This user is blocked'})
             }
 
             const isMatch = await bcrypt.compare(password, user.password)
 
             if (!isMatch) {
-                return res.status(400).json({message: 'Invalid password, try again.'})
+                return res.status(400).json({message: 'Invalid password, try again'})
             }
 
             const token = createToken(user, 'jwtSecret')
@@ -113,7 +113,7 @@ router.post(
             })
 
         } catch (e) {
-            res.status(500).json({message: 'Something went wrong, try again.'})
+            res.status(500).json({message: 'Something went wrong, try again'})
         }
     }
 )
@@ -140,15 +140,20 @@ router.post('/social', async (req, res) => {
             const isMatch = await bcrypt.compare(password, user.password)
 
             if (!isMatch) {
-                return res.status(400).json({message: 'Invalid password, try again.'})
+                return res.status(400).json({message: 'Invalid password, try again'})
             }
 
             const token = createToken(user, 'jwtSecret')
 
-            res.status(200).json({token, userId: user.id, userIsAdmin: user.isAdmin})
+            res.status(200).json({
+                token,
+                userId: user.id,
+                idLikedItems: user.idLikedItems,
+                userIsAdmin: user.isAdmin,
+            })
         }
     } catch (e) {
-        res.status(500).json({message: 'Something went wrong, try again.'})
+        res.status(500).json({message: 'Something went wrong, try again'})
     }
 })
 

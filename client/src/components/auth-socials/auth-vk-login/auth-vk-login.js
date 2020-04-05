@@ -9,7 +9,7 @@ import {useResetAllErrors} from "../../../hooks/use-reset-all-errors"
 
 const AuthVkLogin = () => {
 
-    const authorization = useContext(AuthContext)
+    const {login} = useContext(AuthContext)
     const {request} = useHttp()
     const {resetAllErrors} = useResetAllErrors()
 
@@ -20,9 +20,15 @@ const AuthVkLogin = () => {
             name: `${first_name} ${last_name}`,
             password: id,
         }
-        const {token, userId, userIsAdmin} = await request('/api/auth/social', 'POST', authData)
+        const {
+            token,
+            userId,
+            userIsAdmin,
+            idLikedItems
+        } = await request('/api/auth/social', 'POST', authData)
+        console.log('auth-vk', token, userId, userIsAdmin, idLikedItems)
         resetAllErrors()
-        authorization.login(token, userId, userIsAdmin)
+        login(token, userId, userIsAdmin, idLikedItems)
     }
 
     return (
