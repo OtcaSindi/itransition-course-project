@@ -73,7 +73,10 @@ const ItemPage = ({itemId}) => {
         <div className={styles.container}>
             <div className={styles.title}>{title}</div>
             <div className={styles.imgAndDateTags}>
-                <img src={image} className={styles.img} alt={title}/>
+                {image ?
+                    <img src={image} className={styles.img} alt={title}/> :
+                    <div className={styles.fakeImg}>No picture</div>
+                }
                 <div className={styles.dateCreationAndTags}>
                     <div className={styles.dateCreation}>{dateFormat(dateCreation)}</div>
                     <div>

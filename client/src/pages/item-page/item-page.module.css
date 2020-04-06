@@ -25,6 +25,22 @@
     box-shadow: 0 0 15px #7a7a7a;
 }
 
+.fakeImg {
+    min-width: 400px;
+    max-width: 475px;
+    height: 350px;
+    border-radius: 9px;
+    margin-bottom: 10px;
+    background-color: #c8c8c8;
+    box-shadow: 0 0 15px #7a7a7a;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    font-weight: bold;
+}
+
 .dateCreationAndTags {
     min-height: 150px;
     margin-left: 60px;
