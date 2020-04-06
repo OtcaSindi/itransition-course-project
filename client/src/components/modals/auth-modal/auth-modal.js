@@ -25,7 +25,6 @@ const invalidDataReg = (email, name, password) => {
 const AuthModal = () => {
 
     const {login, setOpenModal} = useContext(AuthContext)
-
     const [email, setEmail] = useState('')
     const [name, setName] = useState('')
     const [invalidName, setInvalidName] = useState('')
