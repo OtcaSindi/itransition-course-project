@@ -26,7 +26,6 @@ const AuthVkLogin = () => {
             userIsAdmin,
             idLikedItems
         } = await request('/api/auth/social', 'POST', authData)
-        console.log('auth-vk', token, userId, userIsAdmin, idLikedItems)
         resetAllErrors()
         login(token, userId, userIsAdmin, idLikedItems)
     }

@@ -19,7 +19,7 @@
     margin: 4px 0;
 }
 
-.img {
+.imgItemHomePage {
     width: 350px;
     height: 200px;
     object-fit: cover;
@@ -30,11 +30,11 @@
     box-shadow: 0 0 15px #7a7a7a;
 }
 
-.img:hover {
+.imgItemHomePage:hover {
     opacity: 90%;
 }
 
-.fakeImg {
+.fakeImgItemHomePage {
     width: 350px;
     height: 200px;
     border-radius: 9px;
@@ -51,7 +51,7 @@
     font-weight: bold;
 }
 
-.fakeImg:hover {
+.fakeImgItemHomePage:hover {
     opacity: 80%;
 }
 
@@ -61,7 +61,7 @@
     align-items: center;
 }
 
-.likeOff {
+.likeOffItemHomePage {
     height: 22px;
     filter: grayscale(100%);
     cursor: pointer;
@@ -71,13 +71,13 @@
     user-select: none;
 }
 
-.likeOff:hover {
+.likeOffItemHomePage:hover {
     opacity: 70%;
     transform: scale(1.1);
 }
 
 
-.likeOn {
+.likeOnItemHomePage {
     height: 22px;
     cursor: pointer;
     padding: 0 5px;
@@ -86,7 +86,7 @@
     user-select: none;
 }
 
-.likeOn:hover {
+.likeOnItemHomePage:hover {
     opacity: 70%;
     transform: scale(1.1);
 }

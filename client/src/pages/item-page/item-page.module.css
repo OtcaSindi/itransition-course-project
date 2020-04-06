@@ -16,7 +16,7 @@
     margin-bottom: 20px;
 }
 
-.img {
+.imgItemPage {
     min-width: 400px;
     max-width: 475px;
     height: 350px;
@@ -25,7 +25,7 @@
     box-shadow: 0 0 15px #7a7a7a;
 }
 
-.fakeImg {
+.fakeImgItemPage {
     min-width: 400px;
     max-width: 475px;
     height: 350px;

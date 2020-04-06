@@ -29,8 +29,8 @@ const ItemHomePage = ({item, limitTags}) => {
         likedItem,
         countLikes,
         itemLikes,
-        styleLikeOn: styles.likeOn,
-        styleLikeOff: styles.likeOff,
+        styleLikeOn: styles.likeOnItemHomePage,
+        styleLikeOff: styles.likeOffItemHomePage,
         actionForError: itemsMainPageError
     })
 
@@ -50,11 +50,11 @@ const ItemHomePage = ({item, limitTags}) => {
             {
                 image ?
                     <img onClick={historyPush(id)}
-                         className={styles.img}
+                         className={styles.imgItemHomePage}
                          src={image}
                          alt={title}/> :
                     <div onClick={historyPush(id)}
-                         className={styles.fakeImg}
+                         className={styles.fakeImgItemHomePage}
                     >
                         No picture
                     </div>
