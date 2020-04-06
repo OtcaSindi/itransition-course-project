@@ -33,7 +33,7 @@ router.post(
     '/register',
     [
         check('email', 'Invalid email').isEmail(),
-        //check('password', 'The minimum password length is 6 characters.').isLength({min: 6})
+        check('password', 'The minimum password length is 6 characters.').isLength({min: 6})
     ],
     async (req, res) => {
         try {
@@ -72,7 +72,7 @@ router.post(
 router.post(
     '/login',
     [
-        check('email', 'Please enter a valid email').isEmail().normalizeEmail(),
+        check('email', 'Please enter a valid email').isEmail(),
         check('password', 'Enter password').exists()
     ],
     async (req, res) => {

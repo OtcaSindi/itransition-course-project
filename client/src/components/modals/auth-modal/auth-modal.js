@@ -85,6 +85,16 @@ const AuthModal = () => {
         }
     }
 
+    const handleErrorAuth = useCallback((e) => {
+        if (e.response.status === 400) {
+            const {message} = e.response.data
+            message.includes('password') ?
+                setInvalidPassword(message) :
+                setInvalidEmail(message)
+            resetAllErrors()
+        }
+    }, [])
+
     const loginHandler = async (closeModal) => {
         if (!invalidDataLogin(email, password)) {
             try {
@@ -100,14 +110,8 @@ const AuthModal = () => {
                 resetAllErrors()
                 closeModal()
             } catch (e) {
-                if (e.response.status === 400) {
-                    const {message} = e.response.data
-                    message.includes('password') ?
-                        setInvalidPassword(message) :
-                        setInvalidEmail(message)
-                    setLoginWithLoading(false)
-                    resetAllErrors()
-                }
+                handleErrorAuth(e)
+                setLoginWithLoading(false)
             }
         }
     }
@@ -118,6 +122,8 @@ const AuthModal = () => {
                 await regWithLoading({email, name, password, language})
                 closeModal()
             } catch (e) {
+                handleErrorAuth(e)
+                setRegWithLoading(false)
             }
         }
     }

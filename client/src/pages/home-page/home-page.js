@@ -20,7 +20,7 @@ const HomePage = ({options}) => {
             setOpenModal(true)
         }
         dispatch(fetchSearchedItemsMainPage(options))
-    }, [options, errorStatus])
+    }, [options, errorStatus, idLikedItems])
 
     const items = useMemo(() => {
         return idLikedItems ? data.map((item) => {

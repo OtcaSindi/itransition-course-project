@@ -1,6 +1,6 @@
 import {
     getSearchedItems,
-    getItemById
+    getItemById, addCommentByItemId
 } from "../services"
 
 const itemsMainPageRequested = () => {
@@ -47,10 +47,34 @@ const fetchSearchedItemById = (itemId) => (dispatch) => {
         )
 }
 
+const fetchAddCommentItemById = (token, form, itemId) => (dispatch) => {
+    addCommentByItemId(token, form, itemId)
+        .then(({data}) => {
+            dispatch(itemsMainPageLoaded(data))
+        })
+        .catch((err) => {
+                dispatch(itemsMainPageError(err))
+            }
+        )
+}
+
+const fetchHiddenItemUpdate = (itemId) => (dispatch) => {
+    getItemById(itemId)
+        .then(({data}) => {
+            dispatch(itemsMainPageLoaded(data))
+        })
+        .catch((err) => {
+                dispatch(itemsMainPageError(err))
+            }
+        )
+}
+
 export {
     itemsMainPageRequested,
     itemsMainPageLoaded,
     itemsMainPageError,
     fetchSearchedItemsMainPage,
-    fetchSearchedItemById
+    fetchSearchedItemById,
+    fetchAddCommentItemById,
+    fetchHiddenItemUpdate
 }

@@ -94,10 +94,11 @@ router.delete('/delete/:id', auth, async (req, res) => {
 router.post('/create-comment/:idItem', auth, async (req, res) => {
     try {
         const {comment} = req.body
-        const item = await Item.findById(req.params.idItem)
-        item.comments.push({user: req.user.userId, comment}) // переделать на про просто req.user(админ может удалять любые комменты)
+        const item = await Item.findOne({_id: req.params.idItem})
+        const {name} = await User.findOne({_id: req.user.userId})
+        item.comments.push({userName: name, comment})
         await item.save()
-        res.status(201).json({message: 'Comment created'})
+        res.status(201).json({items: itemsForFront([item])})
     } catch (e) {
         res.status(500).json({message: 'Something went wrong, try again'})
     }

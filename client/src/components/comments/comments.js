@@ -9,7 +9,7 @@ import {
     StructuredListWrapper
 } from "carbon-components-react"
 
-const Comments = ({comments}) => {
+const Comments = ({comments, onClickFocus}) => {
 
     return (
         <StructuredListWrapper className={styles.comments}>
@@ -23,7 +23,7 @@ const Comments = ({comments}) => {
             <StructuredListBody>
                 {comments.map(({comment, userName, _id}) => {
                     return (
-                        <StructuredListRow key={_id}>
+                        <StructuredListRow className={styles.row} key={_id} onClick={onClickFocus(userName)}>
                             <StructuredListCell>
                                 <div className={styles.nameCommentator}>
                                     {userName}

@@ -28,7 +28,9 @@ import {
     itemsMainPageLoaded,
     itemsMainPageError,
     fetchSearchedItemsMainPage,
-    fetchSearchedItemById
+    fetchSearchedItemById,
+    fetchAddCommentItemById,
+    fetchHiddenItemUpdate
 } from "./items-main-page"
 
 export {
@@ -51,5 +53,7 @@ export {
     itemsMainPageLoaded,
     itemsMainPageError,
     fetchSearchedItemsMainPage,
-    fetchSearchedItemById
+    fetchSearchedItemById,
+    fetchAddCommentItemById,
+    fetchHiddenItemUpdate
 }
