@@ -49,7 +49,7 @@ const Navbar = () => {
                            onChange={setVal}
                            onKeyPress={(e) => {
                                if (e.key === 'Enter') {
-                                   history.push(`/home?search=${searchItems.replace(' ', '+')}`)
+                                   history.push(`/home?search=${searchItems.split(' ').join('+')}`)
                                }
                            }}
                 />
