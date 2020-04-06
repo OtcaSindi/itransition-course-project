@@ -14,7 +14,7 @@ const AuthGoogleLogin = () => {
     const {resetAllErrors} = useResetAllErrors()
 
     const googleResponse = async (res) => {
-        const {email, name, googleId} = res.profileObj
+        const {email={}, name={}, googleId={}} = res.profileObj ? res.profileObj : {}
         const authData = {
             email,
             name,

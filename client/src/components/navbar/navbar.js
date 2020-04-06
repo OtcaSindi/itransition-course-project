@@ -16,18 +16,12 @@ const Navbar = () => {
 
     const {
         isAuthenticated,
-        logout,
         userIsAdmin,
         setOpenModal,
         searchItems,
         setSearchItems
     } = useContext(AuthContext)
     const history = useHistory()
-
-    const logoutHandler = async () => {
-        await logout()
-        history.push('/home')
-    }
 
     const loginHandler = (e) => {
         setOpenModal(true)
