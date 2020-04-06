@@ -1,5 +1,4 @@
 import React, {useCallback, useContext, useState} from "react"
-import {useHistory} from "react-router"
 
 import {AuthContext} from "../../../context/AuthContext"
 import {loginRequest, registerRequest} from '../../../services'
