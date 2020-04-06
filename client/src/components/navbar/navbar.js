@@ -10,6 +10,7 @@ import styles from './narbar.module.css'
 import {TextInput} from "carbon-components-react"
 
 import './navbar.css'
+import NavBarAuth from "./navbar-auth"
 
 const Navbar = () => {
 
@@ -29,7 +30,6 @@ const Navbar = () => {
     }
 
     const loginHandler = (e) => {
-        e.preventDefault()
         setOpenModal(true)
     }
 
@@ -63,15 +63,9 @@ const Navbar = () => {
                         My collections
                     </NavLink>
                 }
+                <NavBarAuth className={styles.secondaryAuthNavLinks}/>
             </div>
-            <div className={styles.authNavLinks}>
-                {isAuthenticated ?
-                    <NavLink to="/" className={styles.navLink} onClick={logoutHandler}>Log out</NavLink> :
-                    <NavLink to="/" onClick={loginHandler} className={styles.navLink}>
-                        Log in
-                    </NavLink>
-                }
-            </div>
+            <NavBarAuth className={styles.authNavLinks}/>
         </div>
     )
 }
