@@ -32,7 +32,7 @@ const AuthGoogleLogin = () => {
 
     return (
         <GoogleLogin
-            clientId="835703414670-0uv2598uips342q7krmkd10k429oh2m2.apps.googleusercontent.com"
+            clientId="835703414670-nude1ivt02njku4rkhicicafrhn3hgc9.apps.googleusercontent.com"
             onSuccess={googleResponse}
             onFailure={googleResponse}
             cookiePolicy={'single_host_origin'}
