@@ -67,8 +67,6 @@ const ItemPage = ({itemId}) => {
         return <Loader/>
     }
 
-    const checkDescription = () => ('asdf asd fasd fas dfa sdf asd  asdf asd fasd fas dfa sdf asd  asdf asd fasd fas dfa sdf asd  asdf asd fasd fas dfa sdf asd  asdf asd fasd fas dfa sdf asd  asdf asd fasd fas dfa sdf asd  asdf asd fasd fas dfa sdf asd  asdf asd fasd fas dfa sdf asd  asdf asd fasd fas dfa sdf asd  asdf asd fasd fas dfa sdf asd f')
-
     return (
         <div className={styles.container}>
             <div className={styles.title}>{title}</div>
@@ -90,7 +88,7 @@ const ItemPage = ({itemId}) => {
                     </div>
                 </div>
             </div>
-            <div className={styles.description}>{description}{checkDescription()}</div>
+            <div className={styles.description}>{description}</div>
             {comments.length !== 0 && <Comments onClickFocus={onClickFocus} comments={comments}/>}
             <div className={styles.textInputAndButton}>
                 <div className={styles.textInput}>
