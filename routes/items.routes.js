@@ -1,6 +1,5 @@
 const {Router} = require('express')
 const {Types} = require('mongoose')
-
 const auth = require('../middleware/auth.middleware')
 const Item = require('../models/Item')
 const Collection = require('../models/Collection')
@@ -32,7 +31,16 @@ router.get('/searched', async (req, res) => {
 router.get('/searched/:itemId', async (req, res) => {
     try {
         const item = await Item.findOne({_id: req.params.itemId})
-        res.status(200).json({items: itemsForFront([item])})
+        res.status(200).json(itemsForFront([item])[0])
+    } catch (e) {
+        res.status(500).json({message: 'Something went wrong, try again'})
+    }
+})
+
+router.get('/searched/comments/:itemId', async (req, res) => {
+    try {
+        const item = await Item.findOne({_id: req.params.itemId})
+        res.status(200).json(item.comments)
     } catch (e) {
         res.status(500).json({message: 'Something went wrong, try again'})
     }
@@ -57,16 +65,19 @@ router.post('/create/:idCollection', auth, async (req, res) => {
         const {idCollection} = req.params
         const {title, description, image, tags} = req.body
         const collection = await Collection.findById(idCollection)
+
         const item = new Item({
             owner: idCollection,
             title,
-            image: new Buffer(image),
+            image: Buffer.from(image),
             description,
             tags: uniqueTags([...collection.itemTagsDefault, ...tags])
         })
         await item.save()
         res.status(201).json(itemsForFront([item])[0])
+
     } catch (e) {
+        console.log(e)
         res.status(500).json({message: 'Something went wrong, try again'})
     }
 })
@@ -98,7 +109,7 @@ router.post('/create-comment/:idItem', auth, async (req, res) => {
         const {name} = await User.findOne({_id: req.user.userId})
         item.comments.push({userName: name, comment})
         await item.save()
-        res.status(201).json({items: itemsForFront([item])})
+        res.status(201).json(item.comments)
     } catch (e) {
         res.status(500).json({message: 'Something went wrong, try again'})
     }

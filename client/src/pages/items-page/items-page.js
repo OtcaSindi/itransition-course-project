@@ -7,7 +7,7 @@ import MainTable from "../../components/main-table"
 import {AuthContext} from "../../context/AuthContext"
 import {useTableData} from "../../hooks/use-table-data"
 import {itemsReducerSelector as selector} from "../../selectors"
-import {useNotification} from "../../portals/notification-portal"
+
 import {
     headersItems,
     batchActions,
@@ -48,17 +48,6 @@ const ItemsPage = ({collectionId}) => {
         toolbarActions,
     })
 
-    // const fireNotification = useNotification()
-    //
-    // const fireN = () => {
-    //     fireNotification({
-    //         kind: 'primary',
-    //         notificationType: 'inline',
-    //         caption: null,
-    //         delay: 3000,
-    //     })
-    // }
-
     const onModalClose = useCallback(() => {
         setReFetch(i => !i)
         onClose()
@@ -66,7 +55,6 @@ const ItemsPage = ({collectionId}) => {
 
     return (
         <>
-            {/*<button onClick={fireN}> Hello</button>*/}
             <DynamicComponent
                 component={renderItemModals[menuAction.action]}
                 primaryRequest={selectItemRequest(menuAction.action)}

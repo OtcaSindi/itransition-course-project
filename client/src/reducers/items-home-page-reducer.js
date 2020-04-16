@@ -4,10 +4,10 @@ const initialState = {
     errorStatus: null
 }
 
-const itemsMainPageReducer = (state = initialState, action) => {
+const itemsHomePageReducer = (state = initialState, action) => {
     switch (action.type) {
 
-        case 'FETCH_ITEMS_MAIN_PAGE_REQUEST': {
+        case 'FETCH_ITEMS_HOME_PAGE_REQUEST': {
 
             return {
                 ...state,
@@ -15,7 +15,7 @@ const itemsMainPageReducer = (state = initialState, action) => {
             }
         }
 
-        case 'FETCH_ITEMS_MAIN_PAGE_SUCCESS': {
+        case 'FETCH_ITEMS_HOME_PAGE_SUCCESS': {
 
             const {items: data} = action.payload
 
@@ -26,7 +26,7 @@ const itemsMainPageReducer = (state = initialState, action) => {
             }
         }
 
-        case 'FETCH_ITEMS_MAIN_PAGE_FAILURE': {
+        case 'FETCH_ITEMS_HOME_PAGE_FAILURE': {
 
             const {response = {}} = action.payload
             const {status = null} = response
@@ -43,4 +43,4 @@ const itemsMainPageReducer = (state = initialState, action) => {
     }
 }
 
-export default itemsMainPageReducer
+export default itemsHomePageReducer

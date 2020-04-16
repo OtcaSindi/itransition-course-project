@@ -4,4 +4,6 @@ export const usersReducerSelector = state => state.usersReducer
 
 export const collectionsReducerSelector = state => state.collectionsReducer
 
-export const itemsMainPageReducerSelector = state => state.itemsMainPageReducer
+export const itemsHomePageReducerSelector = state => state.itemsHomePageReducer
+
+export const itemPageReducerSelector = state => state.itemPageReducer

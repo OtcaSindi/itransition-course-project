@@ -131,6 +131,10 @@ const create = (baseURL = '') => {
         return await api.get(`/api/items/searched/${itemId}`)
     }
 
+    const getCommentsItemById = async (itemId) => {
+        return await api.get(`/api/items/searched/comments/${itemId}`)
+    }
+
     const likedItem = async (token, itemId) => {
         setHeader(token)
         return await api.post(`/api/items/liked/${itemId}`)
@@ -178,6 +182,7 @@ const create = (baseURL = '') => {
         getSearchedItems,
         addCommentByItemId,
         getItemById,
+        getCommentsItemById,
         setHeader,
         likedItem
     }
@@ -202,5 +207,6 @@ export const {
     getSearchedItems,
     likedItem,
     getItemById,
+    getCommentsItemById,
     addCommentByItemId,
 } = create()

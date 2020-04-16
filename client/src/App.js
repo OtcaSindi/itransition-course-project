@@ -7,7 +7,6 @@ import {useAuth} from "./hooks/use-auth"
 import {AuthContext} from "./context/AuthContext"
 import NavBar from './components/navbar/navbar'
 import store from "./store"
-import {NotificationsProvider} from "./portals/notification-portal"
 import {useOpenAuthModal} from "./hooks/use-open-auth-modal"
 
 const App = () => {
@@ -18,22 +17,20 @@ const App = () => {
     const [searchItems, setSearchItems] = useState('')
 
     return (
-        <NotificationsProvider>
-            <Provider store={store}>
-                <AuthContext.Provider value={{
-                    token, login, logout, userId, isAuthenticated,
-                    userIsAdmin, openModal, setOpenModal, searchItems,
-                    setSearchItems, idLikedItems, setIdLikedItems
-                }}>
-                    <Router>
-                        <NavBar/>
-                        <div className="contentApp">
-                            <Routes isAuthenticated={isAuthenticated} userIsAdmin={userIsAdmin}/>
-                        </div>
-                    </Router>
-                </AuthContext.Provider>
-            </Provider>
-        </NotificationsProvider>
+        <Provider store={store}>
+            <AuthContext.Provider value={{
+                token, login, logout, userId, isAuthenticated,
+                userIsAdmin, openModal, setOpenModal, searchItems,
+                setSearchItems, idLikedItems, setIdLikedItems
+            }}>
+                <Router>
+                    <NavBar/>
+                    <div className="contentApp">
+                        <Routes isAuthenticated={isAuthenticated} userIsAdmin={userIsAdmin}/>
+                    </div>
+                </Router>
+            </AuthContext.Provider>
+        </Provider>
     )
 }
 

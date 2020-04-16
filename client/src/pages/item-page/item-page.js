@@ -3,8 +3,8 @@ import {useDispatch, useSelector} from "react-redux"
 
 import Comments from "../../components/comments"
 import {AuthContext} from "../../context/AuthContext"
-import {fetchAddCommentItemById, fetchHiddenItemUpdate, fetchSearchedItemById} from "../../actionsCreator"
-import {itemsMainPageReducerSelector} from "../../selectors"
+import {fetchAddCommentItemById, fetchHiddenUpdateComments, fetchItemById} from "../../actionsCreator"
+import {itemPageReducerSelector} from "../../selectors"
 import {dateFormat} from "../../utilities-functions"
 import Loader from "../../components/loader"
 import {Button, TextArea} from "carbon-components-react"
@@ -17,7 +17,7 @@ const ItemPage = ({itemId}) => {
 
     const dispatch = useDispatch()
     const {setOpenModal, logout, token} = useContext(AuthContext)
-    const {data, loading, errorStatus} = useSelector(itemsMainPageReducerSelector)
+    const {data = {}, loading, errorStatus, loadingComments} = useSelector(itemPageReducerSelector)
 
     const [newComment, setNewComment] = useState('')
     const ref = useRef(null)
@@ -26,24 +26,28 @@ const ItemPage = ({itemId}) => {
         title,
         description,
         dateCreation,
-        countLikes,
         image,
         tags = [],
         comments = []
-    } = data[0] ? data[0] : {}
+    } = data
 
     useEffect(() => {
-        const interval = setInterval(() => dispatch(fetchHiddenItemUpdate(itemId)), 2000)
+        const interval = setInterval(() => {
+            if (!loadingComments && !loading) {
+                dispatch(fetchHiddenUpdateComments(itemId))
+            }
+        }, 3000)
         return () => clearInterval(interval)
-    }, [])
+    }, [itemId, loadingComments, loading])
 
     useEffect(() => {
         if (errorStatus === 401) {
             logout()
             setOpenModal(true)
+        } else {
+            dispatch(fetchItemById(itemId))
         }
-        dispatch(fetchSearchedItemById(itemId))
-    }, [itemId, errorStatus])
+    }, [itemId, errorStatus, logout, setOpenModal])
 
     // const checkItemLikes = idLikedItems && idLikedItems.includes()
 

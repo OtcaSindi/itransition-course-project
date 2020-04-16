@@ -27,11 +27,14 @@ import {
     itemsMainPageRequested,
     itemsMainPageLoaded,
     itemsMainPageError,
-    fetchSearchedItemsMainPage,
-    fetchSearchedItemById,
+    fetchSearchedItemsMainPage
+} from "./items-home-page"
+
+import {
+    fetchItemById,
     fetchAddCommentItemById,
-    fetchHiddenItemUpdate
-} from "./items-main-page"
+    fetchHiddenUpdateComments
+} from './item-page'
 
 export {
     usersRequested,
@@ -53,7 +56,7 @@ export {
     itemsMainPageLoaded,
     itemsMainPageError,
     fetchSearchedItemsMainPage,
-    fetchSearchedItemById,
+    fetchItemById,
     fetchAddCommentItemById,
-    fetchHiddenItemUpdate
+    fetchHiddenUpdateComments
 }
