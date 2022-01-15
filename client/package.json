@@ -14,7 +14,7 @@
     "carbon-components-react": "^7.10.2",
     "carbon-icons": "^7.0.7",
     "lodash": "^4.17.15",
-    "marked": "^0.8.0",
+    "marked": "^4.0.10",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-gesture-responder": "^2.1.0",
